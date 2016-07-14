@@ -1,9 +1,9 @@
-package ru.innopolis.university.summerbootcamp.java.project.services.crud;
+package ru.innopolis.university.summerbootcamp.java.project.services;
 
 import java.util.List;
 
 
-public interface CrudService<T> {
+public interface Service<T> {
     T save(T object);
 
     T findOne(Long objectId);

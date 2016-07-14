@@ -5,10 +5,14 @@ package ru.innopolis.university.summerbootcamp.java.project.dao;
  */
 public interface Dao<T> {
 
-    T findByid(long id);
+    void create(T t);
 
-    void insert(T t);
+    void read(T t);
 
-    void delete(T t);
+    void update(T t);
+
+    void deleate(T t);
+
+
 
 }

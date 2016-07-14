@@ -1,7 +1,9 @@
 package ru.innopolis.university.summerbootcamp.java.project;
 
-
-public class Main {
+/**
+ * Runnable
+ */
+public class Application {
     public static void main(String[] args) {
 
     }
