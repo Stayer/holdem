@@ -1,20 +1,13 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
-
+import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
-import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Engine for game
- * Rules, judging and so on...
- */
 public class GameEngine {
-
-
     /**
      * Compare two combinations
      *
@@ -141,6 +134,4 @@ public class GameEngine {
     private PlayingCard takeCard(Game game) {
         return game.getPlayingCards().remove(0);
     }
-
-
 }
