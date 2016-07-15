@@ -36,9 +36,11 @@ public class GameEngine {
 
 
     public Game createGame(List<HoldemPlayer> players, int needPlayers) {
+        int botCounter = 0;
         while (players.size() < needPlayers) {
+            botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
-            holdemPlayer.setLogin("Bot");
+            holdemPlayer.setLogin("Bot" + botCounter);
             players.add(holdemPlayer);
         }
 
