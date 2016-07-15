@@ -52,7 +52,7 @@ public class GameEngine {
 
 
     public List<PlayingCard> createAndShuffleDeck() {
-        LinkedList<PlayingCard> playingCards = new LinkedList<PlayingCard>();
+        LinkedList<PlayingCard> playingCards = new LinkedList<>();
 
         //TODO: implement it!!!
 
