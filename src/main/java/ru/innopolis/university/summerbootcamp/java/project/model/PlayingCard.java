@@ -5,7 +5,7 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
 public class PlayingCard {
     private Suit suit;
-    private String value;
+    private int value;
 
     public Suit getSuit() {
         return suit;
@@ -15,11 +15,11 @@ public class PlayingCard {
         this.suit = suit;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 }
