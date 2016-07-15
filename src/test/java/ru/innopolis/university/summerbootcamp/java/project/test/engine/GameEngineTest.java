@@ -2,20 +2,13 @@ package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
 import org.junit.Assert;
 import org.junit.Test;
-<<<<<<< HEAD
-import org.junit.Assert;
 import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 
 import java.util.ArrayList;
-=======
-import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
-import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
-
 import java.util.LinkedList;
->>>>>>> 3e9c1b8efd18fe078f579e05de032be01f172610
 import java.util.List;
 
 public class GameEngineTest {
