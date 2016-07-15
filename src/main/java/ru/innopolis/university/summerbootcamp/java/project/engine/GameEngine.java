@@ -1,174 +1,135 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
-
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
-import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
+import ru.innopolis.university.summerbootcamp.java.project.model.Game;
+import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
+import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
 import java.util.LinkedList;
 import java.util.List;
 
-
-/**
- * Engine for game
- * Rules, judging and so on...
- */
 public class GameEngine {
-    public class Checker {
-        private boolean[][] pool = new boolean[4][13];
-
-        public int checkCombo(PlayingCard[] cards) {
-            int score = 10000;
-            int tmp = 0;
-            for (int i = 0; i < cards.length; i++)
-                pool[cards[i].getSuit()][cards[i].getValue()] = true;
-
-            score = isFlushRoyal(cards);
-            score = isStraightFlush(cards);
-            score = isFourOfKind(cards);
-            score = isFullHouse(cards);
-            score = isFlush(cards);
-            score = isStraight(cards);
-            score = isThreeOfKind(cards);
-            score = isTwoPairs(cards);
-            score = isOnePair(cards);
-
-            return score;
+    /**
+     * Compare two combinations
+     *
+     * @param combination1 first combination
+     * @param combination2 second combination
+     * @return the value {@code 0} if {@code first combination} is
+     * equal to {@code second combination}; a value less than
+     * {@code 0} if {@code first combination} is less
+     * than {@code second combination}; and a value greater
+     * than {@code 0} if {@code first combination} is
+     * greater than the {@code second combination} .
+     */
+    public int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
+        if (combination1.size() != 7 || combination2.size() != 7) {
+            //TODO: Throw exception
         }
-        private int isFlushRoyal(PlayingCard[] cards) {
-            for(int i = 0; i < 4; i++) {
-                int count = 0;
-                for (int j = 0; j < 13; j++)
-                    if (pool[i][j])
-                        count++;
-                if (count >= 5)
-                    if (pool[i][13] && pool[i][12] && pool[i][11] && pool[i][10] && pool[i][9])
-                        return 0;
-            }
-            return -1000;
+        return 0;
+    }
+
+
+    public Game createGame(List<HoldemPlayer> players, int needPlayers) {
+        while (players.size() < needPlayers) {
+            HoldemPlayer holdemPlayer = new HoldemPlayer();
+            holdemPlayer.setLogin("Bot");
+            players.add(holdemPlayer);
         }
-        private int isStraightFlush(PlayingCard[] cards) {
-            for (int i = 0; i < 4; i++) {
-                int count = 0;
-                for (int j = 0; j < 13; j++)
-                    if (pool[i][j])
-                        count++;
-                if (count >= 5) {
-                    count = 0;
-                    for (int j = 12; j > 0; j--) {
-                        if (pool[i][j] && pool[i][j - 1])
-                            count++;
-                        else
-                            count = 0;
-                        if (count == 5)
-                            return 0 - (12 - j + 5);
-                    }
+
+        Game game = new Game();
+        game.setHoldemPlayers(players);
+        List<PlayingCard> deck = createAndShuffleDeck();
+        game.setPlayingCards(deck);
+
+        return game;
+    }
+
+
+    public List<PlayingCard> createAndShuffleDeck() {
+        LinkedList<PlayingCard> playingCards = new LinkedList<PlayingCard>();
+
+        //TODO: implement it!!!
+
+        return playingCards;
+    }
+
+
+    public void initGame(Game game) {
+        //TODO: check num of players
+        List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
+
+        //Setting dealer and blinds
+        holdemPlayers.get(0).setDealer(true);
+        HoldemPlayer smallBlindPlayer = holdemPlayers.get(1);
+        smallBlindPlayer.setSmallBlind(true);
+        smallBlindPlayer.setBet(game.getSmallBet() / 2.0);
+
+        HoldemPlayer bigBlindPlayer = holdemPlayers.get(2);
+        bigBlindPlayer.setBigBlind(true);
+        bigBlindPlayer.setBet(game.getSmallBet());
+
+    }
+
+
+    /**
+     * Change dealer and blinds actors in a game
+     *
+     * @param game
+     */
+    public void changeDealer(Game game) {
+        List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
+
+        for (int i = 0; i < holdemPlayers.size(); i++) {
+            HoldemPlayer holdemPlayer = holdemPlayers.get(i);
+            if (holdemPlayer.isDealer()) {
+                holdemPlayer.setDealer(false);
+                if (i == holdemPlayers.size() - 1) {
+                    holdemPlayers.get(0).setDealer(true);
+                    //Last is dealer
+                } else {
+                    holdemPlayers.get(i + 1).setDealer(true);
+                }
+
+
+            } else if (holdemPlayer.isBigBlind()) {
+                holdemPlayer.setBigBlind(false);
+                if (i == holdemPlayers.size() - 1) {
+                    holdemPlayers.get(0).setBigBlind(true);
+                    //Last is bigBlind
+                } else {
+                    holdemPlayers.get(i + 1).setBigBlind(true);
+                }
+            } else if (holdemPlayer.isSmallBlind()) {
+                holdemPlayer.setSmallBlind(false);
+                if (i == holdemPlayers.size() - 1) {
+                    holdemPlayers.get(0).setSmallBlind(true);
+                    //Last is smallBlind
+                } else {
+                    holdemPlayers.get(i + 1).setSmallBlind(true);
                 }
             }
-            return -1000;
-        }
-        private int isFourOfKind(PlayingCard[] cards) {
-            for (int j = 12; j >= 0; j++) {
-                int counter = 0;
-                for(int i = 0; i < 4; i++)
-                    if (pool[i][j])
-                        counter++;
-                if(counter >= 4)
-                    return 0 - (12 - j);
-            }
-            return -1000;
-        }
-        private int isFullHouse(PlayingCard[] cards) {
-            int counter = 0;
-            int sum = 0;
-            int[] total = new int[13];
-            for (int j = 0; j < 13; j++)
-            {
-                for(int i = 0; i < 4; i++)
-                    if(pool[i][j])
-                        counter++;
-                if(counter == 2)
-                    total[j] = 1;
-                if(counter > 2)
-                    total[j] = 2;
-            }
-            for(int j = 12; j >= 0; j--)
-                if(total[j] == 2)
-                {
-                    sum = 12-j;
-                    break;
-                }
-            for(int j = 12; j>= 0; j--)
-                if(total[j] >= 1) {
-                    sum = 12 - j;
-                    break;
-                }
-                if(sum>0)
-                    return -sum; // need to check it
-            return -1000;
-        }
-        private int isFlush(PlayingCard[] cards) {
-            for(int i = 0; i < 4; i++) {
-                int counter = 0;
-                for (int j = 12; j >= 0; j++) {
-                    if (pool[i][j]) {
-                        counter++;
-                        if(counter == 4)
-                            return 0; // need to more work
-                    }
-                }
-            }
-            return -1000;
-        }
-        private int isStraight(PlayingCard[] cards) {
-            for (int i = 0; i < 4; i++) {
-                int count = 0;
-                for (int j = 13; j > 0; j++)
-                    if (pool[i][j] && pool[i][j - 1]) {
-                        count++;
-                        if (count == 5)
-                            return 0; // need to work more
-                    }
-                    else
-                        count = 0;
-            }
-            return -1000;
-        }
-        private int isThreeOfKind(PlayingCard[] cards) {
-            for (int j = 12; j >= 0; j++) {
-                int counter = 0;
-                for(int i = 0; i < 4; i++)
-                    if (pool[i][j])
-                        counter++;
-                if(counter == 3)
-                    return 0 - (12 - j);
-            }
-            return -1000;
-        }
-        private int isTwoPairs(PlayingCard[] cards) {
-            int counter = 0;
-            int sum = 0;
-
-            for (int j = 13; j >= 0; j++) {
-                for (int i = 0; i < 4; i++)
-                    if (pool[i][j])
-                        counter++;
-                if(counter == 2)
-                    sum++;
-                if(sum == 2)
-                    return 0; // need more work with it
-            }
-            return -1000;
-        }
-        private int isOnePair(PlayingCard[] cards) {
-            for (int j = 12; j >= 0; j++) {
-                int counter = 0;
-                for(int i = 0; i < 4; i++)
-                    if (pool[i][j])
-                        counter++;
-                if(counter == 2)
-                    return 0 - (12 - j);
-            }
-            return -1000;
         }
 
+    }
+
+    public void startGame(Game game) {
+        game.setGameStage(GameStage.Start);
+        if (game.getGameStage() == GameStage.Start) {
+            game.setGameStage(GameStage.Preflop);
+            //Giveaway cards
+            for (HoldemPlayer holdemPlayer : game.getHoldemPlayers()) {
+                PlayingCard playingCard = takeCard(game);
+                holdemPlayer.getPlayingCards().add(playingCard);
+                        //TODO: STOP HERE
+            }
+
+
+        }
+
+
+    }
+
+
+    private PlayingCard takeCard(Game game) {
+        return game.getPlayingCards().remove(0);
     }
 }
