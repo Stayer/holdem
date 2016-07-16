@@ -1,6 +1,8 @@
 package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
+import com.sun.tools.javac.comp.Check;
 import org.junit.Test;
+import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.Rank;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
@@ -93,7 +95,13 @@ public class CheckerTest {
         PlayingCard twoOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TWO").ordinal());
 
 
-        ArrayList<PlayingCard> deck = new ArrayList<PlayingCard>();
+        PlayingCard[] flushRoyal = {tenOfClubs, jackOfClubs, queenOfClubs, kingOfClubs, aceOfClubs};
+
+        Checker checker = new Checker();
+        int result = checker.checkCombo(flushRoyal);
+        System.out.println(result);
+
+        //
 
         //System.out.println(new Random().nextInt());
         //System.out.println(Suit.valueOf("Spades"));
