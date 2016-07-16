@@ -13,15 +13,48 @@ public class Checker {
         for (int i = 0; i < cards.length; i++)
             pool[cards[i].getSuit()][cards[i].getValue()] = true;
 
-        score += isFlushRoyal(cards);
-        score += isStraightFlush(cards);
-        score += isFourOfKind(cards);
-        score += isFullHouse(cards);
-        score += isFlush(cards);
-        score += isStraight(cards);
-        score += isThreeOfKind(cards);
-        score += isTwoPairs(cards);
-        score += isOnePair(cards);
+
+        tmp = isFlushRoyal(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isStraightFlush(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isFourOfKind(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isFullHouse(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isFlush(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isStraight(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isThreeOfKind(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isTwoPairs(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
+        tmp = isOnePair(cards);
 
         return score;
     }
@@ -35,7 +68,7 @@ public class Checker {
                 if (pool[i][12] && pool[i][11] && pool[i][10] && pool[i][9] && pool[i][8])
                     return 0;
         }
-        return -1000;
+        return 1000;
     }
     private int isStraightFlush(PlayingCard[] cards) {
         for (int i = 0; i < 4; i++) {
@@ -51,11 +84,11 @@ public class Checker {
                     else
                         count = 0;
                     if (count == 5)
-                        return 0 - (12 - j + 5);
+                        return 12 - j + 5;
                 }
             }
         }
-        return -1000;
+        return 1000;
     }
     private int isFourOfKind(PlayingCard[] cards) {
         for (int j = 12; j >= 0; j--) {
@@ -64,9 +97,9 @@ public class Checker {
                 if (pool[i][j])
                     counter++;
             if(counter >= 4)
-                return 0 - (12 - j);
+                return 12 - j;
         }
-        return -1000;
+        return 1000;
     }
     private int isFullHouse(PlayingCard[] cards) {
         int counter = 0;
@@ -94,8 +127,8 @@ public class Checker {
                 break;
             }
         if(sum>0)
-            return -sum; // need to check it
-        return -1000;
+            return sum; // need to check it
+        return 1000;
     }
     private int isFlush(PlayingCard[] cards) {
         for(int i = 0; i < 4; i++) {
@@ -108,7 +141,7 @@ public class Checker {
                 }
             }
         }
-        return -1000;
+        return 1000;
     }
     private int isStraight(PlayingCard[] cards) {
         for (int i = 0; i < 4; i++) {
@@ -122,7 +155,7 @@ public class Checker {
                 else
                     count = 0;
         }
-        return -1000;
+        return 1000;
     }
     private int isThreeOfKind(PlayingCard[] cards) {
         for (int j = 12; j >= 0; j--) {
@@ -131,9 +164,9 @@ public class Checker {
                 if (pool[i][j])
                     counter++;
             if(counter == 3)
-                return 0 - (12 - j);
+                return 12 - j;
         }
-        return -1000;
+        return 1000;
     }
     private int isTwoPairs(PlayingCard[] cards) {
         int counter = 0;
@@ -148,7 +181,7 @@ public class Checker {
             if(sum == 2)
                 return 0; // need more work with it
         }
-        return -1000;
+        return 1000;
     }
     private int isOnePair(PlayingCard[] cards) {
         for (int j = 12; j >= 0; j--) {
@@ -157,9 +190,9 @@ public class Checker {
                 if (pool[i][j])
                     counter++;
             if(counter == 2)
-                return 0 - (12 - j);
+                return 12 - j;
         }
-        return -1000;
+        return 1000;
     }
 
 }

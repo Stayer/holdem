@@ -4,8 +4,10 @@ import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class GameEngine {
     /**
@@ -48,9 +50,13 @@ public class GameEngine {
 
     public List<PlayingCard> createAndShuffleDeck() {
         LinkedList<PlayingCard> playingCards = new LinkedList<>();
-
-        //TODO: implement it!!!
-
+        final Random random = new Random();
+        int counter = random.nextInt(40);
+        for(int i = 0; i < 4; i++)
+            for(int j = 0; j < 13; j++)
+                playingCards.add(new PlayingCard(i, j));
+        for(int i = 0; i < counter; i++)
+        Collections.shuffle(playingCards);
         return playingCards;
     }
 
