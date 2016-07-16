@@ -4,11 +4,11 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
 public class PlayingCard {
     private int suit;
-    private int value;
+    private int rank;
 
-    public PlayingCard(int suit, int value) {
+    public PlayingCard(int suit, int rank) {
         this.suit = suit;
-        this.value = value;
+        this.rank = rank;
     }
 
     public int getSuit() {
@@ -19,11 +19,9 @@ public class PlayingCard {
         this.suit = suit;
     }
 
-    public int getValue() {
-        return value;
+    public int getRank() {
+        return rank;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
+    public void setRank(int rank) { this.rank = rank; }
 }

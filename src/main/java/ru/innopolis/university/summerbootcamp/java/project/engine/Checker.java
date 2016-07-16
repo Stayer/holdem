@@ -1,21 +1,22 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 
+import java.util.List;
+
 /**
  * Created by rodionov on 16.07.2016.
  */
 public class Checker {
-    private boolean[][] pool = new boolean[4][13];
+    private static boolean[][] pool = new boolean[4][13];
 
-    public int checkCombo(PlayingCard[] cards) {
+    public static int checkCombo(List<PlayingCard> cards) {
         int score = 10000;
         int tmp = 0;
-        for (int i = 0; i < cards.length; i++)
-            pool[cards[i].getSuit()][cards[i].getValue()] = true;
-
+        for (int i = 0; i < cards.size(); i++)
+            pool[cards.get(i).getSuit()][cards.get(i).getRank()] = true;
 
         tmp = isFlushRoyal(cards);
-        if(tmp<0) {
+         if(tmp>0) {
             score -= tmp;
             return score;
         }
@@ -55,10 +56,14 @@ public class Checker {
             return score;
         }
         tmp = isOnePair(cards);
+        if(tmp<0) {
+            score -= tmp;
+            return score;
+        }
 
         return score;
     }
-    private int isFlushRoyal(PlayingCard[] cards) {
+    private static int isFlushRoyal(List<PlayingCard> cards) {
         for(int i = 0; i < 4; i++) {
             int count = 0;
             for (int j = 0; j < 13; j++)
@@ -70,7 +75,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isStraightFlush(PlayingCard[] cards) {
+    private static int isStraightFlush(List<PlayingCard> cards) {
         for (int i = 0; i < 4; i++) {
             int count = 0;
             for (int j = 0; j < 13; j++)
@@ -90,7 +95,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isFourOfKind(PlayingCard[] cards) {
+    private static int isFourOfKind(List<PlayingCard> cards) {
         for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
@@ -101,7 +106,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isFullHouse(PlayingCard[] cards) {
+    private static int isFullHouse(List<PlayingCard> cards) {
         int counter = 0;
         int sum = 0;
         int[] total = new int[13];
@@ -130,7 +135,7 @@ public class Checker {
             return sum; // need to check it
         return 1000;
     }
-    private int isFlush(PlayingCard[] cards) {
+    private static int isFlush(List<PlayingCard> cards) {
         for(int i = 0; i < 4; i++) {
             int counter = 0;
             for (int j = 12; j >= 0; j--) {
@@ -143,7 +148,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isStraight(PlayingCard[] cards) {
+    private static int isStraight(List<PlayingCard> cards) { // need to write some code for Ace correct working
         for (int i = 0; i < 4; i++) {
             int count = 0;
             for (int j = 12; j > 0; j--)
@@ -157,7 +162,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isThreeOfKind(PlayingCard[] cards) {
+    private static int isThreeOfKind(List<PlayingCard> cards) {
         for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
@@ -168,7 +173,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isTwoPairs(PlayingCard[] cards) {
+    private static int isTwoPairs(List<PlayingCard> cards) {
         int counter = 0;
         int sum = 0;
 
@@ -183,7 +188,7 @@ public class Checker {
         }
         return 1000;
     }
-    private int isOnePair(PlayingCard[] cards) {
+    private static int isOnePair(List<PlayingCard> cards) {
         for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
@@ -193,6 +198,13 @@ public class Checker {
                 return 12 - j;
         }
         return 1000;
+    }
+    private static int isHighCard(List<PlayingCard> cards) {
+        PlayingCard card = cards.get(0);
+        for(int i = 1; i<cards.size(); i++)
+            if (cards.get(i).getRank() > card.getRank())
+                card = cards.get(i);
+        return card.getRank();
     }
 
 }

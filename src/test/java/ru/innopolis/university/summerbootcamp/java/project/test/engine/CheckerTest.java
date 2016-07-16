@@ -7,6 +7,8 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Rank;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -93,8 +95,13 @@ public class CheckerTest {
         PlayingCard twoOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("TWO").ordinal());
         PlayingCard twoOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TWO").ordinal());
 
+        List<PlayingCard> flushRoyal = new LinkedList<>();
+        flushRoyal.add(tenOfClubs);
+        flushRoyal.add(jackOfClubs);
+        flushRoyal.add(queenOfClubs);
+        flushRoyal.add(kingOfClubs);
+        flushRoyal.add(aceOfClubs);
 
-        PlayingCard[] flushRoyal = {tenOfClubs, jackOfClubs, queenOfClubs, kingOfClubs, aceOfClubs};
         PlayingCard[] straightFlush = {twoOfClubs, threeOfClubs, fourOfClubs, fiveOfClubs, sixOfClubs};
         PlayingCard[] fourOfKind = {twoOfClubs, twoOfDiamonds, twoOfHarts, twoOfSpades, aceOfDiamonds};
         PlayingCard[] fullHouse = {twoOfClubs, twoOfDiamonds, twoOfHarts, threeOfClubs, threeOfDiamonds};
@@ -104,9 +111,7 @@ public class CheckerTest {
         PlayingCard[] twoPair = {aceOfClubs, aceOfDiamonds, kingOfClubs, kingOfHarts, threeOfClubs};
         PlayingCard[] onePair = {kingOfClubs, kingOfDiamonds, aceOfClubs, twoOfClubs, threeOfClubs};
 
-
-//        Checker checker = new Checker();
-//        int result = checker.checkCombo(flushRoyal);
-//        System.out.println(result);
+        int result = Checker.checkCombo(flushRoyal);
+        System.out.println(result);
     }
 }

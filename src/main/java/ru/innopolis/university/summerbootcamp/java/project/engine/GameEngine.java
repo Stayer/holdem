@@ -23,9 +23,10 @@ public class GameEngine {
      * greater than the {@code second combination} .
      */
     public int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
-        if (combination1.size() != 7 || combination2.size() != 7) {
-            //TODO: Throw exception
-        }
+        if (Checker.checkCombo(combination1) > Checker.checkCombo(combination2))
+            return 1;
+        else if (Checker.checkCombo(combination1) < Checker.checkCombo(combination2))
+            return 2;
         return 0;
     }
 
