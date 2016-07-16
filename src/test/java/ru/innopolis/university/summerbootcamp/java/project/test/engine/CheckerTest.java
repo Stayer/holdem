@@ -1,6 +1,5 @@
 package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
-import com.sun.tools.javac.comp.Check;
 import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
