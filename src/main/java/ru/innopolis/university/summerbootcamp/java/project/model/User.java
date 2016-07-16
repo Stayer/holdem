@@ -2,7 +2,6 @@ package ru.innopolis.university.summerbootcamp.java.project.model;
 
 
 public class User {
-
     private String login;
     private String password;
     private String salt;

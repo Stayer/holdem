@@ -4,14 +4,14 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
 
 public class PlayingCard {
-    private Suit suit;
+    private int suit;
     private int value;
 
-    public Suit getSuit() {
+    public int getSuit() {
         return suit;
     }
 
-    public void setSuit(Suit suit) {
+    public void setSuit(int suit) {
         this.suit = suit;
     }
 

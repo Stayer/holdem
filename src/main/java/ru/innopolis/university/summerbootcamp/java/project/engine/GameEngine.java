@@ -1,20 +1,13 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
-
+import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
-import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Engine for game
- * Rules, judging and so on...
- */
 public class GameEngine {
-
-
     /**
      * Compare two combinations
      *
@@ -36,9 +29,11 @@ public class GameEngine {
 
 
     public Game createGame(List<HoldemPlayer> players, int needPlayers) {
+        int botCounter = 0;
         while (players.size() < needPlayers) {
+            botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
-            holdemPlayer.setLogin("Bot");
+            holdemPlayer.setLogin("Bot" + botCounter);
             players.add(holdemPlayer);
         }
 
@@ -52,7 +47,7 @@ public class GameEngine {
 
 
     public List<PlayingCard> createAndShuffleDeck() {
-        LinkedList<PlayingCard> playingCards = new LinkedList<PlayingCard>();
+        LinkedList<PlayingCard> playingCards = new LinkedList<>();
 
         //TODO: implement it!!!
 
@@ -139,6 +134,4 @@ public class GameEngine {
     private PlayingCard takeCard(Game game) {
         return game.getPlayingCards().remove(0);
     }
-
-
 }
