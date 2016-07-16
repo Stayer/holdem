@@ -30,7 +30,7 @@ public class GameEngineTest {
 
         for (int i = 0; i < deck1.size(); i++) {
             if (deck1.get(i).getSuit() != deck2.get(i).getSuit() ||
-                deck1.get(i).getValue() != deck2.get(i).getValue()
+                deck1.get(i).getRank() != deck2.get(i).getRank()
             ) {
                 return false;
             }

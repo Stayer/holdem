@@ -7,6 +7,8 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Rank;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -94,10 +96,14 @@ public class CheckerTest {
         PlayingCard twoOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TWO").ordinal());
 
 
-        PlayingCard[] flushRoyal = {tenOfClubs, jackOfClubs, queenOfClubs, kingOfClubs, aceOfClubs};
+        List<PlayingCard> flushRoyal = new LinkedList<>();
+        flushRoyal.add(tenOfClubs);
+        flushRoyal.add(jackOfClubs);
+        flushRoyal.add(queenOfClubs);
+        flushRoyal.add(kingOfClubs);
+        flushRoyal.add(aceOfClubs);
 
-        Checker checker = new Checker();
-        int result = checker.checkCombo(flushRoyal);
+        int result = Checker.checkCombo(flushRoyal);
         System.out.println(result);
 
         //
