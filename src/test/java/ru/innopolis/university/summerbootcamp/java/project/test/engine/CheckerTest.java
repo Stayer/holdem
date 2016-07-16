@@ -1,6 +1,5 @@
 package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
-import com.sun.tools.javac.comp.Check;
 import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
@@ -96,15 +95,18 @@ public class CheckerTest {
 
 
         PlayingCard[] flushRoyal = {tenOfClubs, jackOfClubs, queenOfClubs, kingOfClubs, aceOfClubs};
+        PlayingCard[] straightFlush = {twoOfClubs, threeOfClubs, fourOfClubs, fiveOfClubs, sixOfClubs};
+        PlayingCard[] fourOfKind = {twoOfClubs, twoOfDiamonds, twoOfHarts, twoOfSpades, aceOfDiamonds};
+        PlayingCard[] fullHouse = {twoOfClubs, twoOfDiamonds, twoOfHarts, threeOfClubs, threeOfDiamonds};
+        PlayingCard[] flush = {twoOfClubs, threeOfClubs, fiveOfClubs, sevenOfClubs, jackOfClubs};
+        PlayingCard[] straight = {twoOfClubs, threeOfDiamonds, fourOfSpades, fiveOfHarts, sixOfHarts};
+        PlayingCard[] threeOfKind = {aceOfClubs, aceOfDiamonds, aceOfHarts, twoOfClubs, fiveOfClubs};
+        PlayingCard[] twoPair = {aceOfClubs, aceOfDiamonds, kingOfClubs, kingOfHarts, threeOfClubs};
+        PlayingCard[] onePair = {kingOfClubs, kingOfDiamonds, aceOfClubs, twoOfClubs, threeOfClubs};
 
-        Checker checker = new Checker();
-        int result = checker.checkCombo(flushRoyal);
-        System.out.println(result);
 
-        //
-
-        //System.out.println(new Random().nextInt());
-        //System.out.println(Suit.valueOf("Spades"));
-        //System.out.println(Suit.valueOf("Spades").ordinal());
+//        Checker checker = new Checker();
+//        int result = checker.checkCombo(flushRoyal);
+//        System.out.println(result);
     }
 }
