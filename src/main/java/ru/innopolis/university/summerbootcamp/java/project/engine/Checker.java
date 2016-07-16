@@ -13,15 +13,15 @@ public class Checker {
         for (int i = 0; i < cards.length; i++)
             pool[cards[i].getSuit()][cards[i].getValue()] = true;
 
-        score = isFlushRoyal(cards);
-        score = isStraightFlush(cards);
-        score = isFourOfKind(cards);
-        score = isFullHouse(cards);
-        score = isFlush(cards);
-        score = isStraight(cards);
-        score = isThreeOfKind(cards);
-        score = isTwoPairs(cards);
-        score = isOnePair(cards);
+        score += isFlushRoyal(cards);
+        score += isStraightFlush(cards);
+        score += isFourOfKind(cards);
+        score += isFullHouse(cards);
+        score += isFlush(cards);
+        score += isStraight(cards);
+        score += isThreeOfKind(cards);
+        score += isTwoPairs(cards);
+        score += isOnePair(cards);
 
         return score;
     }
@@ -32,7 +32,7 @@ public class Checker {
                 if (pool[i][j])
                     count++;
             if (count >= 5)
-                if (pool[i][13] && pool[i][12] && pool[i][11] && pool[i][10] && pool[i][9])
+                if (pool[i][12] && pool[i][11] && pool[i][10] && pool[i][9] && pool[i][8])
                     return 0;
         }
         return -1000;
@@ -58,7 +58,7 @@ public class Checker {
         return -1000;
     }
     private int isFourOfKind(PlayingCard[] cards) {
-        for (int j = 12; j >= 0; j++) {
+        for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
                 if (pool[i][j])
@@ -72,7 +72,7 @@ public class Checker {
         int counter = 0;
         int sum = 0;
         int[] total = new int[13];
-        for (int j = 0; j < 13; j++)
+        for (int j = 12; j >= 0; j--)
         {
             for(int i = 0; i < 4; i++)
                 if(pool[i][j])
@@ -100,7 +100,7 @@ public class Checker {
     private int isFlush(PlayingCard[] cards) {
         for(int i = 0; i < 4; i++) {
             int counter = 0;
-            for (int j = 12; j >= 0; j++) {
+            for (int j = 12; j >= 0; j--) {
                 if (pool[i][j]) {
                     counter++;
                     if(counter == 4)
@@ -113,7 +113,7 @@ public class Checker {
     private int isStraight(PlayingCard[] cards) {
         for (int i = 0; i < 4; i++) {
             int count = 0;
-            for (int j = 13; j > 0; j++)
+            for (int j = 12; j > 0; j--)
                 if (pool[i][j] && pool[i][j - 1]) {
                     count++;
                     if (count == 5)
@@ -125,7 +125,7 @@ public class Checker {
         return -1000;
     }
     private int isThreeOfKind(PlayingCard[] cards) {
-        for (int j = 12; j >= 0; j++) {
+        for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
                 if (pool[i][j])
@@ -139,7 +139,7 @@ public class Checker {
         int counter = 0;
         int sum = 0;
 
-        for (int j = 13; j >= 0; j++) {
+        for (int j = 12; j >= 0; j--) {
             for (int i = 0; i < 4; i++)
                 if (pool[i][j])
                     counter++;
@@ -151,7 +151,7 @@ public class Checker {
         return -1000;
     }
     private int isOnePair(PlayingCard[] cards) {
-        for (int j = 12; j >= 0; j++) {
+        for (int j = 12; j >= 0; j--) {
             int counter = 0;
             for(int i = 0; i < 4; i++)
                 if (pool[i][j])
