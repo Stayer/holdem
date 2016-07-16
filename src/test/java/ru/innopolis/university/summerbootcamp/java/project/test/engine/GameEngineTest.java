@@ -10,8 +10,11 @@ import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class GameEngineTest {
+
+
     public void deckEmptynessTest(List<PlayingCard> deck) {
         Assert.assertTrue("Created deck is zero sized", deck.size() > 0);
     }
