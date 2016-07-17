@@ -1,20 +1,15 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
-
+import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
-import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
-/**
- * Engine for game
- * Rules, judging and so on...
- */
 public class GameEngine {
-
-
     /**
      * Compare two combinations
      *
@@ -28,17 +23,20 @@ public class GameEngine {
      * greater than the {@code second combination} .
      */
     public int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
-        if (combination1.size() != 7 || combination2.size() != 7) {
-            //TODO: Throw exception
-        }
+        if (Checker.checkCombo(combination1) > Checker.checkCombo(combination2))
+            return 1;
+        else if (Checker.checkCombo(combination1) < Checker.checkCombo(combination2))
+            return 2;
         return 0;
     }
 
 
     public Game createGame(List<HoldemPlayer> players, int needPlayers) {
+        int botCounter = 0;
         while (players.size() < needPlayers) {
+            botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
-            holdemPlayer.setLogin("Bot");
+            holdemPlayer.setLogin("Bot" + botCounter);
             players.add(holdemPlayer);
         }
 
@@ -53,9 +51,13 @@ public class GameEngine {
 
     public List<PlayingCard> createAndShuffleDeck() {
         LinkedList<PlayingCard> playingCards = new LinkedList<>();
-
-        //TODO: implement it!!!
-
+        final Random random = new Random();
+        int counter = random.nextInt(40);
+        for(int i = 0; i < 4; i++)
+            for(int j = 0; j < 13; j++)
+                playingCards.add(new PlayingCard(i, j));
+        for(int i = 0; i < counter; i++)
+        Collections.shuffle(playingCards);
         return playingCards;
     }
 
@@ -139,6 +141,4 @@ public class GameEngine {
     private PlayingCard takeCard(Game game) {
         return game.getPlayingCards().remove(0);
     }
-
-
 }
