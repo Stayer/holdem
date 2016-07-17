@@ -13,6 +13,11 @@ public class StatisticServices implements Service<Statistic> {
         return null;
     }
 
+    @Override
+    public Statistic findOne(String name) {
+        return null;
+    }
+
     public Statistic findOne(Long objectId) {
         return null;
     }

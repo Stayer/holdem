@@ -17,7 +17,7 @@ public class Application {
         System.out.println(settings2.getCash());
         System.out.println(settings2.getDifficulty());
         System.out.println(settings2.getPassword());
-        System.out.println(settings2.getPersonalName());
+        System.out.println(settings2.getUserName());
         System.out.println(settings2.getPlayerCount());
 
 

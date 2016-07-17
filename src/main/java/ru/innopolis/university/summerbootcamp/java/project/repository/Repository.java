@@ -1,6 +1,8 @@
 package ru.innopolis.university.summerbootcamp.java.project.repository;
 
 
+import java.util.List;
+
 /**
  * Data Access Object
  */
@@ -14,6 +16,6 @@ public interface Repository<T> {
 
     void delete(T t);
 
-
+    List<T> getAll();
 
 }

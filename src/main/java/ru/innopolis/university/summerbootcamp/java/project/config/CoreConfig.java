@@ -18,7 +18,7 @@ public class CoreConfig{
     public void saveSettings(Settings settings){
 
         JSONObject obj = new JSONObject();
-        obj.put("Name", settings.getPersonalName());
+        obj.put("Name", settings.getUserName());
         obj.put("Password", settings.getPassword());
         obj.put("Cash", settings.getCash());
         obj.put("PlayerCount", settings.getPlayerCount());
@@ -51,7 +51,7 @@ public class CoreConfig{
 
                 JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("Settings.txt"));
 
-            settings.setPersonalName((String) jsonObject.get("Name"));
+            settings.setUserName((String) jsonObject.get("Name"));
             settings.setPassword((String) jsonObject.get("Password"));
             settings.setBat((int)(long) jsonObject.get("Bat"));
             settings.setCash((int)(long) jsonObject.get("Cash"));

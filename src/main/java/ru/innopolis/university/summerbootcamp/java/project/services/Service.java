@@ -6,7 +6,7 @@ import java.util.List;
 public interface Service<T> {
     T save(T object);
 
-    T findOne(Long objectId);
+    T findOne(String name);
 
     List<T> findAll();
 

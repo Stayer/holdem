@@ -7,14 +7,15 @@ import ru.innopolis.university.summerbootcamp.java.project.model.Player;
 import ru.innopolis.university.summerbootcamp.java.project.util.FileReaderWriterUtil;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by dalv6_000 on 14.07.2016.
  */
 public class PlayerRepository implements Repository<Player> {
-
 
     private static Map<String, Player> players;
     private static PlayerRepository playerRepository;
@@ -62,5 +63,12 @@ public class PlayerRepository implements Repository<Player> {
 
     public void delete(Player player) {
 
+    }
+
+    @Override
+    public List<Player> getAll() {
+        ArrayList<Player> players = new ArrayList<>();
+        players.addAll(PlayerRepository.players.values());
+        return players;
     }
 }
