@@ -3,6 +3,7 @@ package ru.innopolis.university.summerbootcamp.java.project.ai;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
+import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
@@ -53,27 +54,44 @@ public class AIEngine {
         1.31f, // connectors 4|5-J|T -> Straight
     };
 
+    private static final int pointsBias = 5000; // 18.07.16 empirical number
+    private float prevBetsAvg=0;
+
     /**
      * Analyzes current player's data and makes decision.
      * @param cards player's current deck
      * @param cash player's current cash
-     * @param round 1 for first round. 2 for second. Exception thrown otherwise
+     * @param betSum sum of players' bet
      * @return computed decision
      */
-    public CommandType getDecision(List<PlayingCard> cards, int cash, int round) throws IllegalArgumentException {
+    public CommandType getDecision(List<PlayingCard> cards, int cash, int betSum) throws IllegalArgumentException {
+        if (prevBetsAvg == 0)
+            prevBetsAvg = betSum;
+        else
+            prevBetsAvg = (betSum+prevBetsAvg)/2;
+        
         int comboPoints = Checker.checkCombo(cards);
-        switch (cards.size()) {
-            case 2:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            default:
-                throw new IllegalArgumentException("incorrect cards quantity");
+        boolean goodCards = false;
+        boolean enoughMoney = false;
+        boolean suddenRaise = false;
+        if (CommonUtils.isInRange(pointsBias, comboPoints, Checker.FLUSHROYAL))
+            goodCards = true;
+        if (cash <= betSum)
+            enoughMoney = true;
+        if (betSum > prevBetsAvg)
+            suddenRaise = true;
+
+        if (!enoughMoney)
+            return CommandType.Fold;
+        if (goodCards) {
+            if (suddenRaise)
+                return CommandType.Bet;
+            else
+                return CommandType.Rise;
         }
-        throw new NotImplementedException();
+        else if (suddenRaise)
+            return CommandType.Bet;
+        else
+            return CommandType.Fold;
     }
 }
