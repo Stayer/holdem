@@ -17,7 +17,7 @@ public class PlayerRepositoryTest {
         Player player = new Player();
         player.setLogin("test");
         player.setPassword("password");
-        player.setPoints(223);
+        player.setCash(223);
         PlayerRepository.getInstance().create(player);
 
         Player player1 = new Player();
