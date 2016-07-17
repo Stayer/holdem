@@ -38,42 +38,42 @@ public class Checker {
             return score;
         }
         tmp = isFourOfKind(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isFullHouse(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isFlush(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isStraight(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isThreeOfKind(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isTwoPairs(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isOnePair(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
         tmp = isHighCard(cards);
-        score += tmp;;
+        score += tmp;
         if(tmp>0) {
             return score;
         }
