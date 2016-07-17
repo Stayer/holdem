@@ -2,24 +2,26 @@ package ru.innopolis.university.summerbootcamp.java.project.model;
 
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 
-
 public class PlayingCard {
-    private Suit suit;
-    private int value;
+    private int suit;
+    private int rank;
 
-    public Suit getSuit() {
+    public PlayingCard(int suit, int rank) {
+        this.suit = suit;
+        this.rank = rank;
+    }
+
+    public int getSuit() {
         return suit;
     }
 
-    public void setSuit(Suit suit) {
+    public void setSuit(int suit) {
         this.suit = suit;
     }
 
-    public int getValue() {
-        return value;
+    public int getRank() {
+        return rank;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
+    public void setRank(int rank) { this.rank = rank; }
 }
