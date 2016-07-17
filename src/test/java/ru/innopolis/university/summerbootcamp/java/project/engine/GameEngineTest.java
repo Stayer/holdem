@@ -1,4 +1,4 @@
-package ru.innopolis.university.summerbootcamp.java.project.test.engine;
+package ru.innopolis.university.summerbootcamp.java.project.engine;
 
 import org.junit.Assert;
 import org.junit.Test;
