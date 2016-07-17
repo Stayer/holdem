@@ -10,12 +10,10 @@ import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class GameEngineTest {
 
-
-    public void deckEmptynessTest(List<PlayingCard> deck) {
+    public void deckEmptinessTest(List<PlayingCard> deck) {
         Assert.assertTrue("Created deck is zero sized", deck.size() > 0);
     }
 
@@ -65,7 +63,7 @@ public class GameEngineTest {
             List<HoldemPlayer> returnedPlayers = game.getHoldemPlayers();
             Assert.assertEquals("wrong number of players during game creation", returnedPlayers.size(), i);
             List<PlayingCard> returnedCards = game.getPlayingCards();
-            deckEmptynessTest(returnedCards);
+            deckEmptinessTest(returnedCards);
         }
 
     }

@@ -1,5 +1,12 @@
 package ru.innopolis.university.summerbootcamp.java.project.ai;
 
+import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
+import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
+import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.List;
+
 /**
  * Bot decisions engine
  */
@@ -15,7 +22,7 @@ public class AIEngine {
         2.1128451381f, // ThreeOfAKind
         4.7539015606f, // TwoPair
         42.2569027611f, // OnePair
-        50.1177394035f   // HighKard
+        50.1177394035f   // HighCard
     };
 
     private float[] ptacc7 = { // Probability to collect a certain combination (7 of 52)
@@ -28,7 +35,7 @@ public class AIEngine {
         4.829869755f, // ThreeOfAKind
         23.49553641f, // TwoPair
         43.82254574f, // OnePair
-        17.4119195f   // HighKard
+        17.4119195f   // HighCard
     };
     private float[] ishotf = // Improved starting hand on the flop
     {
@@ -46,4 +53,27 @@ public class AIEngine {
         1.31f, // connectors 4|5-J|T -> Straight
     };
 
+    /**
+     * Analyzes current player's data and makes decision.
+     * @param cards player's current deck
+     * @param cash player's current cash
+     * @param round 1 for first round. 2 for second. Exception thrown otherwise
+     * @return computed decision
+     */
+    public CommandType getDecision(List<PlayingCard> cards, int cash, int round) throws IllegalArgumentException {
+        int comboPoints = Checker.checkCombo(cards);
+        switch (cards.size()) {
+            case 2:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            default:
+                throw new IllegalArgumentException("incorrect cards quantity");
+        }
+        throw new NotImplementedException();
+    }
 }

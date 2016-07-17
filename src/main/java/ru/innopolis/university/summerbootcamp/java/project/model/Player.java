@@ -1,6 +1,5 @@
 package ru.innopolis.university.summerbootcamp.java.project.model;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Player extends User {
 
     private transient  List<PlayingCard> playingCards;
 
-    private double points;
+    private double cash;
 
     public List<PlayingCard> getPlayingCards() {
         return playingCards;
@@ -22,12 +21,12 @@ public class Player extends User {
         this.playingCards = playingCards;
     }
 
-    public double getPoints() {
-        return points;
+    public double getCash() {
+        return cash;
     }
 
-    public void setPoints(double points) {
-        this.points = points;
+    public void setCash(double cash) {
+        this.cash = cash;
     }
 
     public Player() {

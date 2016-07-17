@@ -22,10 +22,9 @@ public class Checker {
 
     public static int checkCombo(List<PlayingCard> cards) {
         int score = 10000;
-        int tmp = 0;
-        for (int i = 0; i < cards.size(); i++) {
-            pool[cards.get(i).getSuit()][cards.get(i).getRank()] = true;
-        }
+        int tmp;
+        for (PlayingCard card : cards)
+            pool[card.getSuit()][card.getRank()] = true;
 
         tmp = isFlushRoyal(cards);
         score += tmp;
