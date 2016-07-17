@@ -1,5 +1,7 @@
 package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
+import com.sun.tools.javac.comp.Check;
+import org.junit.Assert;
 import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
@@ -95,6 +97,8 @@ public class CheckerTest {
         PlayingCard twoOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("TWO").ordinal());
         PlayingCard twoOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TWO").ordinal());
 
+        // decks
+
         List<PlayingCard> flushRoyal = new LinkedList<>();
         flushRoyal.add(tenOfClubs);
         flushRoyal.add(jackOfClubs);
@@ -102,16 +106,61 @@ public class CheckerTest {
         flushRoyal.add(kingOfClubs);
         flushRoyal.add(aceOfClubs);
 
-        PlayingCard[] straightFlush = {twoOfClubs, threeOfClubs, fourOfClubs, fiveOfClubs, sixOfClubs};
-        PlayingCard[] fourOfKind = {twoOfClubs, twoOfDiamonds, twoOfHarts, twoOfSpades, aceOfDiamonds};
-        PlayingCard[] fullHouse = {twoOfClubs, twoOfDiamonds, twoOfHarts, threeOfClubs, threeOfDiamonds};
-        PlayingCard[] flush = {twoOfClubs, threeOfClubs, fiveOfClubs, sevenOfClubs, jackOfClubs};
-        PlayingCard[] straight = {twoOfClubs, threeOfDiamonds, fourOfSpades, fiveOfHarts, sixOfHarts};
-        PlayingCard[] threeOfKind = {aceOfClubs, aceOfDiamonds, aceOfHarts, twoOfClubs, fiveOfClubs};
-        PlayingCard[] twoPair = {aceOfClubs, aceOfDiamonds, kingOfClubs, kingOfHarts, threeOfClubs};
-        PlayingCard[] onePair = {kingOfClubs, kingOfDiamonds, aceOfClubs, twoOfClubs, threeOfClubs};
+        List<PlayingCard> straightFlush = new LinkedList<>();
+        straightFlush.add(twoOfClubs);
+        straightFlush.add(threeOfClubs);
+        straightFlush.add(fourOfClubs);
+        straightFlush.add(fiveOfClubs);
+        straightFlush.add(sixOfClubs);
 
-        int result = Checker.checkCombo(flushRoyal);
-        System.out.println(result);
+        List<PlayingCard> fourOfKind = new LinkedList<>();
+        fourOfKind.add(aceOfClubs);
+        fourOfKind.add(aceOfDiamonds);
+        fourOfKind.add(aceOfHarts);
+        fourOfKind.add(aceOfSpades);
+        fourOfKind.add(twoOfClubs);
+
+        List<PlayingCard> fullHouse = new LinkedList<>();
+        fullHouse.add(twoOfDiamonds);
+        fullHouse.add(twoOfClubs);
+        fullHouse.add(twoOfHarts);
+        fullHouse.add(threeOfDiamonds);
+        fullHouse.add(threeOfClubs);
+
+        List<PlayingCard> flush = new LinkedList<>();
+        flush.add(twoOfClubs);
+        flush.add(threeOfClubs);
+        flush.add(fiveOfClubs);
+        flush.add(sevenOfClubs);
+        flush.add(jackOfClubs);
+
+        List<PlayingCard> straight = new LinkedList<>();
+        straight.add(twoOfClubs);
+        straight.add(threeOfDiamonds);
+        straight.add(fourOfSpades);
+        straight.add(fiveOfHarts);
+        straight.add(sixOfHarts);
+
+        List<PlayingCard> threeOfKind = new LinkedList<>();
+        straight.add(aceOfClubs);
+        straight.add(aceOfDiamonds);
+        straight.add(aceOfHarts);
+        straight.add(twoOfClubs);
+        straight.add(fiveOfClubs);
+
+        List<PlayingCard> twoPair = new LinkedList<>();
+        straight.add(aceOfClubs);
+        straight.add(aceOfDiamonds);
+        straight.add(kingOfClubs);
+        straight.add(kingOfDiamonds);
+        straight.add(threeOfClubs);
+
+        List<PlayingCard> onePair = new LinkedList<>();
+        straight.add(kingOfClubs);
+        straight.add(kingOfDiamonds);
+        straight.add(aceOfClubs);
+        straight.add(twoOfClubs);
+        straight.add(threeOfClubs);
+
     }
 }
