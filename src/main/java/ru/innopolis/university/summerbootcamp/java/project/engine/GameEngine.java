@@ -26,7 +26,7 @@ public class GameEngine {
         if (Checker.checkCombo(combination1) > Checker.checkCombo(combination2))
             return 1;
         else if (Checker.checkCombo(combination1) < Checker.checkCombo(combination2))
-            return 2;
+            return -1;
         return 0;
     }
 
