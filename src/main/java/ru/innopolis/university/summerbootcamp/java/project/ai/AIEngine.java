@@ -5,7 +5,7 @@ package ru.innopolis.university.summerbootcamp.java.project.ai;
  */
 public class AIEngine {
     private float prob = 0.0f;
-    private float[] ptacc5 = { // Probability to collect a certain combination (7 of 52)
+    private float[] ptacc5 = { // Probability to collect a certain combination (5 of 52)
         0.0001539077f, // FlushRoyal
         0.0013851695f, // StraightFlush
         0.0240096038f, // FourOfAKind

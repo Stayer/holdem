@@ -1,6 +1,7 @@
 package ru.innopolis.university.summerbootcamp.java.project.services.impl;
 
 import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
+import ru.innopolis.university.summerbootcamp.java.project.repository.impl.SettingsRepository;
 import ru.innopolis.university.summerbootcamp.java.project.services.Service;
 
 import java.util.List;
@@ -9,16 +10,32 @@ import java.util.List;
  * Created by dalv6_000 on 15.07.2016.
  */
 public class SettingsServices implements Service<Settings> {
-    public Settings save(Settings object) {
-        return null;
+
+    private static SettingsRepository settingsRepository = SettingsRepository.getInstance();
+    private static SettingsServices settingsServices;
+
+    public static SettingsServices getInstance() {
+        if (settingsServices == null) {
+            settingsServices = new SettingsServices();
+        }
+        return settingsServices;
     }
 
-    public Settings findOne(Long objectId) {
-        return null;
+    public Settings save(Settings object) {
+        settingsRepository.create(object);
+        return object;
+    }
+
+    @Override
+    public Settings findOne(String name) {
+        Settings settings = new Settings();
+        settings.setUserName(name);
+        Settings read = settingsRepository.read(settings);
+        return read;
     }
 
     public List<Settings> findAll() {
-        return null;
+        return settingsRepository.getAll();
     }
 
     public Settings update(Settings object) {

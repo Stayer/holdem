@@ -3,6 +3,8 @@ package ru.innopolis.university.summerbootcamp.java.project.repository.impl;
 import ru.innopolis.university.summerbootcamp.java.project.repository.Repository;
 import ru.innopolis.university.summerbootcamp.java.project.model.Statistic;
 
+import java.util.List;
+
 //TODO: do it later, after main goals
 public class StatisticRepository implements Repository<Statistic> {
     public void create(Statistic statistic) {
@@ -19,5 +21,10 @@ public class StatisticRepository implements Repository<Statistic> {
 
     public void delete(Statistic statistic) {
 
+    }
+
+    @Override
+    public List<Statistic> getAll() {
+        return null;
     }
 }

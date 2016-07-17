@@ -3,7 +3,7 @@ package ru.innopolis.university.summerbootcamp.java.project.model;
 
 public class Settings {
 
-    private String personalName;
+    private String userName;
     private String password;
     private int cash;
     private int playerCount;
@@ -14,7 +14,7 @@ public class Settings {
     }
 
     public Settings(String personalName, String password, int cash, int playerCount, int difficulty, int bat) {
-        this.personalName = personalName;
+        this.userName = personalName;
         this.password = password;
         this.cash = cash;
         this.playerCount = playerCount;
@@ -22,12 +22,12 @@ public class Settings {
         this.bat = bat;
     }
 
-    public String getPersonalName() {
-        return personalName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPersonalName(String personalName) {
-        this.personalName = personalName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
