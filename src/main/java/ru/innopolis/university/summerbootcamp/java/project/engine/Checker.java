@@ -18,65 +18,65 @@ public class Checker {
     public static final int ONEPAIR = 2000;
     public static final int HIGH = 0;
 
-    private static boolean[][] pool = new boolean[4][13];
-
+    public static boolean[][] pool;
     public static int checkCombo(List<PlayingCard> cards) {
         int score = 10000;
+        pool = new boolean[4][13];
         int tmp;
         for (PlayingCard card : cards)
             pool[card.getSuit()][card.getRank()] = true;
 
         tmp = isFlushRoyal(cards);
         score += tmp;
-         if(tmp>0) {
+         if(tmp == 0) {
             return score;
         }
         tmp = isStraightFlush(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isFourOfKind(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isFullHouse(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isFlush(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isStraight(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isThreeOfKind(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isTwoPairs(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isOnePair(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
         tmp = isHighCard(cards);
         score += tmp;
-        if(tmp>0) {
+        if(tmp>=0) {
             return score;
         }
-        
+
         return 0;
     }
     private static int isFlushRoyal(List<PlayingCard> cards) {
@@ -231,5 +231,4 @@ public class Checker {
                 card = cards.get(i);
         return card.getRank();
     }
-
 }

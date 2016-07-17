@@ -60,6 +60,21 @@ public class AIEngine {
      * @param round 1 for first round. 2 for second. Exception thrown otherwise
      * @return computed decision
      */
+
+    private float[] getCoeffFromPoints (List<PlayingCard> cards)
+    {
+        float[] coeffs = new float[3]; // coeffs[0] - FOLD, coeffs[1] - RAISE, coeffs[2] - CHECK
+        int comboPoints = Checker.checkCombo(cards);
+        switch(comboPoints)
+        {
+            case 10000:
+                coeffs = new float[]{0.0f, 1.0f, 0.5f};
+        }
+
+
+        return coeffs;
+    }
+
     public CommandType getDecision(List<PlayingCard> cards, int cash, int round) throws IllegalArgumentException {
         int comboPoints = Checker.checkCombo(cards);
         switch (cards.size()) {
