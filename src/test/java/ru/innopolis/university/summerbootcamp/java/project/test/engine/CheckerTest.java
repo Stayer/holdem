@@ -1,6 +1,5 @@
 package ru.innopolis.university.summerbootcamp.java.project.test.engine;
 
-import com.sun.tools.javac.comp.Check;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
@@ -11,7 +10,6 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.Suit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by iskandar on 17/07/16.
@@ -20,82 +18,82 @@ public class CheckerTest {
     @Test
     public void deckCheckerTets() {
         // aces
-        PlayingCard aceOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("ACE").ordinal());
-        PlayingCard aceOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("ACE").ordinal());
-        PlayingCard aceOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("ACE").ordinal());
-        PlayingCard aceOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("ACE").ordinal());
+        PlayingCard aceOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.ACE.getValue());
+        PlayingCard aceOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.ACE.getValue());
+        PlayingCard aceOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.ACE.getValue());
+        PlayingCard aceOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.ACE.getValue());
 
         // kings
-        PlayingCard kingOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("KING").ordinal());
-        PlayingCard kingOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("KING").ordinal());
-        PlayingCard kingOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("KING").ordinal());
-        PlayingCard kingOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("KING").ordinal());
+        PlayingCard kingOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.KING.getValue());
+        PlayingCard kingOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.KING.getValue());
+        PlayingCard kingOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.KING.getValue());
+        PlayingCard kingOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.KING.getValue());
 
         // queens
-        PlayingCard queenOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("QUEEN").ordinal());
-        PlayingCard queenOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("QUEEN").ordinal());
-        PlayingCard queenOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("QUEEN").ordinal());
-        PlayingCard queenOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("QUEEN").ordinal());
+        PlayingCard queenOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.QUEEN.getValue());
+        PlayingCard queenOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.QUEEN.getValue());
+        PlayingCard queenOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.QUEEN.getValue());
+        PlayingCard queenOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.QUEEN.getValue());
 
         // jacks
-        PlayingCard jackOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("JACK").ordinal());
-        PlayingCard jackOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("JACK").ordinal());
-        PlayingCard jackOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("JACK").ordinal());
-        PlayingCard jackOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("JACK").ordinal());
+        PlayingCard jackOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.JACK.getValue());
+        PlayingCard jackOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.JACK.getValue());
+        PlayingCard jackOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.JACK.getValue());
+        PlayingCard jackOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.JACK.getValue());
 
         // tens
-        PlayingCard tenOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("TEN").ordinal());
-        PlayingCard tenOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("TEN").ordinal());
-        PlayingCard tenOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("TEN").ordinal());
-        PlayingCard tenOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TEN").ordinal());
+        PlayingCard tenOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.TEN.getValue());
+        PlayingCard tenOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.TEN.getValue());
+        PlayingCard tenOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.TEN.getValue());
+        PlayingCard tenOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.TEN.getValue());
 
         // nines
-        PlayingCard nineOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("NINE").ordinal());
-        PlayingCard nineOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("NINE").ordinal());
-        PlayingCard nineOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("NINE").ordinal());
-        PlayingCard nineOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("NINE").ordinal());
+        PlayingCard nineOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.NINE.getValue());
+        PlayingCard nineOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.NINE.getValue());
+        PlayingCard nineOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.NINE.getValue());
+        PlayingCard nineOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.NINE.getValue());
 
         // eights
-        PlayingCard eightOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("EIGHT").ordinal());
-        PlayingCard eightOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("EIGHT").ordinal());
-        PlayingCard eightOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("EIGHT").ordinal());
-        PlayingCard eightOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("EIGHT").ordinal());
+        PlayingCard eightOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.EIGHT.getValue());
+        PlayingCard eightOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.EIGHT.getValue());
+        PlayingCard eightOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.EIGHT.getValue());
+        PlayingCard eightOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.EIGHT.getValue());
 
         // sevens
-        PlayingCard sevenOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("SEVEN").ordinal());
-        PlayingCard sevenOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("SEVEN").ordinal());
-        PlayingCard sevenOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("SEVEN").ordinal());
-        PlayingCard sevenOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("SEVEN").ordinal());
+        PlayingCard sevenOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.SEVEN.getValue());
+        PlayingCard sevenOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.SEVEN.getValue());
+        PlayingCard sevenOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.SEVEN.getValue());
+        PlayingCard sevenOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.SEVEN.getValue());
 
         // sixes
-        PlayingCard sixOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("SIX").ordinal());
-        PlayingCard sixOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("SIX").ordinal());
-        PlayingCard sixOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("SIX").ordinal());
-        PlayingCard sixOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("SIX").ordinal());
+        PlayingCard sixOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.SIX.getValue());
+        PlayingCard sixOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.SIX.getValue());
+        PlayingCard sixOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.SIX.getValue());
+        PlayingCard sixOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.SIX.getValue());
 
         // fives
-        PlayingCard fiveOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("FIVE").ordinal());
-        PlayingCard fiveOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("FIVE").ordinal());
-        PlayingCard fiveOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("FIVE").ordinal());
-        PlayingCard fiveOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("FIVE").ordinal());
+        PlayingCard fiveOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.FIVE.getValue());
+        PlayingCard fiveOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.FIVE.getValue());
+        PlayingCard fiveOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.FIVE.getValue());
+        PlayingCard fiveOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.FIVE.getValue());
 
         // fours
-        PlayingCard fourOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("FOUR").ordinal());
-        PlayingCard fourOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("FOUR").ordinal());
-        PlayingCard fourOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("FOUR").ordinal());
-        PlayingCard fourOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("FOUR").ordinal());
+        PlayingCard fourOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.FOUR.getValue());
+        PlayingCard fourOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.FOUR.getValue());
+        PlayingCard fourOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.FOUR.getValue());
+        PlayingCard fourOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.FOUR.getValue());
 
         // threes
-        PlayingCard threeOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("THREE").ordinal());
-        PlayingCard threeOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("THREE").ordinal());
-        PlayingCard threeOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("THREE").ordinal());
-        PlayingCard threeOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("THREE").ordinal());
+        PlayingCard threeOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.THREE.getValue());
+        PlayingCard threeOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.THREE.getValue());
+        PlayingCard threeOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.THREE.getValue());
+        PlayingCard threeOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.THREE.getValue());
 
         // twos
-        PlayingCard twoOfSpades = new PlayingCard(Suit.valueOf("Spades").ordinal(), Rank.valueOf("TWO").ordinal());
-        PlayingCard twoOfHarts = new PlayingCard(Suit.valueOf("Hearts").ordinal(), Rank.valueOf("TWO").ordinal());
-        PlayingCard twoOfClubs = new PlayingCard(Suit.valueOf("Clubs").ordinal(), Rank.valueOf("TWO").ordinal());
-        PlayingCard twoOfDiamonds = new PlayingCard(Suit.valueOf("Diamonds").ordinal(), Rank.valueOf("TWO").ordinal());
+        PlayingCard twoOfSpades = new PlayingCard(Suit.Spades.getValue(), Rank.TWO.getValue());
+        PlayingCard twoOfHarts = new PlayingCard(Suit.Hearts.getValue(), Rank.TWO.getValue());
+        PlayingCard twoOfClubs = new PlayingCard(Suit.Clubs.getValue(), Rank.TWO.getValue());
+        PlayingCard twoOfDiamonds = new PlayingCard(Suit.Diamonds.getValue(), Rank.TWO.getValue());
 
         // decks
 
@@ -162,5 +160,6 @@ public class CheckerTest {
         straight.add(twoOfClubs);
         straight.add(threeOfClubs);
 
+        // TODO: implement hands compare logic
     }
 }
