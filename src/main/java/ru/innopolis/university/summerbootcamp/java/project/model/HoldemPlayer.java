@@ -9,6 +9,15 @@ public class HoldemPlayer extends Player {
     private boolean isSmallBlind;
     private boolean isBigBlind;
     private double bet;
+    private boolean isBot;
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
 
     public boolean isDealer() {
         return isDealer;
