@@ -57,7 +57,7 @@ public class GameEngine {
             for(int j = 0; j < 13; j++)
                 playingCards.add(new PlayingCard(i, j));
         for(int i = 0; i < counter; i++)
-        Collections.shuffle(playingCards);
+            Collections.shuffle(playingCards);
         return playingCards;
     }
 

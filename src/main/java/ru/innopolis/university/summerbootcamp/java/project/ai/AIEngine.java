@@ -3,6 +3,7 @@ package ru.innopolis.university.summerbootcamp.java.project.ai;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
+import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
@@ -53,13 +54,48 @@ public class AIEngine {
         1.31f, // connectors 4|5-J|T -> Straight
     };
 
+    private static final int pointsBias = 5000; // 18.07.16 empirical number
+    private float prevBetsAvg=0;
+
     /**
      * Analyzes current player's data and makes decision.
      * @param cards player's current deck
      * @param cash player's current cash
-     * @param round 1 for first round. 2 for second. Exception thrown otherwise
+     * @param betSum sum of players' bet
      * @return computed decision
      */
+    public CommandType getDecision(List<PlayingCard> cards, int cash, int betSum) throws IllegalArgumentException {
+        if (prevBetsAvg == 0) // TODO: WTF?!
+            prevBetsAvg = betSum;
+        else
+            prevBetsAvg = (betSum + prevBetsAvg) / 2;
+
+        int comboPoints = Checker.checkCombo(cards);
+        boolean goodCards = false;
+        boolean enoughMoney = false;
+        boolean suddenRaise = false;
+        // TODO: pointsBias is almost hardcoded. There must be better solution
+        if (CommonUtils.isInRange(pointsBias, comboPoints, Checker.FLUSHROYAL))
+            goodCards = true;
+        if (cash > betSum)
+            enoughMoney = true;
+        if (betSum > prevBetsAvg)
+            suddenRaise = true;
+
+        if (!enoughMoney)
+            return CommandType.Fold;
+        if (goodCards) {
+            if (suddenRaise)
+                return CommandType.Bet;
+            else
+                return CommandType.Rise;
+        } else {
+            if (suddenRaise)
+                return CommandType.Fold;
+            else
+                return CommandType.Bet;
+        }
+    }
 
     private float[] getCoeffsFromPoints (List<PlayingCard> cards)
     {
@@ -99,23 +135,5 @@ public class AIEngine {
                 break;
         }
         return coeffs;
-    }
-
-    public CommandType getDecision(List<PlayingCard> cards, int cash, int round) throws IllegalArgumentException {
-        int comboPoints = Checker.checkCombo(cards);
-        float[] coeffs = getCoeffsFromPoints(cards);
-        switch (cards.size()) {
-            case 2:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            default:
-                throw new IllegalArgumentException("incorrect cards quantity");
-        }
-        throw new NotImplementedException();
     }
 }

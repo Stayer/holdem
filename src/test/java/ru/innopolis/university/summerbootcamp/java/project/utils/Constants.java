@@ -188,4 +188,15 @@ public class Constants {
 
         return onePair;
     }
+
+    public static List<PlayingCard> getHighestCard() {
+        List<PlayingCard> highestCard = new LinkedList<>();
+        highestCard.add(TWO_OF_CLUBS);
+        highestCard.add(FOUR_OF_HEARTS);
+        highestCard.add(SEVEN_OF_SPADES);
+        highestCard.add(JACK_OF_CLUBS);
+        highestCard.add(ACE_OF_CLUBS);
+
+        return highestCard;
+    }
 }
