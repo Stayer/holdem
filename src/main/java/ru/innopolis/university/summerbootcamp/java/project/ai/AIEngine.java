@@ -65,15 +65,16 @@ public class AIEngine {
      * @return computed decision
      */
     public CommandType getDecision(List<PlayingCard> cards, int cash, int betSum) throws IllegalArgumentException {
-        if (prevBetsAvg == 0)
+        if (prevBetsAvg == 0) // TODO: WTF?!
             prevBetsAvg = betSum;
         else
             prevBetsAvg = (betSum+prevBetsAvg)/2;
-        
+
         int comboPoints = Checker.checkCombo(cards);
         boolean goodCards = false;
         boolean enoughMoney = false;
         boolean suddenRaise = false;
+        // TODO: pointsBias is almost hardcoded. There must be better solution
         if (CommonUtils.isInRange(pointsBias, comboPoints, Checker.FLUSHROYAL))
             goodCards = true;
         if (cash <= betSum)
