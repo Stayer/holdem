@@ -61,22 +61,49 @@ public class AIEngine {
      * @return computed decision
      */
 
-    private float[] getCoeffFromPoints (List<PlayingCard> cards)
+    private float[] getCoeffsFromPoints (List<PlayingCard> cards)
     {
         float[] coeffs = new float[3]; // coeffs[0] - FOLD, coeffs[1] - RAISE, coeffs[2] - CHECK
         int comboPoints = Checker.checkCombo(cards);
-        switch(comboPoints)
-        {
-            case 10000:
+        switch(comboPoints % 1000)
+        {                           // fold raise check
+            case 10: // flushroyal
                 coeffs = new float[]{0.0f, 1.0f, 0.5f};
+                break;
+            case 9: // straightflush
+                coeffs = new float[]{0.0f, 1.0f, 0.5f};
+                break;
+            case 8: // fourofakind
+                coeffs = new float[]{0.02f, 0.92f, 0.6f};
+                break;
+            case 7: // fullhouse
+                coeffs = new float[]{0.05f, 0.85f, 0.65f};
+                break;
+            case 6: // flush
+                coeffs = new float[]{0.2f, 0.6f, 0.3f};
+                break;
+            case 5: // staight
+                coeffs = new float[]{0.3f, 0.4f, 0.2f};
+                break;
+            case 4: // threeofakind
+                coeffs = new float[]{0.2f, 0.3f, 0.5f};
+                break;
+            case 3: // twopairs
+                coeffs = new float[]{0.2f, 0.5f, 0.8f};
+                break;
+            case 2: // onepair
+                coeffs = new float[]{0.25f, 0.7f, 0.9f};
+                break;
+            default:
+                coeffs = new float[]{0.4f, 0.8f, 1.0f};
+                break;
         }
-
-
         return coeffs;
     }
 
     public CommandType getDecision(List<PlayingCard> cards, int cash, int round) throws IllegalArgumentException {
         int comboPoints = Checker.checkCombo(cards);
+        float[] coeffs = getCoeffsFromPoints(cards);
         switch (cards.size()) {
             case 2:
                 break;
