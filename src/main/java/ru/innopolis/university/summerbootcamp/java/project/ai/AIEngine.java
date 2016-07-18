@@ -68,7 +68,7 @@ public class AIEngine {
         if (prevBetsAvg == 0) // TODO: WTF?!
             prevBetsAvg = betSum;
         else
-            prevBetsAvg = (betSum+prevBetsAvg)/2;
+            prevBetsAvg = (betSum + prevBetsAvg) / 2;
 
         int comboPoints = Checker.checkCombo(cards);
         boolean goodCards = false;
@@ -89,10 +89,51 @@ public class AIEngine {
                 return CommandType.Bet;
             else
                 return CommandType.Rise;
+        } else {
+            if (suddenRaise)
+                return CommandType.Fold;
+            else
+                return CommandType.Bet;
         }
-        else if (suddenRaise)
-            return CommandType.Bet;
-        else
-            return CommandType.Fold;
+    }
+
+    private float[] getCoeffsFromPoints (List<PlayingCard> cards)
+    {
+        float[] coeffs = new float[3]; // coeffs[0] - FOLD, coeffs[1] - RAISE, coeffs[2] - CHECK
+        int comboPoints = Checker.checkCombo(cards);
+        switch(comboPoints % 1000)
+        {                           // fold raise check
+            case 10: // flushroyal
+                coeffs = new float[]{0.0f, 0.5f, 0.5f};
+                break;
+            case 9: // straightflush
+                coeffs = new float[]{0.0f, 0.5f, 0.5f};
+                break;
+            case 8: // fourofakind
+                coeffs = new float[]{0.02f, 0.38f, 0.6f};
+                break;
+            case 7: // fullhouse
+                coeffs = new float[]{0.05f, 0.85f, 0.1f};
+                break;
+            case 6: // flush
+                coeffs = new float[]{0.2f, 0.6f, 0.2f};
+                break;
+            case 5: // staight
+                coeffs = new float[]{0.3f, 0.5f, 0.2f};
+                break;
+            case 4: // threeofakind
+                coeffs = new float[]{0.2f, 0.3f, 0.5f};
+                break;
+            case 3: // twopairs
+                coeffs = new float[]{0.3f, 0.3f, 0.4f};
+                break;
+            case 2: // onepair
+                coeffs = new float[]{0.25f, 0.7f, 0.05f};
+                break;
+            default:
+                coeffs = new float[]{0.4f, 0.4f, 0.2f};
+                break;
+        }
+        return coeffs;
     }
 }
