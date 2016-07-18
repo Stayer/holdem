@@ -164,13 +164,13 @@ public class Checker {
                     if(j > highCard) {highCard = j;}
                     counter++;
                     if(counter == 5)
-                        return highCard; // need to more work
+                        return highCard;
                 }
             }
         }
         return -1000;
     } // 6000+
-    private static int isStraight(List<PlayingCard> cards) { // need to write some code for Ace correct working
+    private static int isStraight(List<PlayingCard> cards) {
         int count = 0;
         boolean[] tmpPool = new boolean[13];
         for(int j = 12; j >= 0; j--) {
@@ -182,7 +182,7 @@ public class Checker {
         for (int j = 12; j > 0; j--) {
             if (tmpPool[j] && tmpPool[j - 1]) {
                 count++;
-                if ((count == 4) || (count == 3 && tmpPool[12] && tmpPool[0])) return j+3; // need to work more
+                if ((count == 4) || (count == 3 && tmpPool[12] && tmpPool[0])) return j+3;
             }
         }
         return -1000;
@@ -211,7 +211,7 @@ public class Checker {
                 sum *= (j+1);
             }
             if(pairs == 2)
-                return sum; // need more work with it
+                return sum;
         }
         return -1000;
     } // 3000+
