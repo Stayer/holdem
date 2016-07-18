@@ -77,7 +77,7 @@ public class AIEngine {
         // TODO: pointsBias is almost hardcoded. There must be better solution
         if (CommonUtils.isInRange(pointsBias, comboPoints, Checker.FLUSHROYAL))
             goodCards = true;
-        if (cash <= betSum)
+        if (cash >= betSum)
             enoughMoney = true;
         if (betSum > prevBetsAvg)
             suddenRaise = true;
