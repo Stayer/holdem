@@ -199,4 +199,26 @@ public class Constants {
 
         return highestCard;
     }
+
+    public static List<PlayingCard> getCycledStraight() {
+        List<PlayingCard> cycledStraight = new LinkedList<>();
+        cycledStraight.add(TWO_OF_CLUBS);
+        cycledStraight.add(THREE_OF_CLUBS);
+        cycledStraight.add(FOUR_OF_CLUBS);
+        cycledStraight.add(FIVE_OF_CLUBS);
+        cycledStraight.add(ACE_OF_HEARTS);
+
+        return cycledStraight;
+    }
+
+    public static List<PlayingCard> getCycledStraightFlush() {
+        List<PlayingCard> cycledStraightFlush = new LinkedList<>();
+        cycledStraightFlush.add(TWO_OF_CLUBS);
+        cycledStraightFlush.add(THREE_OF_CLUBS);
+        cycledStraightFlush.add(FOUR_OF_CLUBS);
+        cycledStraightFlush.add(FIVE_OF_CLUBS);
+        cycledStraightFlush.add(ACE_OF_CLUBS);
+
+        return cycledStraightFlush;
+    }
 }
