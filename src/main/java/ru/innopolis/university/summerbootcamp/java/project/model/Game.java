@@ -9,8 +9,15 @@ public class Game {
     private List<PlayingCard> playingCards;
     private double smallBet;
     private GameStage gameStage;
+    private double currentBet;
 
+    public double getCurrentBet() {
+        return currentBet;
+    }
 
+    public void setCurrentBet(double currentBet) {
+        this.currentBet = currentBet;
+    }
 
     public GameStage getGameStage() {
         return gameStage;

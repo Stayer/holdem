@@ -1,3 +1,4 @@
+/*
 package ru.innopolis.university.summerbootcamp.java.project.engine;
 
 import org.junit.Assert;
@@ -51,9 +52,11 @@ public class GameEngineTest {
     }
 
     @Test
-    /**
+    */
+/**
      * create games with different number of players
-     */
+     *//*
+
     public void createGameTest() {
         List<HoldemPlayer> players = new ArrayList<>();
         GameEngine ge = new GameEngine();
@@ -68,3 +71,4 @@ public class GameEngineTest {
 
     }
 }
+*/
