@@ -8,8 +8,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
+import java.net.URL;
 
-import java.lang.reflect.Array;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import java.util.ArrayList;
 
 public class ui extends Application {
@@ -309,6 +311,11 @@ public class ui extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
+        Media media = new Media(getClass().getResource("/casino.mp3").toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.setVolume(0.2f);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.play();
         thestage=primaryStage;
         sceneMainMenu = new Scene(setMainMenu(), 800, 600);
         sceneQuit = new Scene(setQuit(), 800, 600);
