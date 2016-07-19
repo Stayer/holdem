@@ -3,11 +3,8 @@ package ru.innopolis.university.summerbootcamp.java.project.ai;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
 import ru.innopolis.university.summerbootcamp.java.project.utils.Constants;
-
-import java.util.List;
 
 /**
  * Created by iskandar on 17/07/16.

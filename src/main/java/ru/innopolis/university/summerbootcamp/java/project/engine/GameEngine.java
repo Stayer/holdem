@@ -22,12 +22,11 @@ public class GameEngine {
      * than {@code 0} if {@code first combination} is
      * greater than the {@code second combination} .
      */
-    public int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
-        if (Checker.checkCombo(combination1) > Checker.checkCombo(combination2))
-            return 1;
-        else if (Checker.checkCombo(combination1) < Checker.checkCombo(combination2))
-            return -1;
-        return 0;
+    public int compareCombinations(List<PlayingCard> combination1, List<PlayingCard> combination2) {
+        return Integer.compare(
+                Checker.checkCombo(combination1),
+                Checker.checkCombo(combination2)
+        );
     }
 
 
@@ -82,7 +81,7 @@ public class GameEngine {
     /**
      * Change dealer and blinds actors in a game
      *
-     * @param game
+     * @param game game object
      */
     public void changeDealer(Game game) {
         List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
