@@ -50,5 +50,15 @@ public class CheckerTest {
                 "Two pairs must be greater one pair",
                 Checker.checkCombo(Constants.getTwoPair()) > Checker.checkCombo(Constants.getOnePair())
         );
+
+        Assert.assertTrue(
+                "Cycled straight must be greater than three of kind",
+                Checker.checkCombo(Constants.getCycledStraight()) > Checker.checkCombo(Constants.getThreeOfKind())
+        );
+
+        Assert.assertTrue(
+                "Cycled straight flush must be greater than three of kind",
+                Checker.checkCombo(Constants.getCycledStraightFlush()) > Checker.checkCombo(Constants.getFourOfKind())
+        );
     }
 }
