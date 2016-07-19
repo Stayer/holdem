@@ -3,6 +3,7 @@ package ru.innopolis.university.summerbootcamp.java.project.ai;
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
+import ru.innopolis.university.summerbootcamp.java.project.model.enums.PokerHands;
 import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
 
 import java.util.List;
@@ -74,7 +75,7 @@ public class AIEngine {
         boolean enoughMoney = false;
         boolean suddenRaise = false;
         // TODO: pointsBias is almost hardcoded. There must be better solution
-        if (CommonUtils.isInRange(pointsBias, comboPoints, Checker.FLUSHROYAL))
+        if (CommonUtils.isIn(pointsBias, comboPoints, Checker.FLUSHROYAL))
             goodCards = true;
         if (cash > betSum)
             enoughMoney = true;
@@ -96,43 +97,36 @@ public class AIEngine {
         }
     }
 
+    /**
+     *
+     * @param cards
+     * @return float[0] - FOLD; float[1] - RAISE; float[2] - CHECK
+     */
     private float[] getCoeffsFromPoints (List<PlayingCard> cards)
     {
-        float[] coeffs = new float[3]; // coeffs[0] - FOLD, coeffs[1] - RAISE, coeffs[2] - CHECK
         int comboPoints = Checker.checkCombo(cards);
-        switch(comboPoints % 1000)  // TODO: magic numbers.
+        switch(PokerHands.parse(comboPoints))
         {                           // fold raise check
-            case 10: // flushroyal
-                coeffs = new float[]{0.0f, 0.5f, 0.5f};
-                break;
-            case 9: // straightflush
-                coeffs = new float[]{0.0f, 0.5f, 0.5f};
-                break;
-            case 8: // fourofakind
-                coeffs = new float[]{0.02f, 0.38f, 0.6f};
-                break;
-            case 7: // fullhouse
-                coeffs = new float[]{0.05f, 0.85f, 0.1f};
-                break;
-            case 6: // flush
-                coeffs = new float[]{0.2f, 0.6f, 0.2f};
-                break;
-            case 5: // staight
-                coeffs = new float[]{0.3f, 0.5f, 0.2f};
-                break;
-            case 4: // threeofakind
-                coeffs = new float[]{0.2f, 0.3f, 0.5f};
-                break;
-            case 3: // twopairs
-                coeffs = new float[]{0.3f, 0.3f, 0.4f};
-                break;
-            case 2: // onepair
-                coeffs = new float[]{0.25f, 0.7f, 0.05f};
-                break;
+            case FLUSHROYAL:
+                return new float[]{0.0f, 0.5f, 0.5f};
+            case STRAIGHTFLUSH:
+                return new float[]{0.0f, 0.5f, 0.5f};
+            case FOUROFAKIND:
+                return new float[]{0.02f, 0.38f, 0.6f};
+            case FULLHOUSE:
+                return new float[]{0.05f, 0.85f, 0.1f};
+            case FLUSH:
+                return new float[]{0.2f, 0.6f, 0.2f};
+            case STRAIGHT:
+                return new float[]{0.3f, 0.5f, 0.2f};
+            case THREEOFAKIND:
+                return new float[]{0.2f, 0.3f, 0.5f};
+            case TWOPAIR:
+                return new float[]{0.3f, 0.3f, 0.4f};
+            case ONEPAIR:
+                return new float[]{0.25f, 0.7f, 0.05f};
             default:
-                coeffs = new float[]{0.4f, 0.4f, 0.2f};
-                break;
+                return new float[]{0.4f, 0.4f, 0.2f};
         }
-        return coeffs;
     }
 }
