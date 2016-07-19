@@ -69,11 +69,11 @@ public class GameEngine {
         holdemPlayers.get(0).setDealer(true);
         HoldemPlayer smallBlindPlayer = holdemPlayers.get(1);
         smallBlindPlayer.setSmallBlind(true);
-        smallBlindPlayer.setBet(game.getSmallBet() / 2.0);
+        smallBlindPlayer.setBet(game.getLowestBet() / 2.0);
 
         HoldemPlayer bigBlindPlayer = holdemPlayers.get(2);
         bigBlindPlayer.setBigBlind(true);
-        bigBlindPlayer.setBet(game.getSmallBet());
+        bigBlindPlayer.setBet(game.getLowestBet());
 
     }
 

@@ -5,7 +5,9 @@ import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
+import ru.innopolis.university.summerbootcamp.java.project.model.Player;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
+import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +21,7 @@ public class GameEngineTest {
 
     @Test
     public void changeDealer(){
-        // test
+
     }
 
     public boolean areDecksSame(List<PlayingCard> deck1, List<PlayingCard> deck2) {
@@ -50,10 +52,10 @@ public class GameEngineTest {
         Assert.assertFalse("All 5 random generated decks are equal", decks.stream().allMatch((p)-> areDecksSame(p, cards)));
     }
 
-    @Test
     /**
      * create games with different number of players
      */
+    @Test
     public void createGameTest() {
         List<HoldemPlayer> players = new ArrayList<>();
         GameEngine ge = new GameEngine();
@@ -65,6 +67,31 @@ public class GameEngineTest {
             List<PlayingCard> returnedCards = game.getPlayingCards();
             deckEmptinessTest(returnedCards);
         }
+    }
 
+    /**
+     * Creates test game and checks if dealer and blind are set correctly.
+     */
+    @Test
+    public void gameInitTest() {
+        GameEngine engine = new GameEngine();
+        Game game = new Game();
+        game.setGameStage(GameStage.Round1);
+        game.setPlayingCards(engine.createAndShuffleDeck());
+        LinkedList<HoldemPlayer> players = new LinkedList<>();
+        HoldemPlayer p1 = new HoldemPlayer();
+        HoldemPlayer p2 = new HoldemPlayer();
+        HoldemPlayer p3 = new HoldemPlayer();
+        HoldemPlayer p4 = new HoldemPlayer();
+        players.add(p1);
+        players.add(p2);
+        players.add(p3);
+        players.add(p4);
+        game.setHoldemPlayers(players);
+        engine.initGame(game);
+
+        Assert.assertTrue(game.getHoldemPlayers().get(0).isDealer());
+        Assert.assertTrue(game.getHoldemPlayers().get(1).isSmallBlind());
+        Assert.assertTrue(game.getHoldemPlayers().get(2).isBigBlind());
     }
 }
