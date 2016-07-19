@@ -4,7 +4,6 @@ import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
 import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class AIEngine {
     {
         float[] coeffs = new float[3]; // coeffs[0] - FOLD, coeffs[1] - RAISE, coeffs[2] - CHECK
         int comboPoints = Checker.checkCombo(cards);
-        switch(comboPoints % 1000)
+        switch(comboPoints % 1000)  // TODO: magic numbers.
         {                           // fold raise check
             case 10: // flushroyal
                 coeffs = new float[]{0.0f, 0.5f, 0.5f};

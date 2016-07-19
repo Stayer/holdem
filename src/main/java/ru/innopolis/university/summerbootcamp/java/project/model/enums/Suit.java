@@ -11,7 +11,7 @@ public enum Suit {
     Diamonds(0), Hearts(1), Clubs(2), Spades(3);
 
     private static final Map<Integer,Suit> lookup
-            = new HashMap<Integer,Suit>();
+            = new HashMap<>();
 
     static {
         for(Suit w : EnumSet.allOf(Suit.class))
