@@ -7,7 +7,7 @@ import java.util.List;
 public class Game {
     private List<HoldemPlayer> holdemPlayers;
     private List<PlayingCard> playingCards;
-    private double smallBet;
+    private double lowestBet;
     private GameStage gameStage;
 
 
@@ -20,12 +20,12 @@ public class Game {
         this.gameStage = gameStage;
     }
 
-    public double getSmallBet() {
-        return smallBet;
+    public double getLowestBet() {
+        return lowestBet;
     }
 
-    public void setSmallBet(double smallBet) {
-        this.smallBet = smallBet;
+    public void setLowestBet(double lowestBet) {
+        this.lowestBet = lowestBet;
     }
 
     public List<HoldemPlayer> getHoldemPlayers() {

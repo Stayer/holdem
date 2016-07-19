@@ -28,7 +28,7 @@ public class PlayerRepositoryTest {
 
 
     @Test
-    public void readTest() {
+    public void loadTest() {
         Player player1 = new Player();
         player1.setLogin("test");
         Player read = PlayerRepository.getInstance().read(player1);
