@@ -119,21 +119,19 @@ public class MainMenuController implements Initializable {
     }
     public void onClickStart(ActionEvent event) throws IOException {
         Stage stage;
-        Parent root;
+        stage=(Stage) btnStart.getScene().getWindow();
         if(event.getSource()==btnStart){
-            //get reference to the button's stage
-            stage=(Stage) btnStart.getScene().getWindow();
-            //load up OTHER FXML document
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("MainMenu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+            root.getStylesheets().addAll(getClass().getClassLoader().getResource("style.css").toExternalForm());
+            stage.setTitle("Holdem");
+            stage.setResizable(false);
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
         }
-        else{
-            stage=(Stage) btnStart.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("MainMenu.fxml"));
-        }
+
         //create a new scene with root and set the stage
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+
     }
     public void onClickLogOut(ActionEvent event) throws IOException {
         Stage stage;

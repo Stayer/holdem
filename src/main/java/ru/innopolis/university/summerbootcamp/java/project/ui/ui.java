@@ -448,7 +448,7 @@ public class ui extends Application {
 
         media = new Media(getClass().getResource("/casino.mp3").toString());
         player = new MediaPlayer(media);
-        player.setVolume(10f);
+        player.setVolume(1f);
         player.setCycleCount(MediaPlayer.INDEFINITE);
         player.play();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainFX.fxml"));
