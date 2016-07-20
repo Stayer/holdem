@@ -227,6 +227,7 @@ public class Controller {
         settingBets();
         displayBets();
         step();
+        game.setGameStage(GameStage.Start);
     }
 
     private void step() {
@@ -246,17 +247,48 @@ public class Controller {
                 break;
             }
             if (p.isBigBlind() && p.getBet() == game.getCurrentBet()) {
+                //следующий кон
                 //обнуляем ставки
+                nextGameStage(GameStage.Start);
+
+
                 countRoundBets();
                 resetBets();
                 displayBets();
 
                 setCurrentPlayer();
+
+                switch (game.getGameStage()) {
+                    case Flop:
+                        flop();
+                        break;
+                    case Tern:
+                        tern();
+                        break;
+                    case Riever:
+                        riever();
+                        break;
+                    case Round4:
+                        showWinner();
+                }
+
                 flop();
                 //заканчиваем раунд
                 break;
             }
         } while (true);
+    }
+
+    private GameStage nextGameStage(GameStage start) {
+
+        return null;
+    }
+
+    private void tern() {
+        //1 карта для флопа
+        game.getTableCards().add(takeCard());
+        showTableCard();
+        step();
     }
 
     private void setCurrentPlayer() {
