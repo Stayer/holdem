@@ -1,17 +1,19 @@
 package ru.innopolis.university.summerbootcamp.java.project.ui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.geometry.*;
-import java.net.URL;
-
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -29,12 +31,15 @@ public class ui extends Application {
     Button startGame, settings, score, tutorial;
     Button backtoMenu1,backtoMenu2,backtoMenu3,backtoMenu4,backtoMenu5,backtoMenu6;
     Button gotoSignUpAgain,gotoSignInAgain,gotoQuit1,gotoQuit2,gotoQuit3;
-
+    public static Media media;
+    public static MediaPlayer player;
     // available scenes
     Scene sceneMainMenu, sceneQuit, sceneUserSign, sceneExceptionWindowNotExist;
     Scene sceneExceptionWindowExist, sceneProfileWindow, sceneSettingsWindow;
     Scene sceneScoreWindow, sceneTutorialWindow;
     Stage thestage;
+    public static String Name = "defaultUser";
+    public static int Cash = 100;
 
 
     /**
@@ -439,15 +444,21 @@ public class ui extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
-        // awesome track
-        Media media = new Media(getClass().getResource("/casino.mp3").toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.setVolume(0.2f);
+        media = new Media(getClass().getResource("/casino.mp3").toString());
+        player = new MediaPlayer(media);
+        player.setVolume(10f);
         player.setCycleCount(MediaPlayer.INDEFINITE);
         player.play();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainFX.fxml"));
+        primaryStage.setTitle("Hello Word");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
 
+        // awesome track
+
+/*
         // TODO: move dat scenes to callbacks
         thestage = primaryStage;
         sceneMainMenu = new Scene(setMainMenu(), 800, 600);
@@ -464,6 +475,6 @@ public class ui extends Application {
         primaryStage.setTitle("Texas Hold'em");
         primaryStage.setScene(sceneMainMenu);
         primaryStage.show();
-    }
+*/    }
 
 }
