@@ -6,12 +6,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.MainMenuController">
    <children>
-      <Button fx:id="btnStart" layoutX="271.0" layoutY="118.0" mnemonicParsing="false" onAction="#onClickStart" text="Start" />
-      <Button fx:id="btnSettings" layoutX="260.0" layoutY="154.0" mnemonicParsing="false" onAction="#onClickSettings" text="Settings" />
-      <Button fx:id="btnTutorial" layoutX="261.0" layoutY="188.0" mnemonicParsing="false" onAction="#onClickTutorial" text="Tutorial" />
-      <Button fx:id="btnExit" layoutX="272.0" layoutY="297.0" mnemonicParsing="false" onAction="#onClickExit" text="Exit" />
-      <Button fx:id="btnScore" layoutX="268.0" layoutY="225.0" mnemonicParsing="false" onAction="#onClickScore" text="Score" />
-      <Button fx:id="btnLogOut" layoutX="262.0" layoutY="261.0" mnemonicParsing="false" onAction="#onClickLogOut" text="LogOut" />
+      <Button fx:id="btnStart" alignment="CENTER" layoutX="271.0" layoutY="118.0" minWidth="50" mnemonicParsing="false" onAction="#onClickStart" text="Start" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="120.0" />
+      <Button fx:id="btnSettings" alignment="CENTER" layoutX="260.0" layoutY="154.0" minWidth="50" mnemonicParsing="false" onAction="#onClickSettings" text="Settings" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="150.0" />
+      <Button fx:id="btnTutorial" alignment="CENTER" layoutX="261.0" layoutY="188.0" minWidth="50" mnemonicParsing="false" onAction="#onClickTutorial" text="Tutorial" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="180.0" />
+      <Button fx:id="btnExit" alignment="CENTER" layoutX="272.0" layoutY="297.0" minWidth="50" mnemonicParsing="false" onAction="#onClickExit" text="Exit" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="270.0" />
+      <Button fx:id="btnScore" alignment="CENTER" layoutX="268.0" layoutY="225.0" minWidth="50" mnemonicParsing="false" onAction="#onClickScore" text="Score" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="210.0" />
+      <Button fx:id="btnLogOut" alignment="CENTER" layoutX="262.0" layoutY="261.0" minWidth="50" mnemonicParsing="false" onAction="#onClickLogOut" text="Log Out" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="240.0" />
       <Label fx:id="lName" layoutX="129.0" layoutY="101.0" text="UserName" />
       <Label fx:id="lCash" layoutX="436.0" layoutY="101.0" text="Cash" />
       <Label layoutX="67.0" layoutY="101.0" text="UserName: " />

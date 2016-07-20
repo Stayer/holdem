@@ -1,1 +1,1 @@
-{"Bat":25,"Difficulty":2,"Cash":100,"PlayerCount":5,"Name":"lo","Password":null}
+{"Bat":250,"Difficulty":2,"Cash":100,"PlayerCount":5,"Name":"dalv","Password":null}
