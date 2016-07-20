@@ -1,12 +1,15 @@
 package ru.innopolis.university.summerbootcamp.java.project.ai;
 
 import ru.innopolis.university.summerbootcamp.java.project.engine.Checker;
+import ru.innopolis.university.summerbootcamp.java.project.model.AiDecision;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.PokerHands;
 import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Bot decisions engine
@@ -55,20 +58,17 @@ public class AIEngine {
     };
 
     private static final int pointsBias = 5000; // 18.07.16 empirical number
-    private float prevBetsAvg=0;
-
+    private List<Integer> history = new LinkedList<>();
+    private Random random = new Random();
     /**
      * Analyzes current player's data and makes decision.
      * @param cards player's current deck
      * @param cash player's current cash
-     * @param betSum sum of players' bet
+     * @param bet current bet
      * @return computed decision
      */
-    public CommandType getDecision(List<PlayingCard> cards, int cash, int betSum) throws IllegalArgumentException {
-        if (prevBetsAvg == 0) // TODO: WTF?!
-            prevBetsAvg = betSum;
-        else
-            prevBetsAvg = (betSum + prevBetsAvg) / 2;
+    public AiDecision getDecision(List<PlayingCard> cards, int cash, int bet) throws IllegalArgumentException {
+        float prevBetsAvg = history.isEmpty()? 0: history.stream().reduce(0, (i1, i2)-> i1+i2) / history.size();
 
         int comboPoints = Checker.checkCombo(cards);
         boolean goodCards = false;
@@ -77,23 +77,32 @@ public class AIEngine {
         // TODO: pointsBias is almost hardcoded. There must be better solution
         if (CommonUtils.isIn(pointsBias, comboPoints, Checker.FLUSHROYAL))
             goodCards = true;
-        if (cash > betSum)
+        if (cash > bet)
             enoughMoney = true;
-        if (betSum > prevBetsAvg)
+        if (bet > prevBetsAvg)
             suddenRaise = true;
 
-        if (!enoughMoney)
-            return CommandType.Fold;
+        history.add(bet);
+
+        if (!enoughMoney) {
+            return AiDecision.fold();
+        }
+
+
         if (goodCards) {
-            if (suddenRaise)
-                return CommandType.Bet;
-            else
-                return CommandType.Rise;
+            return AiDecision.riseWith((int) prevBetsAvg);
+        }
+
+
+        double gaussian = random.nextGaussian();
+        float[] coeffs = getCoeffsFromPoints(cards);
+
+        if (CommonUtils.isInExclusiveR(.0, gaussian, (double)coeffs[0])) {
+            return AiDecision.fold();
+        } else if (CommonUtils.isInExclusiveR((double)coeffs[0], gaussian, (double)(coeffs[1] + coeffs[0]))) {
+            return AiDecision.riseWith((int) prevBetsAvg);
         } else {
-            if (suddenRaise)
-                return CommandType.Fold;
-            else
-                return CommandType.Bet;
+            return AiDecision.bet();
         }
     }
 
@@ -105,8 +114,7 @@ public class AIEngine {
     private float[] getCoeffsFromPoints (List<PlayingCard> cards)
     {
         int comboPoints = Checker.checkCombo(cards);
-        switch(PokerHands.parse(comboPoints))
-        {                           // fold raise check
+        switch(PokerHands.parse(comboPoints)) {
             case FLUSHROYAL:
                 return new float[]{0.0f, 0.5f, 0.5f};
             case STRAIGHTFLUSH:
