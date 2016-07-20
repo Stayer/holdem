@@ -112,9 +112,7 @@ public class Checker {
                     else {
                         count = 0;
                     }
-                    if (count == 4) {
-                        return j+3;
-                    }
+                    if ((count == 4) || (count == 3 && pool[i][12] && pool[i][0])) return j+3;
                 }
             }
         }

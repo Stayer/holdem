@@ -17,7 +17,7 @@
          <children>
             <Button fx:id="fold" mnemonicParsing="false" text="Fold" />
             <Button fx:id="call" mnemonicParsing="false" text="Call" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Check" />
+            <Button fx:id="check" mnemonicParsing="false" text="Check" />
             <Slider fx:id="rateSlider" prefHeight="14.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
             <Label fx:id="callLabel" text="Label" />
             <Button fx:id="confirm" mnemonicParsing="false" text="Confirm" />
@@ -170,6 +170,7 @@
                   <Label fx:id="bet0" prefHeight="46.0" prefWidth="82.0" text="Label" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <Label fx:id="roundBet" prefHeight="31.0" prefWidth="84.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </center>
