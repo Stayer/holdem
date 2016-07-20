@@ -6,13 +6,84 @@ import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
+import ru.innopolis.university.summerbootcamp.java.project.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class GameEngineTest {
-    // TODO: rework
+    @Test
+    public void winnerPickerTest() {
+        GameEngine ge = new GameEngine();
+
+        HoldemPlayer player1 = new HoldemPlayer();
+        player1.setPlayingCards(Constants.getFlushRoyal());
+
+        HoldemPlayer player2 = new HoldemPlayer();
+        player2.setPlayingCards(Constants.getOnePair());
+
+        HoldemPlayer player3 = new HoldemPlayer();
+        player3.setPlayingCards(Constants.getFlush());
+
+        HoldemPlayer player4 = new HoldemPlayer();
+        player4.setPlayingCards(Constants.getFourOfKind());
+
+        HoldemPlayer player5 = new HoldemPlayer();
+        player5.setPlayingCards(Constants.getHighestCard());
+
+        LinkedList<HoldemPlayer> playerList = new LinkedList<>();
+        playerList.add(player1);
+        playerList.add(player2);
+        playerList.add(player3);
+        playerList.add(player4);
+        playerList.add(player5);
+        int winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner picker function return rwong value", winner, 0);
+
+        playerList = new LinkedList<>();
+        playerList.add(player2);
+        playerList.add(player1);
+        playerList.add(player3);
+        playerList.add(player4);
+        playerList.add(player5);
+        winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner picker function return rwong value", winner, 1);
+
+        playerList = new LinkedList<>();
+        playerList.add(player3);
+        playerList.add(player2);
+        playerList.add(player1);
+        playerList.add(player4);
+        playerList.add(player5);
+        winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner picker function return rwong value", winner, 2);
+
+        playerList = new LinkedList<>();
+        playerList.add(player4);
+        playerList.add(player2);
+        playerList.add(player3);
+        playerList.add(player1);
+        playerList.add(player5);
+        winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner picker function return rwong value", winner, 3);
+
+        playerList = new LinkedList<>();
+        playerList.add(player5);
+        playerList.add(player2);
+        playerList.add(player3);
+        playerList.add(player4);
+        playerList.add(player1);
+        winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner picker function return rwong value", winner, 4);
+
+    }
+
 //
 //    public void deckEmptinessTest(List<PlayingCard> deck) {
 //        Assert.assertTrue("Created deck is zero sized", deck.size() > 0);
