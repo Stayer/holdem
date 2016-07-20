@@ -39,7 +39,19 @@ public class Controller {
     private ImageView userCard2;
 
     @FXML
+    private ImageView player2card2;
+    @FXML
+    private ImageView player2card1;
+
+    @FXML
+    private ImageView player1card2;
+    @FXML
+    private ImageView player1card1;
+
+    @FXML
     private ImageView userCard1;
+
+    private List<ImageView> userCardIView;
 
     @FXML
     private Button confirm;
@@ -84,6 +96,8 @@ public class Controller {
 
     private AIEngine aiEngine = new AIEngine();
 
+    private List<List<ImageView>> playersHandCards;
+
 
     public void setMainApp(Math mainApp) {
         this.mainApp = mainApp;
@@ -118,14 +132,25 @@ public class Controller {
         bets.add(bet1);
         bets.add(bet2);
 
+        playersHandCards = new ArrayList<>();
 
-        test.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                changeRoles(game);
-            }
-        });
+        userCardIView = new ArrayList<>();
+        userCardIView.add(userCard1);
+        userCardIView.add(userCard2);
 
+
+        List<ImageView> firstUserCardView = new ArrayList<>();
+        firstUserCardView.add(player1card1);
+        firstUserCardView.add(player1card2);
+
+        List<ImageView> secondUserCardView = new ArrayList<>();
+        secondUserCardView.add(player2card1);
+        secondUserCardView.add(player2card2);
+
+
+        playersHandCards.add(userCardIView);
+        playersHandCards.add(firstUserCardView);
+        playersHandCards.add(secondUserCardView);
 
         fold.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -138,8 +163,11 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
                 double value = rateSlider.getValue();
-                HoldemPlayer user = game.getHoldemPlayers().get(0);
-                user.setBet(user.getBet() + value);
+                HoldemPlayer user = game.getUser();
+                makeBet(user, user.getBet() + value);
+                game.setRoundBet(user.getBet() + value);
+                displayBets();
+                step();
             }
         });
 
@@ -148,7 +176,7 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
                 double diff = game.getCurrentBet() - game.getUser().getBet();
-                callBet(game.getUser(), diff);
+                makeBet(game.getUser(), diff);
                 displayBets();
                 disableControl();
                 step();
@@ -220,14 +248,16 @@ public class Controller {
 
 
     public void initGame() {
+        game.setGameStage(GameStage.Start);
         //TODO: check num of players
         settingDeck();
         distributePlayingCards();
+        game.setGameStage(GameStage.Preflop);
         showUserCard();
         settingBets();
         displayBets();
+        game.setGameStage(GameStage.Round1);
         step();
-        game.setGameStage(GameStage.Start);
     }
 
     private void step() {
@@ -238,7 +268,7 @@ public class Controller {
                 if (game.getCurrentBet() > p.getBet()) {
                     //если текущая ставка больше чем его, то добавляем
                     double count = game.getCurrentBet() - p.getBet();
-                    callBet(p, count);
+                    makeBet(p, count);
                     displayBets();
                 }
             } else {
@@ -249,10 +279,11 @@ public class Controller {
             if (p.isBigBlind() && p.getBet() == game.getCurrentBet()) {
                 //следующий кон
                 //обнуляем ставки
-                nextGameStage(GameStage.Start);
+                GameStage gameStage = nextGameStage(game.getGameStage());
+                game.setGameStage(gameStage);
 
 
-                countRoundBets();
+                countAndDisplayRoundBets();
                 resetBets();
                 displayBets();
 
@@ -268,26 +299,59 @@ public class Controller {
                     case Riever:
                         riever();
                         break;
-                    case Round4:
+                    case Final:
                         showWinner();
                 }
-
-                flop();
                 //заканчиваем раунд
                 break;
             }
         } while (true);
     }
 
-    private GameStage nextGameStage(GameStage start) {
+    private void showWinner() {
+        for (int i = 1; i < game.getHoldemPlayers().size(); i++) {
+            showPlayerCard(i);
+        }
+    }
 
-        return null;
+    private void showPlayerCard(int id) {
+        HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(id);
+        for (int j = 0; j < 2; j++) {
+            PlayingCard card = holdemPlayer.getPlayingCards().get(j);
+            playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getPlayingCardImageUrlByValue(card)).toExternalForm()));
+        }
+    }
+
+
+    private GameStage nextGameStage(GameStage start) {
+        for (GameStage st : GameStage.values()) {
+            if (st.compareTo(start) > 0) {
+                return st;
+            }
+        }
+        return GameStage.Start;
     }
 
     private void tern() {
-        //1 карта для флопа
+        //1 карта для терна
         game.getTableCards().add(takeCard());
         showTableCard();
+        //ставим ставки
+        settingBets();
+        displayBets();
+        game.setGameStage(nextGameStage(game.getGameStage()));
+        step();
+    }
+
+
+    private void riever() {
+        //1 карта для ривера
+        game.getTableCards().add(takeCard());
+        showTableCard();
+        //ставим ставки
+        settingBets();
+        displayBets();
+        game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
 
@@ -299,12 +363,13 @@ public class Controller {
         }
     }
 
-    private void countRoundBets() {
+    private void countAndDisplayRoundBets() {
         int roundTotalBet = 0;
         for (HoldemPlayer player : game.getHoldemPlayers()) {
             roundTotalBet += player.getBet();
         }
-        game.setRoundBet(game.getRoundBet() + roundTotalBet);
+        roundBet.setText(game.getWinPoint() + roundTotalBet + " ");
+        game.setWinPoint(game.getWinPoint() + roundTotalBet);
     }
 
     private void flop() {
@@ -314,6 +379,10 @@ public class Controller {
             game.getTableCards().add(takeCard());
             showTableCard();
         }
+        //ставим ставки
+        settingBets();
+        displayBets();
+        game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
 
@@ -324,7 +393,7 @@ public class Controller {
         }
     }
 
-    private void callBet(HoldemPlayer p, double count) {
+    private void makeBet(HoldemPlayer p, double count) {
         p.setBet(p.getBet() + count);
         p.setCash(p.getCash() - count);
     }
@@ -339,6 +408,7 @@ public class Controller {
                 holdemPlayer.setBet(game.getLowestBet());
             }
         }
+        game.setRoundBet(game.getLowestBet());
     }
 
 
@@ -464,13 +534,8 @@ public class Controller {
     }
 
     private void showUserCard() {
-        HoldemPlayer user = game.getHoldemPlayers().get(0);
-        PlayingCard card1 = user.getPlayingCards().get(0);
-        PlayingCard card2 = user.getPlayingCards().get(1);
-        userCard1.setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getPlayingCardImageUrlByValue(card1)).toExternalForm()));
-        userCard2.setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getPlayingCardImageUrlByValue(card2)).toExternalForm()));
+        showPlayerCard(0);
     }
-
 
     private PlayingCard takeCard() {
         return game.getDeck().remove(0);
@@ -490,6 +555,13 @@ public class Controller {
         confirm.setDisable(false);
         fold.setDisable(false);
         rateSlider.setDisable(false);
+
+
+        //устанавливаем слайдер в минимальную ставку
+        rateSlider.setMin(game.getRoundBet());
+        rateSlider.setMax(game.getRoundBet() + 100);
+
+
     }
 
     public void nextRound() {
@@ -538,6 +610,10 @@ public class Controller {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             bets.get(i).setText(game.getHoldemPlayers().get(i).getBet() + "");
         }
+    }
+
+    private void displayRoundBet() {
         roundBet.setText(game.getRoundBet() + "");
     }
+
 }

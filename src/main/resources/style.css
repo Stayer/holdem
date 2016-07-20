@@ -1,5 +1,5 @@
 #pokertable{
-    -fx-background-image: url("ui/table_background.png");
+    -fx-background-image: url("table_background.png");
     -fx-background-repeat: repeat;
 }
 

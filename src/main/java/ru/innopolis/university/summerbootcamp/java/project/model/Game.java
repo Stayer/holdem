@@ -13,6 +13,15 @@ public class Game {
     private double currentBet;
     private int currentPlayer;
     private double roundBet;
+    private double winPoint;
+
+    public double getWinPoint() {
+        return winPoint;
+    }
+
+    public void setWinPoint(double winPoint) {
+        this.winPoint = winPoint;
+    }
 
     public double getRoundBet() {
         return roundBet;

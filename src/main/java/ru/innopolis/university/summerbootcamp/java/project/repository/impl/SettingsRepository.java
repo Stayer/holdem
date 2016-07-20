@@ -32,6 +32,10 @@ public class SettingsRepository implements Repository<Settings> {
         }
     }
 
+    private SettingsRepository(){
+        loadFiles();
+    }
+
 
     public static SettingsRepository getInstance() {
         if (settingsRepository == null) {
