@@ -30,8 +30,6 @@ public class GameEngine {
     }
     public int winnerPicker(List<HoldemPlayer> players)
     {
-        int id = 0;
-
         HoldemPlayer winner = players.stream().max(new Comparator<HoldemPlayer>() {
             Checker checker = new Checker();
             @Override
@@ -40,7 +38,7 @@ public class GameEngine {
                 return Integer.compare(Checker.checkCombo(o1.getPlayingCards()), Checker.checkCombo(o2.getPlayingCards()));
             }
         }).get();
-        return id;
+        return players.indexOf(winner);
     }
 
 
