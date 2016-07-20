@@ -9,6 +9,7 @@ public class Settings {
     private int playerCount;
     private int difficulty;
     private int bat;
+    private boolean music;
 
     public Settings() {
     }
@@ -20,6 +21,38 @@ public class Settings {
         this.playerCount = playerCount;
         this.difficulty = difficulty;
         this.bat = bat;
+    }
+    public Settings(Settings settings) {
+        this.userName = settings.getUserName();
+        this.password = settings.getPassword();
+        this.cash = settings.getCash();
+        this.playerCount = settings.getPlayerCount();
+        this.difficulty = settings.getDifficulty();
+        this.bat = settings.getBat();
+    }
+
+    public Settings(String userName, int cash, int playerCount, int difficulty, int bat, boolean music) {
+        this.userName = userName;
+        this.cash = cash;
+        this.playerCount = playerCount;
+        this.difficulty = difficulty;
+        this.bat = bat;
+        this.music = music;
+    }
+
+    public Settings(int playerCount, int difficulty, int bat, boolean music) {
+        this.playerCount = playerCount;
+        this.difficulty = difficulty;
+        this.bat = bat;
+        this.music = music;
+    }
+
+    public boolean isMusic() {
+        return music;
+    }
+
+    public void setMusic(boolean music) {
+        this.music = music;
     }
 
     public String getUserName() {
