@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.SettingsController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <HBox prefHeight="519.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="308.0" prefWidth="50.0" />
+            <VBox prefHeight="308.0" prefWidth="125.0"  fx:id="vbPlayers">
+               <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="Number of Players" />
+               <children>
+                  <RadioButton fx:id="player3" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" selected="true" text="3 players" textAlignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="Number_of_players" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="player4" mnemonicParsing="false"  prefHeight="35.0" prefWidth="150.0" text="4 players" toggleGroup="$Number_of_players" />
+                  <RadioButton fx:id="player5" mnemonicParsing="false"  prefHeight="35.0" prefWidth="150.0" text="5 players" toggleGroup="$Number_of_players" />
+                  <RadioButton fx:id="player6" mnemonicParsing="false"  prefHeight="35.0" prefWidth="150.0" text="6 players" toggleGroup="$Number_of_players" />
+                  <RadioButton fx:id="player7" mnemonicParsing="false"  prefHeight="35.0" prefWidth="150.0" text="7 players" toggleGroup="$Number_of_players" />
+               </children>
+            </VBox>
+            <VBox prefHeight="308.0" prefWidth="125.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="Difficulty" />
+                  <RadioButton fx:id="difficultyEasy" alignment="CENTER_LEFT" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" selected="true" text="Easy" textAlignment="RIGHT">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="Difficulty" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="difficultyHard" mnemonicParsing="false" prefHeight="35.0" text="Hard" toggleGroup="$Difficulty" />
+               </children>
+            </VBox>
+            <VBox prefHeight="308.0" prefWidth="150.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="Minimal bet" />
+                  <RadioButton fx:id="Bet1" mnemonicParsing="false" prefHeight="35.0" selected="true" text="\$10">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="Bet" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="Bet2" mnemonicParsing="false" prefHeight="35.0" text="\$25" toggleGroup="$Bet" />
+                  <RadioButton fx:id="Bet3" mnemonicParsing="false" prefHeight="35.0" text="\$100" toggleGroup="$Bet" />
+                  <RadioButton fx:id="Bet4" mnemonicParsing="false" prefHeight="35.0" text="\$250" toggleGroup="$Bet" />
+               </children>
+            </VBox>
+            <VBox prefHeight="308.0" prefWidth="150.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="Music" />
+                  <RadioButton fx:id="musicOn" mnemonicParsing="false" prefHeight="35.0" selected="true" text="On">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="Music" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="MusicOff" mnemonicParsing="false" prefHeight="35.0" text="Off" toggleGroup="$Music" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="304.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="btnBackOnMainMenu" alignment="CENTER" mnemonicParsing="false" onAction="#onClickBack" prefHeight="50.0" prefWidth="601.0" text="Back">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>

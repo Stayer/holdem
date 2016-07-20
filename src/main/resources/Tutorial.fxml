@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.TutorialController">
+   <children>
+      <Text layoutX="41.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Each player is dealt two down (or hole) cards that only they can see. A round of betting occurs. " />
+      <Label layoutX="40.0" layoutY="81.0" text="Three community cards (known as the flop) are dealt face up in the middle of the table. " />
+      <Label layoutX="14.0" layoutY="98.0" text="Another round of betting occurs. A fourth community card (known as the turn) is dealt face up on the table. " />
+      <Label layoutX="22.0" layoutY="115.0" text="Another round of betting occurs. A fifth and final community card (known as the river) is dealt face up " />
+      <Label layoutX="22.0" layoutY="132.0" text="on the table. A final round of better occurs. The player's hole cards are revealed and the player with" />
+      <Label layoutX="25.0" layoutY="149.0" text=" the best five-card poker hand wins the pot. Your five card hand can consist of none, one, " />
+      <Label layoutX="25.0" layoutY="166.0" text="or both of your hole cards along with five, four, or three of the community cards. " />
+      <Label layoutX="25.0" layoutY="183.0" text="If two or more players share the same best hand, the pot is divided equally among the winners." />
+      <Button fx:id="btnBackOnMainMenu" layoutX="272.0" layoutY="297.0" mnemonicParsing="false" onAction="#onClickBack" text="Back" />
+   </children>
+</AnchorPane>
