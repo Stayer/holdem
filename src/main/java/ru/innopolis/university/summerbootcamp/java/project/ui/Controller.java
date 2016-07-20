@@ -14,7 +14,6 @@ import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
-import ru.innopolis.university.summerbootcamp.java.project.model.enums.CommandType;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 import ru.innopolis.university.summerbootcamp.java.project.ui.util.ViewUtil;
 
@@ -416,7 +415,7 @@ public class Controller {
     public void changeDealer(List<HoldemPlayer> holdemPlayers, int number, boolean value) {
         holdemPlayers.get(number).setDealer(value);
         if (value) {
-            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/d.jpeg").toExternalForm()));
+            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/dealerChip.png").toExternalForm()));
         } else {
             chips.get(number).setImage(null);
         }
@@ -425,7 +424,7 @@ public class Controller {
     public void changeBigBlind(List<HoldemPlayer> holdemPlayers, int number, boolean value) {
         holdemPlayers.get(number).setBigBlind(value);
         if (value) {
-            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/bb.jpg").toExternalForm()));
+            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/bigBlindChip.png").toExternalForm()));
         } else {
             chips.get(number).setImage(null);
         }
@@ -434,7 +433,7 @@ public class Controller {
     public void changeSmallBlind(List<HoldemPlayer> holdemPlayers, int number, boolean value) {
         holdemPlayers.get(number).setSmallBlind(value);
         if (value) {
-            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/sb.jpg").toExternalForm()));
+            chips.get(number).setImage(new Image(getClass().getClassLoader().getResource("ui/smallBlindChip.png").toExternalForm()));
         } else {
             chips.get(number).setImage(null);
         }

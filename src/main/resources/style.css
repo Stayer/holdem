@@ -1,9 +1,9 @@
-#pokertable{
+#pokertable {
     -fx-background-image: url("table_background.png");
     -fx-background-repeat: repeat;
 }
 
-#takeSeat{
+#takeSeat {
     -fx-background-color: #23685c;
     -fx-text-fill: #5ca497;
     -fx-border-color: rgba(92, 164, 151, 0.5);
@@ -12,7 +12,63 @@
     -fx-opacity: 0.5;
 
 }
-#takeSeat:hover{
+
+#takeSeat:hover {
     -fx-cursor: pointer;
     -fx-border-color: #ffffff;
+}
+
+#bottom_control {
+    -fx-background-color: #1a1a1a;
+}
+
+#call-elloy {
+    -fx-background-color: #fbb03b;
+    -fx-background-radius: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#call-elloy Text {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0.0, 0, 1);
+}
+#fold-red {
+    -fx-background-color: #fd4b59;
+    -fx-background-radius: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#fold-red Text {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0.0, 0, 1);
+}
+
+#rate-label{
+    -fx-background-color: white;
+    -fx-background-radius: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: #484848;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+#control-rise{
+    -fx-background-color: #7cb9ad;
+    -fx-background-radius: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#control-check{
+    -fx-background-color: #7cb9ad;
+    -fx-background-radius: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
