@@ -516,7 +516,7 @@ public class Controller {
         for (int i = startPlayer; i < game.getHoldemPlayers().size(); i++) {
             if (game.getHoldemPlayers().get(i).isBot()) {
                 // FIXME: 19.07.2016 Bet sum and cash
-                CommandType decision = aiEngine.getDecision(game.getHoldemPlayers().get(i).getPlayingCards(), 0, 0);
+                //CommandType decision = aiEngine.getDecision(game.getHoldemPlayers().get(i).getPlayingCards(), 0, 0);
                 //AI engine
                 if (game.getCurrentBet() > game.getHoldemPlayers().get(i).getBet()) {
                     double diff = game.getCurrentBet() - game.getHoldemPlayers().get(i).getBet();
