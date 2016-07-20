@@ -65,16 +65,10 @@ public class AIEngine {
      * @param cards player's current deck
      * @param cash player's current cash
      * @param bet current bet
-     * @param round current round of bets (IAE exception if round is incorrect)
      * @return computed decision
      */
-    public AiDecision getDecision(List<PlayingCard> cards, int cash, int bet, int round) throws IllegalArgumentException {
-
-        if (round < 1 || round > 2) {
-            throw new IllegalArgumentException("round");
-        }
-
-        float prevBetsAvg = history.stream().reduce(0, (i1, i2)-> i1+i2) / history.size();
+    public AiDecision getDecision(List<PlayingCard> cards, int cash, int bet) throws IllegalArgumentException {
+        float prevBetsAvg = history.isEmpty()? 0: history.stream().reduce(0, (i1, i2)-> i1+i2) / history.size();
 
         int comboPoints = Checker.checkCombo(cards);
         boolean goodCards = false;
@@ -94,13 +88,11 @@ public class AIEngine {
             return AiDecision.fold();
         }
 
-        if (goodCards && round > 1 ) {
-            return AiDecision.bet();
-        }
 
-        if (goodCards && suddenRaise && round == 1) {
+        if (goodCards) {
             return AiDecision.riseWith((int) prevBetsAvg);
         }
+
 
         double gaussian = random.nextGaussian();
         float[] coeffs = getCoeffsFromPoints(cards);
