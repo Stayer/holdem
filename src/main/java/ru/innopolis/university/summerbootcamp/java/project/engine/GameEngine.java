@@ -4,10 +4,9 @@ import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
+import static sun.audio.AudioPlayer.player;
 
 public class GameEngine {
     /**
@@ -29,7 +28,20 @@ public class GameEngine {
             return -1;
         return 0;
     }
+    public int winnerPicker(List<HoldemPlayer> players)
+    {
+        int id = 0;
 
+        HoldemPlayer winner = players.stream().max(new Comparator<HoldemPlayer>() {
+            Checker checker = new Checker();
+            @Override
+            public int compare(HoldemPlayer o1, HoldemPlayer o2) {
+
+                return Integer.compare(Checker.checkCombo(o1.getPlayingCards()), Checker.checkCombo(o2.getPlayingCards()));
+            }
+        }).get();
+        return id;
+    }
 
 
 }
