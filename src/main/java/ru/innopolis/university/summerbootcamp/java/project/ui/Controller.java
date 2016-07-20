@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
+import ru.innopolis.university.summerbootcamp.java.project.model.AiDecision;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
@@ -454,7 +455,7 @@ public class Controller {
         for (int i = startPlayer; i < game.getHoldemPlayers().size(); i++) {
             if (game.getHoldemPlayers().get(i).isBot()) {
                 // FIXME: 19.07.2016 Bet sum and cash
-                CommandType decision = aiEngine.getDecision(game.getHoldemPlayers().get(i).getPlayingCards(), 0, 0);
+                AiDecision decision = aiEngine.getDecision(game.getHoldemPlayers().get(i).getPlayingCards(), 0, 0);
                 //AI engine
                 if (game.getCurrentBet() > game.getHoldemPlayers().get(i).getBet()) {
                     double diff = game.getCurrentBet() - game.getHoldemPlayers().get(i).getBet();
