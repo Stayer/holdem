@@ -1,0 +1,18 @@
+#pokertable{
+    -fx-background-image: url("ui/table_background.png");
+    -fx-background-repeat: repeat;
+}
+
+#takeSeat{
+    -fx-background-color: #23685c;
+    -fx-text-fill: #5ca497;
+    -fx-border-color: rgba(92, 164, 151, 0.5);
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+    -fx-opacity: 0.5;
+
+}
+#takeSeat:hover{
+    -fx-cursor: pointer;
+    -fx-border-color: #ffffff;
+}
