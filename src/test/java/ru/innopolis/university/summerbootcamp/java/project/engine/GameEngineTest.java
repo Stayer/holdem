@@ -84,6 +84,29 @@ public class GameEngineTest {
 
     }
 
+    @Test
+    public void winnerCheckerExtremeTest() {
+        GameEngine ge = new GameEngine();
+
+        HoldemPlayer player1 = new HoldemPlayer();
+        player1.setPlayingCards(Constants.getHighestCard());
+
+        HoldemPlayer player2 = new HoldemPlayer();
+        player2.setPlayingCards(Constants.getHighestCard());
+
+        HoldemPlayer player3 = new HoldemPlayer();
+        player3.setPlayingCards(Constants.getHighestCard());
+
+        LinkedList<HoldemPlayer> playerList = new LinkedList<>();
+        playerList.add(player1);
+        playerList.add(player2);
+        playerList.add(player3);
+
+        int winner = ge.winnerPicker(playerList);
+
+        Assert.assertEquals("Winner checker with same cards", winner, 0);
+    }
+
 //
 //    public void deckEmptinessTest(List<PlayingCard> deck) {
 //        Assert.assertTrue("Created deck is zero sized", deck.size() > 0);
