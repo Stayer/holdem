@@ -279,6 +279,14 @@ public class Controller {
         } while (true);
     }
 
+    private void riever() {
+        // TODO: implement
+    }
+
+    private void showWinner() {
+        // TODO: implement
+    }
+
     private GameStage nextGameStage(GameStage start) {
 
         return null;
