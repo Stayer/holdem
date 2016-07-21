@@ -24,14 +24,6 @@ public class PlayerServicesTest {
         List<Player> all = instance.findAll();
         assertTrue(all.contains(player));*/
 
-
-        SettingsServices settingsServices = SettingsServices.getInstance();
-        Settings settings = new Settings();
-        settings.setUserName("dalv");
-        settings.setBat(100);
-        settings.setCash(123);
-        settings.setPassword("ddas");
-        settingsServices.save(settings);
     }
 
 }
