@@ -246,6 +246,7 @@ public class Controller {
                 int diff = game.getCurrentBet() - game.getUser().getBet();
                 makeBet(game.getUser(), diff);
                 showBets();
+                displayCashes();
                 disableControl();
                 step();
             }
@@ -547,7 +548,7 @@ public class Controller {
         p.setCash(p.getCash() - count);
         
         Settings settings =  settingsServices.findOne(game.getUser().getLogin());
-        settings.setCash((int)game.getUser().getCash());
+        settings.setCash(game.getUser().getCash());
         settingsServices.save(settings);
     }
 
