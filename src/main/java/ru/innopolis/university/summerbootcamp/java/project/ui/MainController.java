@@ -73,11 +73,18 @@ public class MainController  implements Initializable {
         Parent roott = loader.load();
 
         SettingsServices services = SettingsServices.getInstance();
-        Settings settings = services.findOne(ui.Name);
-        if(!etName.getText().trim().isEmpty())
+        Settings settings = null;
+        if(!etName.getText().trim().isEmpty()) {
             ui.Name = etName.getText();
+            settings = services.findOne(ui.Name);
+            System.out.println(ui.Name);
+            System.out.println(settings.getUserName());
+            System.out.println(settings.getCash());
+        }
         else{
-            ui.Name = settings.getUserName();
+            ui.Name = "Anonymous";
+            Settings settingsNew = new Settings(ui.Name,"",1000,3,1,10);
+            settings = services.save(settingsNew);
         }
         ui.Cash = settings.getCash();
         MainMenuController personController = loader.getController();

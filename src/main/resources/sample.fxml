@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.Controller">
    <bottom>
       <HBox id="bottom_control" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -144,6 +150,11 @@
                              <Insets top="10.0" />
                          </GridPane.margin>
                      </ImageView>
+                  <Label fx:id="lbBot1" text="Bot#1" textFill="WHITE">
+                     <GridPane.margin>
+                        <Insets left="10.0" top="150.0" />
+                     </GridPane.margin>
+                  </Label>
                      <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                          <children>
                              <ImageView fx:id="player1card1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -216,6 +227,11 @@
                              <Insets top="10.0" />
                          </GridPane.margin>
                      </ImageView>
+                  <Label fx:id="lbBot2" text="Bot#2" textFill="WHITE">
+                     <GridPane.margin>
+                        <Insets left="10.0" top="150.0" />
+                     </GridPane.margin>
+                  </Label>
                      <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                          <children>
                              <ImageView fx:id="player2card1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -292,6 +308,11 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </ImageView>
+                  <Label fx:id="lbUserName" text="UserName" textFill="WHITE">
+                     <GridPane.margin>
+                        <Insets left="10.0" top="150.0" />
+                     </GridPane.margin>
+                  </Label>
                   <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                      <children>
                         <ImageView fx:id="userCard1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

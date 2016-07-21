@@ -94,11 +94,20 @@ public class Controller {
     private Label bet1;
 
     @FXML
+    private Label lbBot1;
+    @FXML
+    private Label lbBot2;
+    @FXML
+    private Label lbUserName;
+
+
+    @FXML
     private Label bet2;
 
     private List<ImageView> chips;
     private List<ImageView> cards;
     private List<Label> bets;
+    private List<Label> names;
 
     private AIEngine aiEngine = new AIEngine();
 
@@ -131,6 +140,11 @@ public class Controller {
         bets.add(bet0);
         bets.add(bet1);
         bets.add(bet2);
+
+        names = new ArrayList<>();
+        names.add(lbUserName);
+        names.add(lbBot1);
+        names.add(lbBot2);
 
         playersHandCards = new ArrayList<>();
 
@@ -255,6 +269,7 @@ public class Controller {
         game.setRoundBet(0);
 
         //Setting dealer and blinds
+        game.getHoldemPlayers().get(0).setLogin(settings.getUserName());
         game.getHoldemPlayers().get(0).setDealer(true);
         game.getHoldemPlayers().get(1).setSmallBlind(true);
         game.getHoldemPlayers().get(2).setBigBlind(true);
@@ -284,6 +299,7 @@ public class Controller {
         showUserCard();
         settingBets();
         displayBets();
+        displayNames();
         game.setGameStage(GameStage.Round1);
         step();
     }
@@ -634,6 +650,11 @@ public class Controller {
         }
     }
 
+    private void displayNames() {
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            names.get(i).setText(game.getHoldemPlayers().get(i).getLogin() + "");
+        }
+    }
     private void displayRoundBet() {
         roundBet.setText(game.getRoundBet() + "");
     }
