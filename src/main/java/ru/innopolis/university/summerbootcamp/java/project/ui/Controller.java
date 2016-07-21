@@ -109,19 +109,11 @@ public class Controller {
     private List<Label> bets;
     private List<Label> names;
 
-    private Math mainApp;
-
     private AIEngine aiEngine = new AIEngine();
 
     private List<List<ImageView>> playersHandCards;
 
-
-    public void setMainApp(Math mainApp) {
-        this.mainApp = mainApp;
-    }
-
-
-    Game game = createGame(new HoldemPlayer(), 3);
+    Game game = createGame();
 
     @FXML
     private void initialize() {
@@ -249,12 +241,18 @@ public class Controller {
         rateSlider.setDisable(true);
     }
 
+    public Game createGame() {
+        SettingsServices services = SettingsServices.getInstance();
+        Settings settings = services.findOne(ui.Name);
 
-    public Game createGame(HoldemPlayer user, int needPlayers) {
+        HoldemPlayer player = new HoldemPlayer();
+        player.setCash(settings.getCash());
+        player.setBet(settings.getBet());
+
         int botCounter = 0;
         List<HoldemPlayer> players = new ArrayList<>();
-        players.add(user);
-        while (players.size() < needPlayers) {
+        players.add(player);
+        while (players.size() < settings.getPlayerCount()) {
             botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
             holdemPlayer.setLogin("Bot" + botCounter);
@@ -264,9 +262,6 @@ public class Controller {
         }
 
         game = new Game();
-
-        SettingsServices settingsServices = SettingsServices.getInstance();
-        Settings settings = settingsServices.findOne(ui.Name);
 
         game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);
@@ -283,7 +278,6 @@ public class Controller {
         return game;
     }
 
-
     public List<PlayingCard> createAndShuffleDeck() {
         LinkedList<PlayingCard> playingCards = new LinkedList<>();
         final Random random = new Random();
@@ -295,7 +289,6 @@ public class Controller {
             Collections.shuffle(playingCards);
         return playingCards;
     }
-
 
     public void initGame() {
         game.setGameStage(GameStage.Start);
@@ -353,6 +346,11 @@ public class Controller {
                     case Final:
                         showWinner();
                 }
+
+                SettingsServices service = SettingsServices.getInstance();
+                Settings settings = service.findOne(ui.Name);
+                settings.setCash(ui.Cash);
+                service.save(settings);
                 //заканчиваем раунд
                 break;
             }
@@ -373,7 +371,6 @@ public class Controller {
         }
     }
 
-
     private GameStage nextGameStage(GameStage start) {
         for (GameStage st : GameStage.values()) {
             if (st.compareTo(start) > 0) {
@@ -393,7 +390,6 @@ public class Controller {
         game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
-
 
     private void riever() {
         //1 карта для ривера
@@ -449,7 +445,6 @@ public class Controller {
         p.setCash(p.getCash() - count);
     }
 
-
     public void settingBets() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(i);
@@ -461,7 +456,6 @@ public class Controller {
         }
         game.setRoundBet(game.getLowestBet());
     }
-
 
     //TODO: refactor it
     public void changeDealer(List<HoldemPlayer> holdemPlayers, int number, boolean value) {
@@ -502,10 +496,8 @@ public class Controller {
         int nSB = 0;
         int nBB = 0;
 
-
         for (int i = 0; i < holdemPlayers.size(); i++) {
             HoldemPlayer holdemPlayer = holdemPlayers.get(i);
-
 
             if (holdemPlayer.isBigBlind()) {
                 changeBigBlind(holdemPlayers, i, false);
@@ -523,8 +515,6 @@ public class Controller {
                     nDealer = i + 1;
                 }
             }
-
-
         }
         changeBigBlind(holdemPlayers, nBB, true);
         changeSmallBlind(holdemPlayers, nSB, true);
@@ -550,15 +540,12 @@ public class Controller {
             //Bet round
             bettingRound(2);
 
-
             //TODO: STOP HERE
-
 
         }
         showUserCard();
 
     }
-
 
     private void bettingRound(int startPlayer) {
         if (startPlayer == game.getHoldemPlayers().size() - 1) {
@@ -580,8 +567,6 @@ public class Controller {
                 enableUserControl();
             }
         }
-
-
     }
 
     private void showUserCard() {
@@ -597,7 +582,7 @@ public class Controller {
     }
 
     private void enableUserControl() {
-        //если сумма не ровна то добираем или увеличиваем ставку
+        //если сумма не равна то добираем или увеличиваем ставку
         if (game.getCurrentBet() == game.getUser().getBet()) {
             check.setDisable(false);
         } else {
@@ -607,12 +592,9 @@ public class Controller {
         fold.setDisable(false);
         rateSlider.setDisable(false);
 
-
         //устанавливаем слайдер в минимальную ставку
         rateSlider.setMin(game.getRoundBet());
         rateSlider.setMax(game.getRoundBet() + 100);
-
-
     }
 
     public void nextRound() {
@@ -640,7 +622,6 @@ public class Controller {
             game.getHoldemPlayers().get(i).setBet(0);
         }
     }
-
 
     private void afterUserAction() {
 

@@ -32,7 +32,6 @@ public class SettingsController {
     @FXML
     private VBox vbPlayers;
 
-
     public void setDifficulty(int i){
         switch (i){
             case 1:
