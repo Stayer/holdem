@@ -26,7 +26,7 @@ public class CoreConfig{
         obj.put("Bat", settings.getBat());
 
         try {
-            file = new FileWriter("Settings.txt");
+            file = new FileWriter("Settings.txt", true);
             file.write(obj.toJSONString());
 
         } catch (IOException e) {

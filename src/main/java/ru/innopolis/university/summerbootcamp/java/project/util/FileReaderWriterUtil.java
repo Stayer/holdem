@@ -34,7 +34,7 @@ public class FileReaderWriterUtil {
 
         PrintWriter out = null;
         try {
-            out = new PrintWriter(new FileWriter(file, false));
+            out = new PrintWriter(new FileWriter(file, true));
             out.write(text);
             out.flush();
         } catch (FileNotFoundException e) {
