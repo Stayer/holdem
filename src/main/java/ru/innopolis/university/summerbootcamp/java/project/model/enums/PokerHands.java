@@ -21,21 +21,21 @@ public enum PokerHands {
     public static PokerHands parse(int comboPoints) {
         if (comboPoints >= Checker.FLUSHROYAL) {
             return PokerHands.FLUSHROYAL;
-        } else if (CommonUtils.isInExclusiveL(Checker.FLUSHROYAL, comboPoints, Checker.STRAIGHTFLUSH)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.STRAIGHTFLUSH, comboPoints, Checker.FLUSHROYAL)) {
             return PokerHands.STRAIGHTFLUSH;
-        } else if (CommonUtils.isInExclusiveL(Checker.STRAIGHTFLUSH, comboPoints, Checker.FOUROFAKIND)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.FOUROFAKIND, comboPoints, Checker.STRAIGHTFLUSH)) {
             return PokerHands.FOUROFAKIND;
-        } else if (CommonUtils.isInExclusiveL(Checker.FOUROFAKIND, comboPoints, Checker.FULLHOUSE)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.FULLHOUSE, comboPoints, Checker.FOUROFAKIND)) {
             return PokerHands.FULLHOUSE;
-        } else if (CommonUtils.isInExclusiveL(Checker.FULLHOUSE, comboPoints, Checker.FLUSH)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.FLUSH, comboPoints, Checker.FULLHOUSE)) {
             return PokerHands.FLUSH;
-        } else if (CommonUtils.isInExclusiveL(Checker.FLUSH, comboPoints, Checker.STRAIGHT)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.STRAIGHT, comboPoints, Checker.FLUSH)) {
             return PokerHands.STRAIGHT;
-        } else if (CommonUtils.isInExclusiveL(Checker.STRAIGHT, comboPoints, Checker.THREEOFAKIND)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.THREEOFAKIND, comboPoints, Checker.STRAIGHT)) {
             return PokerHands.THREEOFAKIND;
-        } else if (CommonUtils.isInExclusiveL(Checker.THREEOFAKIND, comboPoints, Checker.TWOPAIR)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.TWOPAIR, comboPoints, Checker.THREEOFAKIND)) {
             return PokerHands.TWOPAIR;
-        } else if (CommonUtils.isInExclusiveL(Checker.TWOPAIR, comboPoints, Checker.ONEPAIR)) {
+        } else if (CommonUtils.isInExclusiveR(Checker.ONEPAIR, comboPoints, Checker.TWOPAIR)) {
             return PokerHands.ONEPAIR;
         } else
             return PokerHands.HIGH;

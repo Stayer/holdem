@@ -9,7 +9,7 @@ import ru.innopolis.university.summerbootcamp.java.project.util.CommonUtils;
  */
 public class CommonUtilsTest {
     @Test
-    public void inRangeTest() {
+    public void isIn() {
         Assert.assertTrue(
                 "InRange function fails on integers (in range)",
                 CommonUtils.isIn(new Integer(1), new Integer(10), new Integer(20))
@@ -33,6 +33,22 @@ public class CommonUtilsTest {
         Assert.assertTrue(
                 "InRange function fails on double (not in range, extreme value)",
                 !CommonUtils.isIn(new Double(1), new Double(20.1), new Double(20))
+        );
+    }
+
+    @Test
+    public void isInExclusive() {
+        Assert.assertFalse(
+                CommonUtils.isInExclusiveL(1, 1, 20)
+        );
+        Assert.assertTrue(
+                CommonUtils.isInExclusiveL(1, 20, 20)
+        );
+        Assert.assertFalse(
+                CommonUtils.isInExclusiveR(1, 20, 20)
+        );
+        Assert.assertTrue(
+                CommonUtils.isInExclusiveR(1, 1, 20)
         );
     }
 }

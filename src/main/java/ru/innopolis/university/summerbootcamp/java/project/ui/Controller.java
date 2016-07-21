@@ -346,6 +346,11 @@ public class Controller {
                     case Final:
                         showWinner();
                 }
+
+                SettingsServices service = SettingsServices.getInstance();
+                Settings settings = service.findOne(ui.Name);
+                settings.setCash(ui.Cash);
+                service.save(settings);
                 //заканчиваем раунд
                 break;
             }
@@ -491,10 +496,8 @@ public class Controller {
         int nSB = 0;
         int nBB = 0;
 
-
         for (int i = 0; i < holdemPlayers.size(); i++) {
             HoldemPlayer holdemPlayer = holdemPlayers.get(i);
-
 
             if (holdemPlayer.isBigBlind()) {
                 changeBigBlind(holdemPlayers, i, false);
@@ -512,8 +515,6 @@ public class Controller {
                     nDealer = i + 1;
                 }
             }
-
-
         }
         changeBigBlind(holdemPlayers, nBB, true);
         changeSmallBlind(holdemPlayers, nSB, true);
@@ -539,9 +540,7 @@ public class Controller {
             //Bet round
             bettingRound(2);
 
-
             //TODO: STOP HERE
-
 
         }
         showUserCard();
@@ -568,8 +567,6 @@ public class Controller {
                 enableUserControl();
             }
         }
-
-
     }
 
     private void showUserCard() {
@@ -595,12 +592,9 @@ public class Controller {
         fold.setDisable(false);
         rateSlider.setDisable(false);
 
-
         //устанавливаем слайдер в минимальную ставку
         rateSlider.setMin(game.getRoundBet());
         rateSlider.setMax(game.getRoundBet() + 100);
-
-
     }
 
     public void nextRound() {
