@@ -73,7 +73,7 @@ public class MainMenuController implements Initializable {
         Parent root = loader.load();
         SettingsController personController = loader.getController();
         personController.setDifficulty(settings.getDifficulty());
-        personController.setBet(settings.getBat());
+        personController.setBet(settings.getBet());
         personController.setplayer(settings.getPlayerCount());
         //create a new scene with root and set the stage
         Scene scene = new Scene(root);
