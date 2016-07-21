@@ -38,8 +38,8 @@ public class ui extends Application {
     Scene sceneExceptionWindowExist, sceneProfileWindow, sceneSettingsWindow;
     Scene sceneScoreWindow, sceneTutorialWindow;
     Stage thestage;
-    public static String Name = "defaultUser";
-    public static int Cash = 100;
+    public static String Name = "Anonymous";
+    public static int Cash = 1000;
 
 
     /**
