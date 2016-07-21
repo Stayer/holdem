@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -19,14 +13,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.innopolis.university.summerbootcamp.java.project.ui.Controller">
    <bottom>
       <HBox id="bottom_control" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-             <Button id="control-rise" fx:id="back" mnemonicParsing="false" text="Back">
-                 <HBox.margin>
-                     <Insets left="8.0" right="4.0" />
-                 </HBox.margin></Button>
              <Button id="fold-red" fx:id="fold" mnemonicParsing="false" text="Fold">
                <HBox.margin>
                   <Insets left="8.0" right="4.0" />
@@ -365,4 +355,15 @@
          </children>
       </GridPane>
    </center>
+   <top>
+      <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="control-rise" fx:id="nextRound" mnemonicParsing="false" text="NEXT ROUND" />
+             <Button id="control-rise" fx:id="back" mnemonicParsing="false" text="MENU">
+                 <HBox.margin>
+                     <Insets left="8.0" right="4.0" />
+                 </HBox.margin></Button>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

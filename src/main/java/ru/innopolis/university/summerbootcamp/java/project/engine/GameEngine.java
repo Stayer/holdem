@@ -21,14 +21,14 @@ public class GameEngine {
      * than {@code 0} if {@code first combination} is
      * greater than the {@code second combination} .
      */
-    public int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
+    public static int compareCombination(List<PlayingCard> combination1, List<PlayingCard> combination2) {
         if (Checker.checkCombo(combination1) > Checker.checkCombo(combination2))
             return 1;
         else if (Checker.checkCombo(combination1) < Checker.checkCombo(combination2))
             return -1;
         return 0;
     }
-    public int winnerPicker(List<HoldemPlayer> players)
+    public static int winnerPicker(List<HoldemPlayer> players)
     {
         HoldemPlayer winner = players.stream().max(new Comparator<HoldemPlayer>() {
             Checker checker = new Checker();

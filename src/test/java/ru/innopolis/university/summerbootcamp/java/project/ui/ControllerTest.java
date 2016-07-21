@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class ControllerTest {
 
-    @Test
+/*    @Test
     public void createGameTest() {
         Controller controller = new Controller();
 
@@ -43,5 +43,5 @@ public class ControllerTest {
         );
         
         // TODO: complete tests
-    }
+    }*/
 }
