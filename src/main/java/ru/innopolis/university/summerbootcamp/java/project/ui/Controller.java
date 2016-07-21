@@ -101,6 +101,12 @@ public class Controller {
     @FXML
     private Label lbUserName;
     @FXML
+    private Label CashBot1;
+    @FXML
+    private Label CashBot2;
+    @FXML
+    private Label CashMe;
+    @FXML
     private Button nextRound;
 
     @FXML
@@ -112,6 +118,8 @@ public class Controller {
     private List<ImageView> cards;
     private List<Label> bets;
     private List<Label> names;
+    private List<Label> cashes;
+
 
     private AIEngine aiEngine = new AIEngine();
 
@@ -150,6 +158,11 @@ public class Controller {
         names.add(lbBot1);
         names.add(lbBot2);
 
+        cashes = new ArrayList<>();
+        cashes.add(CashMe);
+        cashes.add(CashBot1);
+        cashes.add(CashBot2);
+
         playersHandCards = new ArrayList<>();
 
         userCardIView = new ArrayList<>();
@@ -184,7 +197,9 @@ public class Controller {
                 HoldemPlayer user = game.getUser();
                 makeBet(user, value);
                 game.setCurrentBet(user.getBet());
+                game.setCurrentCash(user.getCash());
                 showBets();
+                displayCashes();
                 step();
             }
         });
@@ -272,6 +287,7 @@ public class Controller {
 
         HoldemPlayer player = new HoldemPlayer();
         player.setCash(settings.getCash());
+        System.out.println(settings.getCash());
         player.setBet(settings.getBet());
         int playerCount = settings.getPlayerCount() > 0 ? settings.getPlayerCount() : 3;
 
@@ -292,7 +308,7 @@ public class Controller {
         game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);
         game.setCurrentBet(settings.getBet());
-        game.setTotalRoundBet(0);
+        game.setTotalRoundBet(settings.getBet());
 
         //Setting dealer and blinds
         game.getHoldemPlayers().get(0).setLogin(settings.getUserName());
@@ -328,6 +344,7 @@ public class Controller {
         settingBets();
         showBets();
         displayNames();
+        displayCashes();
         nextRound.setDisable(true);
         game.setGameStage(GameStage.Round1);
         step();
@@ -386,6 +403,7 @@ public class Controller {
 
                 enableNextGame();
         }
+
 
         Settings settings = settingsServices.findOne(ui.Name);
         settings.setCash(ui.Cash);
@@ -744,6 +762,12 @@ public class Controller {
     private void showBets() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             bets.get(i).setText(game.getHoldemPlayers().get(i).getBet() + "");
+        }
+    }
+
+    private void displayCashes() {
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            cashes.get(i).setText(game.getHoldemPlayers().get(i).getCash() + "");
         }
     }
 

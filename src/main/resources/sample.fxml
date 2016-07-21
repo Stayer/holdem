@@ -145,6 +145,11 @@
                         <Insets left="10.0" top="150.0" />
                      </GridPane.margin>
                   </Label>
+                     <Label fx:id="CashBot1" text="Cash" textFill="WHITE">
+                         <GridPane.margin>
+                             <Insets left="75.0" top="150.0" />
+                         </GridPane.margin>
+                     </Label>
                      <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                          <children>
                              <ImageView fx:id="player1card1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -222,6 +227,11 @@
                         <Insets left="10.0" top="150.0" />
                      </GridPane.margin>
                   </Label>
+                     <Label fx:id="CashBot2" text="Cash" textFill="WHITE">
+                         <GridPane.margin>
+                             <Insets left="75.0" top="150.0" />
+                         </GridPane.margin>
+                     </Label>
                      <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                          <children>
                              <ImageView fx:id="player2card1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -303,6 +313,11 @@
                         <Insets left="10.0" top="150.0" />
                      </GridPane.margin>
                   </Label>
+                   <Label fx:id="CashMe" text="Cash" textFill="WHITE">
+                       <GridPane.margin>
+                           <Insets left="75.0" top="150.0" />
+                       </GridPane.margin>
+                   </Label>
                   <HBox alignment="CENTER" prefHeight="87.0" prefWidth="122.0" GridPane.rowSpan="2">
                      <children>
                         <ImageView fx:id="userCard1" fitHeight="80.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

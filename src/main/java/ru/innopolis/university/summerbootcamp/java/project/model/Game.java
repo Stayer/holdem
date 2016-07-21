@@ -11,15 +11,17 @@ public class Game {
     private int lowestBet;
     private GameStage gameStage;
     private int currentBet;
+    private int currentCash;
+
     private int currentPlayer;
     private int totalRoundBet;
-    private double winPoint;
+    private int winPoint;
 
-    public double getWinPoint() {
+    public int getWinPoint() {
         return winPoint;
     }
 
-    public void setWinPoint(double winPoint) {
+    public void setWinPoint(int winPoint) {
         this.winPoint = winPoint;
     }
 
@@ -71,6 +73,9 @@ public class Game {
         this.currentBet = currentBet;
     }
 
+    public void setCurrentCash(int currentCash) {
+        this.currentCash = currentCash;
+    }
     public GameStage getGameStage() {
         return gameStage;
     }

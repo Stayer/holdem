@@ -11,7 +11,7 @@ public class Player extends User {
 
     private transient  List<PlayingCard> playingCards;
 
-    private double cash;
+    private int cash;
 
     public List<PlayingCard> getPlayingCards() {
         return playingCards;
@@ -21,11 +21,11 @@ public class Player extends User {
         this.playingCards = playingCards;
     }
 
-    public double getCash() {
+    public int getCash() {
         return cash;
     }
 
-    public void setCash(double cash) {
+    public void setCash(int cash) {
         this.cash = cash;
     }
 
