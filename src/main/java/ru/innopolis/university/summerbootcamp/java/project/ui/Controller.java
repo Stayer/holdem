@@ -18,7 +18,9 @@ import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
+import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
+import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 import ru.innopolis.university.summerbootcamp.java.project.ui.util.ViewUtil;
 
 import java.io.IOException;
@@ -243,13 +245,18 @@ public class Controller {
             HoldemPlayer holdemPlayer = new HoldemPlayer();
             holdemPlayer.setLogin("Bot" + botCounter);
             holdemPlayer.setBot(true);
+            holdemPlayer.setCash(7000);
             players.add(holdemPlayer);
         }
 
         game = new Game();
-        game.setLowestBet(100);
+
+        SettingsServices settingsServices = SettingsServices.getInstance();
+        Settings settings = settingsServices.findOne(ui.Name);
+
+        game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);
-        game.setCurrentBet(100);
+        game.setCurrentBet(settings.getBet());
         game.setRoundBet(0);
 
         //Setting dealer and blinds
