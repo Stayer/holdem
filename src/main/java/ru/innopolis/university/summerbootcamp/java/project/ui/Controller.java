@@ -687,8 +687,8 @@ public class Controller {
 
 
         //устанавливаем слайдер в минимальную ставку
-        rateSlider.setMin(game.getCurrentBet());
-        rateSlider.setMax(game.getCurrentBet() + 100);
+        rateSlider.setMin(game.getTotalRoundBet());
+        rateSlider.setMax(game.getUser().getCash());
 
 
     }
