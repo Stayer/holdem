@@ -72,13 +72,14 @@ public class MainController  implements Initializable {
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainMenu.fxml"));
         Parent roott = loader.load();
-        if(!etName.getText().trim().isEmpty())
-        ui.Name = etName.getText();
-        else{
-            ui.Name = "defaultUser";
-        }
+
         SettingsServices services = SettingsServices.getInstance();
         Settings settings = services.findOne(ui.Name);
+        if(!etName.getText().trim().isEmpty())
+            ui.Name = etName.getText();
+        else{
+            ui.Name = settings.getUserName();
+        }
         ui.Cash = settings.getCash();
         MainMenuController personController = loader.getController();
         personController.setTextToLabel();
