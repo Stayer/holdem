@@ -24,6 +24,11 @@ public class PlayerServicesTest {
         List<Player> all = instance.findAll();
         assertTrue(all.contains(player));*/
 
+        SettingsServices settingsServices = SettingsServices.getInstance();
+        List<Settings> all = settingsServices.findAll();
+        for (Settings settings : all) {
+            System.out.println(settings.getUserName());
+        }
     }
 
 }

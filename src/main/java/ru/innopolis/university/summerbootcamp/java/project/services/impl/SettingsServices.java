@@ -1,5 +1,7 @@
 package ru.innopolis.university.summerbootcamp.java.project.services.impl;
 
+import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
+import ru.innopolis.university.summerbootcamp.java.project.model.Player;
 import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
 import ru.innopolis.university.summerbootcamp.java.project.repository.impl.SettingsRepository;
 import ru.innopolis.university.summerbootcamp.java.project.services.Service;
@@ -21,6 +23,8 @@ public class SettingsServices implements Service<Settings> {
         return settingsServices;
     }
 
+    private SettingsServices() {}
+
     public Settings save(Settings object) {
         settingsRepository.create(object);
         return object;
@@ -31,6 +35,14 @@ public class SettingsServices implements Service<Settings> {
         Settings settings = new Settings();
         settings.setUserName(name);
         Settings read = settingsRepository.read(settings);
+        if (read == null) {
+            read = new Settings();
+            read.setBat(25);
+            read.setCash(1000);
+            read.setDifficulty(1);
+            read.setMusic(true);
+            read.setUserName("Anonymous");
+        }
         return read;
     }
 

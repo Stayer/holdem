@@ -24,7 +24,7 @@ public class SettingsRepository implements Repository<Settings> {
 
     private void loadFiles() {
         String s = FileReaderWriterUtil.readFile(FILE_NAME);
-        Type hashMapType = new TypeToken<HashMap<String, Player>>() {
+        Type hashMapType = new TypeToken<HashMap<String, Settings>>() {
         }.getType();
         this.settings = new Gson().fromJson(s, hashMapType);
         if (settings == null) {

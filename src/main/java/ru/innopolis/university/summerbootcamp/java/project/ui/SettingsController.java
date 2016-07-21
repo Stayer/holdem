@@ -13,6 +13,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
+import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 
 import java.io.IOException;
 
@@ -136,12 +137,10 @@ public class SettingsController {
                 ui.player.stop();
                 ui.player = null;
             }
-
-
         }
 
-        CoreConfig setRep = new CoreConfig();
-        setRep.saveSettings(settings);
+        SettingsServices service = SettingsServices.getInstance();
+        service.save(settings);
 
         /*HashMap<Integer, String> players = new HashMap<>();
         players.put(3,"3 players");
