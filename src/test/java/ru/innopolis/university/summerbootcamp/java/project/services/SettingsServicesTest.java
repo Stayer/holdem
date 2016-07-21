@@ -1,10 +1,12 @@
 package ru.innopolis.university.summerbootcamp.java.project.services;
 
+import org.junit.Assert;
 import org.junit.Test;
 import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
 import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by iskandar on 21/07/16.
@@ -14,22 +16,26 @@ public class SettingsServicesTest {
     public void writeTest() {
         SettingsServices settingsServices = SettingsServices.getInstance();
 
-        Settings settings = new Settings();
-        settings.setUserName("dalv");
-        settings.setBat(100);
-        settings.setCash(123);
-        settings.setPassword("ddas");
-        settingsServices.save(settings);
+        String[] names = {"Joe Pasquale", "John Doe", "Alec Baldwin"};
 
-        Settings settings2 = new Settings();
-        settings2.setUserName("Joe Pasquale");
-        settings2.setBat(200);
-        settings2.setCash(1500);
-        settings2.setPassword("aasdasdasd");
-        settingsServices.save(settings2);
+        for (String name: names) {
+            Settings setting = new Settings();
+            setting.setUserName(name);
+            setting.setBat((int)(Math.random() * 100));
+            setting.setCash((int)(Math.random() * 1000));
+            setting.setPassword(name + "_password");
+            settingsServices.save(setting);
 
-        List<Settings> set = settingsServices.findAll();
+        }
+
+        for (String name: names) {
+            Settings setting = settingsServices.findOne(name);
+
+            Assert.assertTrue(
+                    "Cannot read setting for user " + name,
+                    Objects.equals(setting.getUserName(), name)
+            );
+        }
+
     }
-
-
 }

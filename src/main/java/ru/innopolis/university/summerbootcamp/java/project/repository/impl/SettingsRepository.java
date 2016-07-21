@@ -62,8 +62,8 @@ public class SettingsRepository implements Repository<Settings> {
 
     }
 
-    public void delete(Settings settings) {
-
+    public void delete(Settings s) {
+        settings.remove(s.getUserName());
     }
 
     @Override
