@@ -83,6 +83,10 @@ public class Settings {
         return difficulty;
     }
 
+    /**
+     *
+     * @param difficulty 1- normal; 2 - hardcore
+     */
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }

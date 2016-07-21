@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
+import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,8 +65,9 @@ public class MainMenuController implements Initializable {
         else{
            // root = FXMLLoader.load(getClass().getClassLoader().getResource("MainFX.fxml"));
         }
-        CoreConfig setRep = new CoreConfig();
-        Settings settings = new Settings(setRep.getSettings());
+
+        SettingsServices service = SettingsServices.getInstance();
+        Settings settings = service.findOne(ui.Name);
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Settings.fxml"));
         Parent root = loader.load();

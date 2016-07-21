@@ -187,7 +187,7 @@ public class Controller {
         rateSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                callLabel.setText(String.format("%.2f", new_val));
+                callLabel.setText(String.format("%d", new_val));
             }
         });
 
@@ -540,7 +540,7 @@ public class Controller {
         return game.getDeck().remove(0);
     }
 
-    private void refreshBet(int userNumber, double value) {
+    private void refreshBet(int userNumber, int value) {
         bets.get(userNumber).setText(value + "");
     }
 
