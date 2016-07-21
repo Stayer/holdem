@@ -104,7 +104,7 @@ public class Controller {
 
     private List<List<ImageView>> playersHandCards;
 
-    Game game = createGame(new HoldemPlayer(), 3);
+    Game game = createGame();
 
     @FXML
     private void initialize() {
@@ -227,11 +227,18 @@ public class Controller {
         rateSlider.setDisable(true);
     }
 
-    public Game createGame(HoldemPlayer user, int needPlayers) {
+    public Game createGame() {
+        SettingsServices services = SettingsServices.getInstance();
+        Settings settings = services.findOne(ui.Name);
+
+        HoldemPlayer player = new HoldemPlayer();
+        player.setCash(settings.getCash());
+        player.setBet(settings.getBet());
+
         int botCounter = 0;
         List<HoldemPlayer> players = new ArrayList<>();
-        players.add(user);
-        while (players.size() < needPlayers) {
+        players.add(player);
+        while (players.size() < settings.getPlayerCount()) {
             botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
             holdemPlayer.setLogin("Bot" + botCounter);
@@ -241,9 +248,6 @@ public class Controller {
         }
 
         game = new Game();
-
-        SettingsServices settingsServices = SettingsServices.getInstance();
-        Settings settings = settingsServices.findOne(ui.Name);
 
         game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);

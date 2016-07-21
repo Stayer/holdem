@@ -18,7 +18,6 @@ public class ScoreController {
     @FXML
     private Button btnBackOnMainMenu;
 
-
     public void onClickBack(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;
