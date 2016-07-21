@@ -161,7 +161,7 @@ public class Controller {
         confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double value = rateSlider.getValue();
+                int value = (int)rateSlider.getValue();
                 HoldemPlayer user = game.getUser();
                 makeBet(user, user.getBet() + value);
                 game.setRoundBet(user.getBet() + value);
@@ -174,7 +174,7 @@ public class Controller {
         call.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double diff = game.getCurrentBet() - game.getUser().getBet();
+                int diff = game.getCurrentBet() - game.getUser().getBet();
                 makeBet(game.getUser(), diff);
                 displayBets();
                 disableControl();
@@ -266,7 +266,7 @@ public class Controller {
             if (p.isBot()) {
                 if (game.getCurrentBet() > p.getBet()) {
                     //если текущая ставка больше чем его, то добавляем
-                    double count = game.getCurrentBet() - p.getBet();
+                    int count = game.getCurrentBet() - p.getBet();
                     makeBet(p, count);
                     displayBets();
                 }
@@ -392,7 +392,7 @@ public class Controller {
         }
     }
 
-    private void makeBet(HoldemPlayer p, double count) {
+    private void makeBet(HoldemPlayer p, int count) {
         p.setBet(p.getBet() + count);
         p.setCash(p.getCash() - count);
     }
@@ -402,7 +402,7 @@ public class Controller {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(i);
             if (holdemPlayer.isSmallBlind()) {
-                holdemPlayer.setBet(game.getLowestBet() / 2.0);
+                holdemPlayer.setBet((int) (game.getLowestBet() / 2.0));
             } else if (holdemPlayer.isBigBlind()) {
                 holdemPlayer.setBet(game.getLowestBet());
             }
@@ -518,7 +518,7 @@ public class Controller {
                 //CommandType decision = aiEngine.getDecision(game.getHoldemPlayers().get(i).getPlayingCards(), 0, 0);
                 //AI engine
                 if (game.getCurrentBet() > game.getHoldemPlayers().get(i).getBet()) {
-                    double diff = game.getCurrentBet() - game.getHoldemPlayers().get(i).getBet();
+                    int diff = game.getCurrentBet() - game.getHoldemPlayers().get(i).getBet();
                     game.getHoldemPlayers().get(i).setBet(game.getHoldemPlayers().get(i).getBet() + diff);
                     game.getHoldemPlayers().get(i).setCash(game.getHoldemPlayers().get(i).getCash() - diff);
                     refreshBet(i, game.getHoldemPlayers().get(i).getBet());

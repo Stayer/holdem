@@ -8,11 +8,11 @@ public class Game {
     private List<HoldemPlayer> holdemPlayers;
     private List<PlayingCard> deck;
     private List<PlayingCard> tableCards;
-    private double lowestBet;
+    private int lowestBet;
     private GameStage gameStage;
-    private double currentBet;
+    private int currentBet;
     private int currentPlayer;
-    private double roundBet;
+    private int roundBet;
     private double winPoint;
 
     public double getWinPoint() {
@@ -23,11 +23,11 @@ public class Game {
         this.winPoint = winPoint;
     }
 
-    public double getRoundBet() {
+    public int getRoundBet() {
         return roundBet;
     }
 
-    public void setRoundBet(double roundBet) {
+    public void setRoundBet(int roundBet) {
         this.roundBet = roundBet;
     }
 
@@ -63,11 +63,11 @@ public class Game {
         return holdemPlayers.get(0);
     }
 
-    public double getCurrentBet() {
+    public int getCurrentBet() {
         return currentBet;
     }
 
-    public void setCurrentBet(double currentBet) {
+    public void setCurrentBet(int currentBet) {
         this.currentBet = currentBet;
     }
 
@@ -79,11 +79,11 @@ public class Game {
         this.gameStage = gameStage;
     }
 
-    public double getLowestBet() {
+    public int getLowestBet() {
         return lowestBet;
     }
 
-    public void setLowestBet(double lowestBet) {
+    public void setLowestBet(int lowestBet) {
         this.lowestBet = lowestBet;
     }
 
