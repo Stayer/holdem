@@ -8,7 +8,7 @@ public class HoldemPlayer extends Player {
     private boolean isDealer;
     private boolean isSmallBlind;
     private boolean isBigBlind;
-    private double bet;
+    private int bet;
     private boolean isBot;
 
     public boolean isBot() {
@@ -43,11 +43,11 @@ public class HoldemPlayer extends Player {
         isBigBlind = bigBlind;
     }
 
-    public double getBet() {
+    public int getBet() {
         return bet;
     }
 
-    public void setBet(double bet) {
+    public void setBet(int bet) {
         this.bet = bet;
     }
 }
