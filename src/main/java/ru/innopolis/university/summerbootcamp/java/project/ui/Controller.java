@@ -114,6 +114,7 @@ public class Controller {
 
     private SettingsServices settingsServices = SettingsServices.getInstance();
 
+
     private List<ImageView> chips;
     private List<ImageView> cards;
     private List<Label> bets;
@@ -229,6 +230,7 @@ public class Controller {
                 }
                 MainMenuController personController = loader.getController();
                 personController.setTextToLabel();
+                ui.Cash = settingsServices.findOne(game.getUser().getLogin()).getCash();
                 personController.setCashToLabel();
                 //create a new scene with root and set the stage
                 Scene scene = new Scene(roott);
@@ -252,6 +254,7 @@ public class Controller {
         check.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                settingsServices.findOne(game.getUser().getLogin()).setCash((int)game.getUser().getCash());
                 if (game.getUser().isBigBlind()) {
                     runNextRound();
                 }
@@ -282,8 +285,7 @@ public class Controller {
 
 
     public Game createGame() {
-        SettingsServices services = SettingsServices.getInstance();
-        Settings settings = services.findOne(ui.Name);
+        Settings settings = settingsServices.findOne(ui.Name);
 
         HoldemPlayer player = new HoldemPlayer();
         player.setCash(settings.getCash());
@@ -543,6 +545,10 @@ public class Controller {
     private void makeBet(HoldemPlayer p, int count) {
         p.setBet(p.getBet() + count);
         p.setCash(p.getCash() - count);
+        
+        Settings settings =  settingsServices.findOne(game.getUser().getLogin());
+        settings.setCash((int)game.getUser().getCash());
+        settingsServices.save(settings);
     }
 
 
@@ -655,7 +661,6 @@ public class Controller {
 
     }
 
-
     private void bettingRound(int startPlayer) {
         if (startPlayer == game.getHoldemPlayers().size() - 1) {
             startPlayer = 0;
@@ -676,8 +681,6 @@ public class Controller {
                 enableUserControl();
             }
         }
-
-
     }
 
     private void showUserCard() {
@@ -712,6 +715,10 @@ public class Controller {
     }
 
     public void nextRound() {
+        Settings settings =  settingsServices.findOne(game.getUser().getLogin());
+        settings.setCash((int)game.getUser().getCash());
+        settingsServices.save(settings);
+
         changeRoles(game);
         resetBets();
         settingBets();
@@ -747,7 +754,6 @@ public class Controller {
         }
     }
 
-
     public void distributePlayingCards() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             HoldemPlayer user = game.getHoldemPlayers().get(i);
@@ -756,7 +762,6 @@ public class Controller {
             playingCard = takeCard();
             user.getPlayingCards().add(playingCard);
         }
-
     }
 
     private void showBets() {
