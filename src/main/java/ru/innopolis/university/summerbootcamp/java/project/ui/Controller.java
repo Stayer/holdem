@@ -187,7 +187,7 @@ public class Controller {
         rateSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                callLabel.setText(String.format("%d", new_val));
+                callLabel.setText(String.valueOf(new_val));
             }
         });
 
