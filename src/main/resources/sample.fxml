@@ -17,7 +17,11 @@
    <bottom>
       <HBox id="bottom_control" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="fold-red" fx:id="fold" mnemonicParsing="false" text="Fold">
+             <Button id="control-rise" fx:id="back" mnemonicParsing="false" text="Back">
+                 <HBox.margin>
+                     <Insets left="8.0" right="4.0" />
+                 </HBox.margin></Button>
+             <Button id="fold-red" fx:id="fold" mnemonicParsing="false" text="Fold">
                <HBox.margin>
                   <Insets left="8.0" right="4.0" />
                </HBox.margin></Button>
