@@ -53,7 +53,6 @@ public class MainController  implements Initializable {
         }
     }
 
-
     public void onClickMain(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;

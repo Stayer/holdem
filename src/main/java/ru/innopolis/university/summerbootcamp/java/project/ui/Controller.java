@@ -100,17 +100,9 @@ public class Controller {
     private List<ImageView> cards;
     private List<Label> bets;
 
-    private Math mainApp;
-
     private AIEngine aiEngine = new AIEngine();
 
     private List<List<ImageView>> playersHandCards;
-
-
-    public void setMainApp(Math mainApp) {
-        this.mainApp = mainApp;
-    }
-
 
     Game game = createGame(new HoldemPlayer(), 3);
 
@@ -235,7 +227,6 @@ public class Controller {
         rateSlider.setDisable(true);
     }
 
-
     public Game createGame(HoldemPlayer user, int needPlayers) {
         int botCounter = 0;
         List<HoldemPlayer> players = new ArrayList<>();
@@ -268,7 +259,6 @@ public class Controller {
         return game;
     }
 
-
     public List<PlayingCard> createAndShuffleDeck() {
         LinkedList<PlayingCard> playingCards = new LinkedList<>();
         final Random random = new Random();
@@ -280,7 +270,6 @@ public class Controller {
             Collections.shuffle(playingCards);
         return playingCards;
     }
-
 
     public void initGame() {
         game.setGameStage(GameStage.Start);
@@ -357,7 +346,6 @@ public class Controller {
         }
     }
 
-
     private GameStage nextGameStage(GameStage start) {
         for (GameStage st : GameStage.values()) {
             if (st.compareTo(start) > 0) {
@@ -377,7 +365,6 @@ public class Controller {
         game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
-
 
     private void riever() {
         //1 карта для ривера
@@ -433,7 +420,6 @@ public class Controller {
         p.setCash(p.getCash() - count);
     }
 
-
     public void settingBets() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(i);
@@ -445,7 +431,6 @@ public class Controller {
         }
         game.setRoundBet(game.getLowestBet());
     }
-
 
     //TODO: refactor it
     public void changeDealer(List<HoldemPlayer> holdemPlayers, int number, boolean value) {
@@ -543,7 +528,6 @@ public class Controller {
 
     }
 
-
     private void bettingRound(int startPlayer) {
         if (startPlayer == game.getHoldemPlayers().size() - 1) {
             startPlayer = 0;
@@ -581,7 +565,7 @@ public class Controller {
     }
 
     private void enableUserControl() {
-        //если сумма не ровна то добираем или увеличиваем ставку
+        //если сумма не равна то добираем или увеличиваем ставку
         if (game.getCurrentBet() == game.getUser().getBet()) {
             check.setDisable(false);
         } else {
@@ -624,7 +608,6 @@ public class Controller {
             game.getHoldemPlayers().get(i).setBet(0);
         }
     }
-
 
     private void afterUserAction() {
 

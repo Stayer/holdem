@@ -82,7 +82,6 @@ public class MainMenuController implements Initializable {
 
     }
 
-
     public void onClickScore(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;
