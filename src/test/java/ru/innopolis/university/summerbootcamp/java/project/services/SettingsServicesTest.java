@@ -21,7 +21,7 @@ public class SettingsServicesTest {
         for (String name: names) {
             Settings setting = new Settings();
             setting.setUserName(name);
-            setting.setBat((int)(Math.random() * 100));
+            setting.setBet((int)(Math.random() * 100));
             setting.setCash((int)(Math.random() * 1000));
             setting.setPassword(name + "_password");
             settingsServices.save(setting);

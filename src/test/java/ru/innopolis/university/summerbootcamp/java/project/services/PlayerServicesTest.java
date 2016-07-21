@@ -27,7 +27,7 @@ public class PlayerServicesTest {
         SettingsServices settingsServices = SettingsServices.getInstance();
         List<Settings> all = settingsServices.findAll();
         for (Settings settings : all) {
-            System.out.println(settings.getUserName());
+            //System.out.println(settings.getUserName());
         }
     }
 
