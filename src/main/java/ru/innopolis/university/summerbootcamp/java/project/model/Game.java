@@ -12,7 +12,7 @@ public class Game {
     private GameStage gameStage;
     private int currentBet;
     private int currentPlayer;
-    private int roundBet;
+    private int totalRoundBet;
     private double winPoint;
 
     public double getWinPoint() {
@@ -23,12 +23,12 @@ public class Game {
         this.winPoint = winPoint;
     }
 
-    public int getRoundBet() {
-        return roundBet;
+    public int getTotalRoundBet() {
+        return totalRoundBet;
     }
 
-    public void setRoundBet(int roundBet) {
-        this.roundBet = roundBet;
+    public void setTotalRoundBet(int totalRoundBet) {
+        this.totalRoundBet = totalRoundBet;
     }
 
     public List<PlayingCard> getTableCards() {

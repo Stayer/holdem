@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
+import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
@@ -99,7 +100,8 @@ public class Controller {
     private Label lbBot2;
     @FXML
     private Label lbUserName;
-
+    @FXML
+    private Button nextRound;
 
     @FXML
     private Label bet2;
@@ -184,11 +186,22 @@ public class Controller {
         confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                int value = (int)rateSlider.getValue();
+                int value = (int) rateSlider.getValue();
                 HoldemPlayer user = game.getUser();
-                makeBet(user, user.getBet() + value);
-                game.setRoundBet(user.getBet() + value);
-                displayBets();
+                makeBet(user, value);
+                game.setCurrentBet(user.getBet());
+                showBets();
+                step();
+            }
+        });
+
+        nextRound.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                nextRound.setDisable(true);
+                resetRound();
+                nextRound();
+                game.setGameStage(nextGameStage(game.getGameStage()));
                 step();
             }
         });
@@ -198,7 +211,7 @@ public class Controller {
             public void handle(MouseEvent event) {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainMenu.fxml"));
                 Parent roott = null;
-                Stage stage=(Stage) back.getScene().getWindow();
+                Stage stage = (Stage) back.getScene().getWindow();
 
                 try {
                     roott = loader.load();
@@ -221,9 +234,18 @@ public class Controller {
             public void handle(MouseEvent event) {
                 int diff = game.getCurrentBet() - game.getUser().getBet();
                 makeBet(game.getUser(), diff);
-                displayBets();
+                showBets();
                 disableControl();
                 step();
+            }
+        });
+
+        check.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(game.getUser().isBigBlind()){
+                    runNextRound();
+                }
             }
         });
 
@@ -271,7 +293,7 @@ public class Controller {
         game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);
         game.setCurrentBet(settings.getBet());
-        game.setRoundBet(0);
+        game.setTotalRoundBet(0);
 
         //Setting dealer and blinds
         game.getHoldemPlayers().get(0).setLogin(settings.getUserName());
@@ -305,8 +327,9 @@ public class Controller {
         game.setGameStage(GameStage.Preflop);
         showUserCard();
         settingBets();
-        displayBets();
+        showBets();
         displayNames();
+        nextRound.setDisable(true);
         game.setGameStage(GameStage.Round1);
         step();
     }
@@ -320,7 +343,7 @@ public class Controller {
                     //если текущая ставка больше чем его, то добавляем
                     int count = game.getCurrentBet() - p.getBet();
                     makeBet(p, count);
-                    displayBets();
+                    showBets();
                 }
             } else {
                 // передаем управление пользователю
@@ -330,46 +353,98 @@ public class Controller {
             if (p.isBigBlind() && p.getBet() == game.getCurrentBet()) {
                 //следующий кон
                 //обнуляем ставки
-                GameStage gameStage = nextGameStage(game.getGameStage());
-                game.setGameStage(gameStage);
-
-
-                countAndDisplayRoundBets();
-                resetBets();
-                displayBets();
-
-                setCurrentPlayer();
-
-                switch (game.getGameStage()) {
-                    case Flop:
-                        flop();
-                        break;
-                    case Tern:
-                        tern();
-                        break;
-                    case Riever:
-                        riever();
-                        break;
-                    case Final:
-                        showWinner();
-                }
+                runNextRound();
                 //заканчиваем раунд
                 break;
             }
         } while (true);
     }
 
-    private void showWinner() {
-        for (int i = 1; i < game.getHoldemPlayers().size(); i++) {
-            showPlayerCard(i);
+    private void runNextRound() {
+        GameStage gameStage = nextGameStage(game.getGameStage());
+        game.setGameStage(gameStage);
+
+
+        countAndDisplayRoundBets();
+        resetBets();
+        showBets();
+
+        setCurrentPlayer();
+
+        switch (game.getGameStage()) {
+            case Flop:
+                flop();
+                break;
+            case Tern:
+                tern();
+                break;
+            case Riever:
+                riever();
+                break;
+            case Final:
+                int winner = showWinner();
+                getPrize(winner);
+
+                enableNextGame();
         }
     }
 
+    private void enableNextGame() {
+        disableControl();
+        nextRound.setDisable(false);
+
+    }
+
+
+    private void resetRound() {
+        game.setGameStage(GameStage.Preflop);
+        game.setWinPoint(0);
+        game.setCurrentBet(0);
+    }
+
+    private void getPrize(int winner) {
+        HoldemPlayer win = game.getHoldemPlayers().get(winner);
+        win.setCash(win.getCash() + game.getWinPoint());
+    }
+
+    private int showWinner() {
+        int winner = GameEngine.winnerPicker(game.getHoldemPlayers());
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            if (i != winner) {
+                showPlayerCard(i, 0.1);
+                continue;
+            }
+            showPlayerCard(i);
+        }
+        return winner;
+    }
+
+
     private void showPlayerCard(int id) {
+        showPlayerCard(id, 1.0);
+    }
+
+
+    private void hidePlayerCard(int id) {
+        hidePlayerCard(id, 1.0);
+    }
+
+
+    private void showPlayerCard(int id, double opacity) {
         HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(id);
         for (int j = 0; j < 2; j++) {
             PlayingCard card = holdemPlayer.getPlayingCards().get(j);
             playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getPlayingCardImageUrlByValue(card)).toExternalForm()));
+            playersHandCards.get(id).get(j).setStyle("-fx-opacity: " + opacity + ";");
+
+        }
+    }
+
+    private void hidePlayerCard(int id, double opacity) {
+        for (int j = 0; j < 2; j++) {
+            playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
+            playersHandCards.get(id).get(j).setStyle("-fx-opacity: " + opacity + ";");
+
         }
     }
 
@@ -389,7 +464,7 @@ public class Controller {
         showTableCard();
         //ставим ставки
         settingBets();
-        displayBets();
+        showBets();
         game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
@@ -401,7 +476,7 @@ public class Controller {
         showTableCard();
         //ставим ставки
         settingBets();
-        displayBets();
+        showBets();
         game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
@@ -432,7 +507,7 @@ public class Controller {
         }
         //ставим ставки
         settingBets();
-        displayBets();
+        showBets();
         game.setGameStage(nextGameStage(game.getGameStage()));
         step();
     }
@@ -459,7 +534,7 @@ public class Controller {
                 holdemPlayer.setBet(game.getLowestBet());
             }
         }
-        game.setRoundBet(game.getLowestBet());
+        game.setCurrentBet(game.getLowestBet());
     }
 
 
@@ -609,8 +684,8 @@ public class Controller {
 
 
         //устанавливаем слайдер в минимальную ставку
-        rateSlider.setMin(game.getRoundBet());
-        rateSlider.setMax(game.getRoundBet() + 100);
+        rateSlider.setMin(game.getCurrentBet());
+        rateSlider.setMax(game.getCurrentBet() + 100);
 
 
     }
@@ -619,9 +694,19 @@ public class Controller {
         changeRoles(game);
         resetBets();
         settingBets();
+        showBets();
         removeCards();
         settingDeck();
-        startGame();
+        cleanTableCards();
+        hidePlayersCards();
+        distributePlayingCards();
+        showUserCard();
+    }
+
+    private void hidePlayersCards() {
+        for (int i = 1; i < game.getHoldemPlayers().size(); i++) {
+            hidePlayerCard(i);
+        }
     }
 
     private void settingDeck() {
@@ -642,10 +727,6 @@ public class Controller {
     }
 
 
-    private void afterUserAction() {
-
-    }
-
     public void distributePlayingCards() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             HoldemPlayer user = game.getHoldemPlayers().get(i);
@@ -657,7 +738,7 @@ public class Controller {
 
     }
 
-    private void displayBets() {
+    private void showBets() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             bets.get(i).setText(game.getHoldemPlayers().get(i).getBet() + "");
         }
@@ -668,8 +749,17 @@ public class Controller {
             names.get(i).setText(game.getHoldemPlayers().get(i).getLogin() + "");
         }
     }
+
+    private void cleanTableCards(){
+        for (int i = 0; i < game.getTableCards().size(); i++) {
+            PlayingCard playingCard = game.getTableCards().get(i);
+            cards.get(i).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
+        }
+    }
+
+
     private void displayRoundBet() {
-        roundBet.setText(game.getRoundBet() + "");
+        roundBet.setText(game.getTotalRoundBet() + "");
     }
 
 }
