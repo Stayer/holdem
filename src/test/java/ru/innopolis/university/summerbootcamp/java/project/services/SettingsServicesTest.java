@@ -12,11 +12,10 @@ import java.util.Objects;
  * Created by iskandar on 21/07/16.
  */
 public class SettingsServicesTest {
+    private String[] names = {"Joe Pasquale", "John Doe", "Alec Baldwin"};
     @Test
     public void writeTest() {
         SettingsServices settingsServices = SettingsServices.getInstance();
-
-        String[] names = {"Joe Pasquale", "John Doe", "Alec Baldwin"};
 
         for (String name: names) {
             Settings setting = new Settings();
@@ -36,6 +35,19 @@ public class SettingsServicesTest {
                     Objects.equals(setting.getUserName(), name)
             );
         }
+    }
 
+    @Test
+    public void readTest() {
+        SettingsServices settingsServices = SettingsServices.getInstance();
+
+        for (String name: names) {
+            Settings setting = settingsServices.findOne(name);
+
+            Assert.assertTrue(
+                    "Cannot read setting for user " + name,
+                    Objects.equals(setting.getUserName(), name)
+            );
+        }
     }
 }

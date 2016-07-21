@@ -22,7 +22,7 @@ public class ControllerTest {
         player.setLogin("Joe Pasquale");
         player.setBet(931);
 
-        Game currentGame = controller.createGame(player, 3);
+        Game currentGame = controller.createGame();
         List<HoldemPlayer> players = currentGame.getHoldemPlayers();
 
         Assert.assertTrue(

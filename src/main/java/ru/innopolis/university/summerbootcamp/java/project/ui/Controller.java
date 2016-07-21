@@ -106,6 +106,8 @@ public class Controller {
     @FXML
     private Label bet2;
 
+    private SettingsServices settingsServices = SettingsServices.getInstance();
+
     private List<ImageView> chips;
     private List<ImageView> cards;
     private List<Label> bets;
@@ -243,7 +245,7 @@ public class Controller {
         check.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(game.getUser().isBigBlind()){
+                if (game.getUser().isBigBlind()) {
                     runNextRound();
                 }
             }
@@ -387,6 +389,11 @@ public class Controller {
 
                 enableNextGame();
         }
+
+
+        Settings settings = settingsServices.findOne(ui.Name);
+        settings.setCash(ui.Cash);
+        settingsServices.save(settings);
     }
 
     private void enableNextGame() {
@@ -750,7 +757,7 @@ public class Controller {
         }
     }
 
-    private void cleanTableCards(){
+    private void cleanTableCards() {
         for (int i = 0; i < game.getTableCards().size(); i++) {
             PlayingCard playingCard = game.getTableCards().get(i);
             cards.get(i).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
