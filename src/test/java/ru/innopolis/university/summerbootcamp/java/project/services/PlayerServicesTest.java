@@ -26,12 +26,10 @@ public class PlayerServicesTest {
 
 
         SettingsServices settingsServices = SettingsServices.getInstance();
-        Settings settings = new Settings();
-        settings.setUserName("dalv");
-        settings.setBat(100);
-        settings.setCash(123);
-        settings.setPassword("ddas");
-        settingsServices.save(settings);
+        List<Settings> all = settingsServices.findAll();
+        for (Settings settings : all) {
+            System.out.println(settings.getUserName());
+        }
     }
 
 }
