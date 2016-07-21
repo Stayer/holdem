@@ -35,11 +35,11 @@ public class SettingsServices implements Service<Settings> {
         Settings read = settingsRepository.read(settings);
         if (read == null) {
             read = new Settings();
-            read.setBet(25);
+            read.setBet(10);
             read.setCash(1000);
             read.setDifficulty(1);
             read.setMusic(true);
-            read.setUserName("Anonymous");
+            read.setUserName(name);
         }
         return read;
     }
