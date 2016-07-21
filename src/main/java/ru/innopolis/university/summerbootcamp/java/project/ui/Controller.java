@@ -4,19 +4,26 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
 import ru.innopolis.university.summerbootcamp.java.project.model.Game;
 import ru.innopolis.university.summerbootcamp.java.project.model.HoldemPlayer;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
+import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
+import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 import ru.innopolis.university.summerbootcamp.java.project.ui.util.ViewUtil;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Controller {
@@ -62,6 +69,8 @@ public class Controller {
 
     @FXML
     private Button test;
+    @FXML
+    private Button back;
 
     @FXML
     private Button check;
@@ -170,6 +179,28 @@ public class Controller {
             }
         });
 
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainMenu.fxml"));
+                Parent roott = null;
+                Stage stage=(Stage) back.getScene().getWindow();
+
+                try {
+                    roott = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                MainMenuController personController = loader.getController();
+                personController.setTextToLabel();
+                personController.setCashToLabel();
+                //create a new scene with root and set the stage
+                Scene scene = new Scene(roott);
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
+
 
         call.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -187,7 +218,7 @@ public class Controller {
         rateSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                callLabel.setText(String.format("%d", new_val));
+                callLabel.setText(String.valueOf(new_val.intValue()));
             }
         });
 
@@ -214,13 +245,18 @@ public class Controller {
             HoldemPlayer holdemPlayer = new HoldemPlayer();
             holdemPlayer.setLogin("Bot" + botCounter);
             holdemPlayer.setBot(true);
+            holdemPlayer.setCash(7000);
             players.add(holdemPlayer);
         }
 
         game = new Game();
-        game.setLowestBet(100);
+
+        SettingsServices settingsServices = SettingsServices.getInstance();
+        Settings settings = settingsServices.findOne(ui.Name);
+
+        game.setLowestBet(settings.getBet());
         game.setHoldemPlayers(players);
-        game.setCurrentBet(100);
+        game.setCurrentBet(settings.getBet());
         game.setRoundBet(0);
 
         //Setting dealer and blinds

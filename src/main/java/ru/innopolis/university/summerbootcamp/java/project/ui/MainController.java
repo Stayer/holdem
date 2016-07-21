@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ru.innopolis.university.summerbootcamp.java.project.model.Settings;
+import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 
 import java.io.IOException;
 import java.net.URL;
@@ -75,6 +77,9 @@ public class MainController  implements Initializable {
         else{
             ui.Name = "defaultUser";
         }
+        SettingsServices services = SettingsServices.getInstance();
+        Settings settings = services.findOne(ui.Name);
+        ui.Cash = settings.getCash();
         MainMenuController personController = loader.getController();
         personController.setTextToLabel();
         personController.setCashToLabel();

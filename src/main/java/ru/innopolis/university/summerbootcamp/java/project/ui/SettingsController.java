@@ -109,13 +109,13 @@ public class SettingsController {
             settings.setPlayerCount(7);
 
         if (Bet1.isSelected())
-            settings.setBat(10);
+            settings.setBet(10);
         if (Bet2.isSelected())
-            settings.setBat(25);
+            settings.setBet(25);
         if (Bet3.isSelected())
-            settings.setBat(100);
+            settings.setBet(100);
         if (Bet4.isSelected())
-            settings.setBat(250);
+            settings.setBet(250);
         if (difficultyEasy.isSelected())
             settings.setDifficulty(1);
         if (difficultyHard.isSelected())

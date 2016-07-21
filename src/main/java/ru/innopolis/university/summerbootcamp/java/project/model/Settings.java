@@ -8,19 +8,19 @@ public class Settings {
     private int cash;
     private int playerCount;
     private int difficulty;
-    private int bat;
+    private int bet;
     private boolean music;
 
     public Settings() {
     }
 
-    public Settings(String personalName, String password, int cash, int playerCount, int difficulty, int bat) {
+    public Settings(String personalName, String password, int cash, int playerCount, int difficulty, int bet) {
         this.userName = personalName;
         this.password = password;
         this.cash = cash;
         this.playerCount = playerCount;
         this.difficulty = difficulty;
-        this.bat = bat;
+        this.bet = bet;
     }
     public Settings(Settings settings) {
         this.userName = settings.getUserName();
@@ -28,22 +28,22 @@ public class Settings {
         this.cash = settings.getCash();
         this.playerCount = settings.getPlayerCount();
         this.difficulty = settings.getDifficulty();
-        this.bat = settings.getBat();
+        this.bet = settings.getBet();
     }
 
-    public Settings(String userName, int cash, int playerCount, int difficulty, int bat, boolean music) {
+    public Settings(String userName, int cash, int playerCount, int difficulty, int bet, boolean music) {
         this.userName = userName;
         this.cash = cash;
         this.playerCount = playerCount;
         this.difficulty = difficulty;
-        this.bat = bat;
+        this.bet = bet;
         this.music = music;
     }
 
-    public Settings(int playerCount, int difficulty, int bat, boolean music) {
+    public Settings(int playerCount, int difficulty, int bet, boolean music) {
         this.playerCount = playerCount;
         this.difficulty = difficulty;
-        this.bat = bat;
+        this.bet = bet;
         this.music = music;
     }
 
@@ -91,12 +91,12 @@ public class Settings {
         this.difficulty = difficulty;
     }
 
-    public int getBat() {
-        return bat;
+    public int getBet() {
+        return bet;
     }
 
-    public void setBat(int bat) {
-        this.bat = bat;
+    public void setBet(int bet) {
+        this.bet = bet;
     }
 
     public int getPlayerCount() {
