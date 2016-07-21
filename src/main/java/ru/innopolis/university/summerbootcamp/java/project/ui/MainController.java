@@ -77,9 +77,7 @@ public class MainController  implements Initializable {
         if(!etName.getText().trim().isEmpty()) {
             ui.Name = etName.getText();
             settings = services.findOne(ui.Name);
-            System.out.println(ui.Name);
-            System.out.println(settings.getUserName());
-            System.out.println(settings.getCash());
+
         }
         else{
             ui.Name = "Anonymous";
