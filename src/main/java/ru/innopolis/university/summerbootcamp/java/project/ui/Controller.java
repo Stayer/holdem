@@ -252,7 +252,10 @@ public class Controller {
         int botCounter = 0;
         List<HoldemPlayer> players = new ArrayList<>();
         players.add(player);
-        while (players.size() < settings.getPlayerCount()) {
+
+        int playerCount = settings.getPlayerCount() > 0 ? settings.getPlayerCount() : 3;
+
+        while (players.size() < playerCount) {
             botCounter++;
             HoldemPlayer holdemPlayer = new HoldemPlayer();
             holdemPlayer.setLogin("Bot" + botCounter);
