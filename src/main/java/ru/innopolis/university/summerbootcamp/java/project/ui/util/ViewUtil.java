@@ -14,4 +14,8 @@ public class ViewUtil {
         return prefix + playingCard.getRank() + "_" + playingCard.getSuit()+".png";
     }
 
+    public static String getBackCardImage() {
+        return prefix + "back.png";
+    }
+
 }
