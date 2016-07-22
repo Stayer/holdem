@@ -119,7 +119,8 @@ public class GameController {
         int roundBet = 0;
         int index = dealerIndex + 1;
         AIEngine ai = new AIEngine();
-
+        System.out.println("Table cash: " + game.getTableCash());
+        System.out.println("Current bet: " + game.getCurrentBet());
         do {
             for (HoldemPlayer p: game.getHoldemPlayers()) {
                 if (!p.isBot() && p.isInGame()) {
