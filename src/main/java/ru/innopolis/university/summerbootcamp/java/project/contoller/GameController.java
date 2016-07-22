@@ -9,10 +9,7 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage
 import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 import ru.innopolis.university.summerbootcamp.java.project.ui.ui;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,6 +50,15 @@ public class GameController {
         }
     }
 
+    public HoldemPlayer getSmallBlindPlayer()
+    {
+        return game.getHoldemPlayers().stream().filter((p) -> Objects.equals(p.isSmallBlind(), true)).findFirst().orElse(null);
+    }
+    public HoldemPlayer getBigBlindPlayer()
+    {
+        return game.getHoldemPlayers().stream().filter((p) -> Objects.equals(p.isBigBlind(), true)).findFirst().orElse(null);
+    }
+
     public static boolean emptyGame(List<HoldemPlayer> players) {
 
         int playerCounter = 0;
@@ -64,7 +70,7 @@ public class GameController {
     }
 
     /**
-     * Change dealer and blinds actors in a game
+     * Clear dealer, blinds, beds, cards
      *
      * @param game
      */
