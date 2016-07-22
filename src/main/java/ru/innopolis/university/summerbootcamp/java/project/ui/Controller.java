@@ -235,6 +235,7 @@ public class Controller {
                 //good
                 //create a new scene with root and set the stage
                 Scene scene = new Scene(roott);
+                stage.setTitle("Texas Holdem");
                 stage.setScene(scene);
                 stage.show();
             }

@@ -452,7 +452,7 @@ public class ui extends Application {
         player.setCycleCount(MediaPlayer.INDEFINITE);
         player.play();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainFX.fxml"));
-        primaryStage.setTitle("Hello Word");
+        primaryStage.setTitle("#InnoBootCamp2016 - G3");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 

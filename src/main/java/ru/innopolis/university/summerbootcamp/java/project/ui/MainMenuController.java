@@ -77,6 +77,7 @@ public class MainMenuController implements Initializable {
         personController.setplayer(settings.getPlayerCount());
         //create a new scene with root and set the stage
         Scene scene = new Scene(root);
+        stage.setTitle("Settings");
         stage.setScene(scene);
         stage.show();
 
@@ -97,6 +98,7 @@ public class MainMenuController implements Initializable {
         }
         //create a new scene with root and set the stage
         Scene scene = new Scene(root);
+        stage.setTitle("Score");
         stage.setScene(scene);
         stage.show();
     }
@@ -115,6 +117,7 @@ public class MainMenuController implements Initializable {
         }
         //create a new scene with root and set the stage
         Scene scene = new Scene(root);
+        stage.setTitle("Tutorial");
         stage.setScene(scene);
         stage.show();
     }
@@ -124,7 +127,7 @@ public class MainMenuController implements Initializable {
         if(event.getSource()==btnStart){
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
             root.getStylesheets().addAll(getClass().getClassLoader().getResource("style.css").toExternalForm());
-            stage.setTitle("Holdem");
+            stage.setTitle("Texas Holdem - #InnoBootCamp2016 - G3");
             stage.setResizable(false);
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
