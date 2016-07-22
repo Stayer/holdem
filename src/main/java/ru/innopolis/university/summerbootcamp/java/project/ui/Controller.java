@@ -185,10 +185,13 @@ public class Controller {
         playersHandCards.add(firstUserCardView);
         playersHandCards.add(secondUserCardView);
 
+
         fold.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                nextRound();
+
+                buttonClick = 1;
+                roundGenerator();
             }
         });
 
@@ -196,20 +199,28 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
                 int value = (int) rateSlider.getValue();
-                HoldemPlayer user = game.getUser();
-                makeBet(user, value);
-                game.setCurrentBet(user.getBet());
-                game.setCurrentCash(user.getCash());
-                showBets();
-                displayCashes();
-                step();
+                game.getUser().setBet(value);
+                buttonClick = 2;
+                roundGenerator();
+
+   //             makeBet(user, value);
+   //             game.setCurrentBet(user.getBet());
+   //             game.setCurrentCash(user.getCash());
+   //             showBets();
+   //             displayCashes();
+   //             step();
             }
         });
 
         nextRound.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                roundGenerator();
+    //            nextRound.setDisable(true);
+    //            resetRound();
+    //            nextRound();
+    //            game.setGameStage(nextGameStage(game.getGameStage()));
+    //            step();
             }
         });
 
@@ -236,10 +247,15 @@ public class Controller {
             }
         });
 
+
         call.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                int value = (int) rateSlider.getValue();
                 int diff = game.getCurrentBet() - game.getUser().getBet();
+                game.getUser().setBet(diff);
+                buttonClick = 2;
+                roundGenerator();
             }
         });
 
@@ -247,25 +263,11 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
                 settingsServices.findOne(game.getUser().getLogin()).setCash((int)game.getUser().getCash());
+                buttonClick = 3;
+                roundGenerator();
             }
         });
-
-        private void disableControl() {
-            confirm.setDisable(true);
-            check.setDisable(true);
-            call.setDisable(true);
-            fold.setDisable(true);
-            rateSlider.setDisable(true);
-        }
-        rateSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                callLabel.setText(String.valueOf(new_val.intValue()));
-            }
-        });
-
         // Game Logics 22.07.2016
-        GameEngine ge = new GameEngine();
 
         Settings settings = settingsServices.findOne(ui.Name);
 
@@ -294,9 +296,81 @@ public class Controller {
         game.setCurrentBet(settings.getBet());
         game.setTotalRoundBet(settings.getBet());
 
-
+        // END OF GAME LOGICS
 
     }
+
+    // dalv666
+
+    private void showPlayerCard(int id, double opacity) {
+        HoldemPlayer holdemPlayer = game.getHoldemPlayers().get(id);
+        for (int j = 0; j < 2; j++) {
+            PlayingCard card = holdemPlayer.getPlayingCards().get(j);
+            playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getPlayingCardImageUrlByValue(card)).toExternalForm()));
+            playersHandCards.get(id).get(j).setStyle("-fx-opacity: " + opacity + ";");
+
+        }
+    }
+
+    private void hidePlayerCard(int id, double opacity) {
+        for (int j = 0; j < 2; j++) {
+            playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
+            playersHandCards.get(id).get(j).setStyle("-fx-opacity: " + opacity + ";");
+
+        }
+    }
+    private void showPlayerCard(int id) {
+        showPlayerCard(id, 1.0);
+    }
+
+
+    private void hidePlayerCard(int id) {
+        hidePlayerCard(id, 1.0);
+    }
+
+    private int showWinner() {
+        int winner = GameEngine.winnerPicker(game.getHoldemPlayers());
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            if (i != winner) {
+                showPlayerCard(i, 0.1);
+                continue;
+            }
+            showPlayerCard(i);
+        }
+        return winner;
+    }
+    private void showBets() {
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            bets.get(i).setText(game.getHoldemPlayers().get(i).getBet() + "");
+        }
+    }
+
+    private void displayCashes() {
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            cashes.get(i).setText(game.getHoldemPlayers().get(i).getCash() + "");
+        }
+    }
+
+    private void displayNames() {
+        for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
+            names.get(i).setText(game.getHoldemPlayers().get(i).getLogin() + "");
+        }
+    }
+
+    private void cleanTableCards() {
+        for (int i = 0; i < game.getTableCards().size(); i++) {
+            PlayingCard playingCard = game.getTableCards().get(i);
+            cards.get(i).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
+        }
+    }
+
+
+    private void displayRoundBet() {
+        roundBet.setText(game.getTotalRoundBet() + "");
+    }
+
+    // end dalv666
+
     /**
      * change dealer, sb, bb
      */
@@ -340,6 +414,7 @@ public class Controller {
             if (p.getCash() < game.getLowestBet()) p.setInGame(false);
             p.setPlayingCards(null);
         }
+        gameStage = 0;
     }
     public void recalculateScores(int userId, int cash) {
         game.getHoldemPlayers().get(userId).setCash(game.getHoldemPlayers().get(userId).getCash() + cash);
@@ -372,136 +447,140 @@ public class Controller {
         System.out.println(mess);
         return Integer.parseInt(scanner.nextLine());
     }
-    public void debate() {
+    public int buttonClick;
+    public int debate(int buttonClick, int value) {
         int roundBet = 0;
         int index = dealerIndex + 1;
         AIEngine ai = new AIEngine();
-
-        do {
-
-
-            for (HoldemPlayer p: game.getHoldemPlayers()) {
-                if (!p.isBot() && p.isInGame()) {
-                    switch (scan("введите команду")) {
-                        case 1: // выводим бота из игры до следующего раунда
-                            p.setInGame(false);
-                            break;
-
-                        case 3: // поддержали и обновили данные стола
-                            game.setTableCash(game.getTableCash() + game.getCurrentBet());
-                            p.setCash(p.getCash() - game.getCurrentBet());
-                            break;
-
-                        case 2: // подняли ставку и обновиди данные игрока и стола
-                            int bet = scan("укажите ставку");
-
-                            game.setTableCash(game.getTableCash() + bet);
-                            p.setCash(p.getCash() - bet);
-                            game.setCurrentBet(bet);
-                            break;
-                    }
-                } else if (p.isInGame()) {
-                    List<PlayingCard> cards = Stream.concat(p.getPlayingCards().stream(), game.getTableCards().stream()).collect(Collectors.toList());
-
-                    AiDecision aiDecision = ai.getDecision(cards, p.getCash(), game.getCurrentBet());
-                    reactToDecision(aiDecision, game.getHoldemPlayers().indexOf(p));
-
-                    System.out.println(aiDecision.getCommand().toString());
-                }
-
-                if (roundBet == 0 && roundBet < game.getCurrentBet()) {
-                    roundBet = game.getCurrentBet();
-                }
-            }
-
-            if (roundBet < game.getCurrentBet()) {
-                roundBet = game.getCurrentBet();
-            } else {
-                game.setCurrentBet(0);
-                break;
-            }
-
-
-        } while(true);
-    }
-    public void nextRound() {
-
-        // старт игры 1
-        game.setDeck(ge.createAndShuffleDeck());
-
         for (HoldemPlayer p: game.getHoldemPlayers()) {
-            List<PlayingCard> cards = new LinkedList<>();
-            cards.add(game.getDeck().get(0));
-            game.getDeck().remove(0);
-            cards.add(game.getDeck().get(0));
-            game.getDeck().remove(0);
+            if (!p.isBot() && p.isInGame()) {
+                switch (buttonClick) {
+                    case 1: // выводим бота из игры до следующего раунда
+                        System.out.println("EXIT");
+                        p.setInGame(false);
+                        break;
 
-            p.setPlayingCards(cards);
+                    case 2: // подняли ставку и обновиди данные игрока и стола
+                        int bet = scan("укажите ставку");
+
+                        game.setTableCash(game.getTableCash() + bet);
+                        p.setCash(p.getCash() - bet);
+                        game.setCurrentBet(bet);
+                        break;
+
+                    case 3: // поддержали и обновили данные стола
+                        game.setTableCash(game.getTableCash() + game.getCurrentBet());
+                        p.setCash(p.getCash() - game.getCurrentBet());
+                        break;
+                }
+            } else if (p.isInGame()) {
+                List<PlayingCard> cards = Stream.concat(p.getPlayingCards().stream(), game.getTableCards().stream()).collect(Collectors.toList());
+
+                AiDecision aiDecision = ai.getDecision(cards, p.getCash(), game.getCurrentBet());
+                reactToDecision(aiDecision, game.getHoldemPlayers().indexOf(p));
+
+                System.out.println(aiDecision.getCommand().toString());
+            }
+
+            if (roundBet == 0 && roundBet < game.getCurrentBet()) {
+                roundBet = game.getCurrentBet();
+            }
         }
 
-        System.out.println("прошел старт игры");
-
-        // раунд переговоров 1
-        debate();
-
-        System.out.println("прошел первый раунд дебатов");
-
-        if (emptyGame(game.getHoldemPlayers())) { // TODO: нужно переписать так как у нас уже нет цикла
-            System.out.println("все дропнулись =)");
+        if (roundBet < game.getCurrentBet()) {
+            return -1;
+        } else {
+            return 1;
         }
-
-        // флоп 3  - добавление карт на стол
+    }
+    public void roundGenerator() {
+        GameEngine ge = new GameEngine();
         List<PlayingCard> tableCards = new LinkedList<>();
-        tableCards.add(game.getDeck().get(0));
-        game.getDeck().remove(0);
-        tableCards.add(game.getDeck().get(0));
-        game.getDeck().remove(0);
-        tableCards.add(game.getDeck().get(0));
-        game.getDeck().remove(0);
+        switch (gameStage) {
+            case 0:
+                // старт игры 1
+                game.setDeck(ge.createAndShuffleDeck());
+                for (HoldemPlayer p: game.getHoldemPlayers()) {
+                    List<PlayingCard> cards = new LinkedList<>();
+                    cards.add(game.getDeck().get(0));
+                    game.getDeck().remove(0);
+                    cards.add(game.getDeck().get(0));
+                    game.getDeck().remove(0);
 
-        game.setTableCards(tableCards);
-
-        System.out.println("флоп");
-
-        // раунд переговоров 4
-        debate();
-
-        System.out.println("прошел второй раунд переговоров");
-
-        // turn 5
-        tableCards.add(game.getDeck().get(0));
-        game.getDeck().remove(0);
-
-        game.setTableCards(tableCards);
-
-        System.out.println("turn");
-
-        // раунд переговоров 6
-        debate();
-
-        System.out.println("прошел третий раунд дебатов");
-
-        // reiver 7
-        tableCards.add(game.getDeck().get(0));
-        game.getDeck().remove(0);
-
-        game.setTableCards(tableCards);
-
-        System.out.println("ривер");
-
-        // финальные раунд переговоров 8
-        debate();
-
-        System.out.println("финальные ставки");
-
-
-        int winnerId = ge.winnerPicker(game.getHoldemPlayers(), game.getTableCards());
-        recalculateScores(winnerId, game.getTableCash());
-
-
-        System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
-
-        clearGame();
+                    p.setPlayingCards(cards);
+                }
+                System.out.println("прошел старт игры");
+                gameStage++;
+                break;
+            case 1:
+                // раунд переговоров 2
+                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                    System.out.println("прошел первый раунд дебатов");
+                    gameStage++;
+                }
+                break;
+            case 2:
+                // флоп 3  - добавление карт на стол
+                tableCards.add(game.getDeck().get(0));
+                game.getDeck().remove(0);
+                tableCards.add(game.getDeck().get(0));
+                game.getDeck().remove(0);
+                tableCards.add(game.getDeck().get(0));
+                game.getDeck().remove(0);
+                game.setTableCards(tableCards);
+                System.out.println("флоп");
+                gameStage++;
+                break;
+            case 3:
+                // раунд переговоров 4
+                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                    System.out.println("прошел второй раунд дебатов");
+                    gameStage++;
+                }
+                break;
+            case 4:
+                // turn 5
+                tableCards.add(game.getDeck().get(0));
+                game.getDeck().remove(0);
+                game.setTableCards(tableCards);
+                System.out.println("тёрн");
+                gameStage++;
+                break;
+            case 5:
+                // раунд переговоров 6
+                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                    System.out.println("прошел третий раунд дебатов");
+                    gameStage++;
+                }
+                break;
+            case 6: // river 7
+                tableCards.add(game.getDeck().get(0));
+                game.getDeck().remove(0);
+                game.setTableCards(tableCards);
+                System.out.println("ривер");
+                gameStage++;
+                break;
+            case 7:
+                // раунд переговоров 8
+                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                    System.out.println("финальные ставки");
+                    gameStage++;
+                }
+                break;
+            case 8:
+                int winnerId = ge.winnerPicker(game.getHoldemPlayers(), game.getTableCards());
+                recalculateScores(winnerId, game.getTableCash());
+                System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
+                break;
+            case 9:
+                clearGame();
+                break;
+            default:
+                break;
+        }
+        if(Controller.emptyGame(game.getHoldemPlayers()))
+            gameStage = 8;
+            roundGenerator();
     }
     // end of Game Logics 22.07.2016
 }
@@ -556,97 +635,6 @@ public class Controller {
 
 
 /*
-        fold.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                nextRound();
-            }
-        });
-
-        confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                int value = (int) rateSlider.getValue();
-                HoldemPlayer user = game.getUser();
-                makeBet(user, value);
-                game.setCurrentBet(user.getBet());
-                game.setCurrentCash(user.getCash());
-                showBets();
-                displayCashes();
-                step();
-            }
-        });
-
-        nextRound.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                nextRound.setDisable(true);
-                resetRound();
-                nextRound();
-                game.setGameStage(nextGameStage(game.getGameStage()));
-                step();
-            }
-        });
-
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainMenu.fxml"));
-                Parent roott = null;
-                Stage stage = (Stage) back.getScene().getWindow();
-
-                try {
-                    roott = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                MainMenuController personController = loader.getController();
-                personController.setTextToLabel();
-                ui.Cash = settingsServices.findOne(game.getUser().getLogin()).getCash();
-                personController.setCashToLabel();
-        //        create a new scene with root and set the stage
-                Scene scene = new Scene(roott);
-                stage.setScene(scene);
-                stage.show();
-            }
-        });
-
-
-        call.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                int diff = game.getCurrentBet() - game.getUser().getBet();
-                makeBet(game.getUser(), diff);
-                showBets();
-                displayCashes();
-                disableControl();
-                step();
-            }
-        });
-
-        check.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                settingsServices.findOne(game.getUser().getLogin()).setCash((int)game.getUser().getCash());
-                if (game.getUser().isBigBlind()) {
-                    runNextRound();
-                }
-            }
-        });
-
-        disableControl();
-
-        rateSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                callLabel.setText(String.valueOf(new_val.intValue()));
-            }
-        });
-
-        initGame();
-        startGame();
-
-    }
 
     private void disableControl() {
         confirm.setDisable(true);
@@ -654,58 +642,6 @@ public class Controller {
         call.setDisable(true);
         fold.setDisable(true);
         rateSlider.setDisable(true);
-    }
-
-
-    public Game createGame() {
-        Settings settings = settingsServices.findOne(ui.Name);
-
-        HoldemPlayer player = new HoldemPlayer();
-        player.setCash(settings.getCash());
-        System.out.println(settings.getCash());
-        player.setBet(settings.getBet());
-        int playerCount = settings.getPlayerCount() > 0 ? settings.getPlayerCount() : 3;
-
-        int botCounter = 0;
-        List<HoldemPlayer> players = new ArrayList<>();
-        players.add(player);
-        while (players.size() < playerCount) {
-            botCounter++;
-            HoldemPlayer holdemPlayer = new HoldemPlayer();
-            holdemPlayer.setLogin("Bot" + botCounter);
-            holdemPlayer.setBot(true);
-            holdemPlayer.setCash(7000);
-            players.add(holdemPlayer);
-        }
-
-        game = new Game();
-
-        game.setLowestBet(settings.getBet());
-        game.setHoldemPlayers(players);
-        game.setCurrentBet(settings.getBet());
-        game.setTotalRoundBet(settings.getBet());
-
-  //      Setting dealer and blinds
-        game.getHoldemPlayers().get(0).setLogin(settings.getUserName());
-        game.getHoldemPlayers().get(0).setDealer(true);
-        game.getHoldemPlayers().get(1).setSmallBlind(true);
-        game.getHoldemPlayers().get(2).setBigBlind(true);
-        game.setCurrentPlayer(2 + 1);
-
-        return game;
-    }
-
-
-    public List<PlayingCard> createAndShuffleDeck() {
-        LinkedList<PlayingCard> playingCards = new LinkedList<>();
-        final Random random = new Random();
-        int counter = random.nextInt(40);
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 13; j++)
-                playingCards.add(new PlayingCard(i, j));
-        for (int i = 0; i < counter; i++)
-            Collections.shuffle(playingCards);
-        return playingCards;
     }
 
 
