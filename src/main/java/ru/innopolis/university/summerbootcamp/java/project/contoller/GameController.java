@@ -60,7 +60,7 @@ public class GameController {
             if (p.isInGame()) playerCounter++;
         }
 
-        return playerCounter == 1;
+        return playerCounter <= 1;
     }
 
     /**
@@ -74,6 +74,7 @@ public class GameController {
         game.setDeck(null);
         changeRoles();
         for (HoldemPlayer p: game.getHoldemPlayers()) {
+            if (p.getCash() < game.getLowestBet()) p.setInGame(false);
             p.setPlayingCards(null);
         }
     }
@@ -139,7 +140,7 @@ public class GameController {
                 } else if (p.isInGame()) {
                     List<PlayingCard> cards = Stream.concat(p.getPlayingCards().stream(), game.getTableCards().stream()).collect(Collectors.toList());
 
-                    AiDecision aiDecision = ai.getDecision(cards, p.getCash(), p.getBet());
+                    AiDecision aiDecision = ai.getDecision(cards, p.getCash(), game.getCurrentBet());
                     reactToDecision(aiDecision, game.getHoldemPlayers().indexOf(p));
 
                     System.out.println(aiDecision.getCommand().toString());
@@ -193,8 +194,6 @@ public class GameController {
 
 
         while (true) {
-
-
 
             // старт игры 1
             game.setDeck(ge.createAndShuffleDeck());
@@ -270,7 +269,11 @@ public class GameController {
 
             System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
 
+            if (scan("хотите продолжить? 1- да, 2 - нет") == 2) {
+                break;
+            }
 
+            clearGame();
         }
     }
 
