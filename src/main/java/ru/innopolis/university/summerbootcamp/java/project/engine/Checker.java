@@ -1,7 +1,10 @@
 package ru.innopolis.university.summerbootcamp.java.project.engine;
 import ru.innopolis.university.summerbootcamp.java.project.model.PlayingCard;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by rodionov on 16.07.2016.
@@ -19,7 +22,14 @@ public class Checker {
     public static final int HIGH = 0;
 
     public static boolean[][] pool;
-    public static int checkCombo(List<PlayingCard> cards) {
+
+    public static int checkCombo(List<PlayingCard> playerCards, List<PlayingCard> tableCards) {
+        List<PlayingCard> cards = Stream.concat(playerCards.stream(), tableCards.stream()).collect(Collectors.toList());
+
+//
+//        List<PlayingCard> cards = new ArrayList<>(tableCards);
+//        cards.addAll(playerCards);
+
         int score = 10000;
         pool = new boolean[4][13];
         int tmp;
@@ -79,6 +89,69 @@ public class Checker {
 
         return 0;
     }
+
+    public static int checkCombo(List<PlayingCard> cards) {
+        int score = 10000;
+        pool = new boolean[4][13];
+        int tmp;
+        for (PlayingCard card : cards)
+            pool[card.getSuit()][card.getRank()] = true;
+
+        tmp = isFlushRoyal(cards);
+        score += tmp;
+        if(tmp == 0) {
+            return score;
+        }
+        tmp = isStraightFlush(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isFourOfKind(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isFullHouse(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isFlush(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isStraight(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isThreeOfKind(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isTwoPairs(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isOnePair(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+        tmp = isHighCard(cards);
+        score += tmp;
+        if(tmp>=0) {
+            return score;
+        }
+
+        return 0;
+    }
+
+
     private static int isFlushRoyal(List<PlayingCard> cards) {
         for(int i = 0; i < 4; i++) {
             int count = 0;

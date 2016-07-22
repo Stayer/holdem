@@ -10,6 +10,7 @@ public class HoldemPlayer extends Player {
     private boolean isBigBlind;
     private int bet;
     private boolean isBot;
+    private boolean isInGame = true;
 
     public boolean isBot() {
         return isBot;
@@ -49,5 +50,13 @@ public class HoldemPlayer extends Player {
 
     public void setBet(int bet) {
         this.bet = bet;
+    }
+
+    public boolean isInGame() {
+        return isInGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        isInGame = inGame;
     }
 }

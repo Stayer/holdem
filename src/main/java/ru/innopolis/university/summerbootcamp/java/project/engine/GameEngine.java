@@ -28,6 +28,21 @@ public class GameEngine {
             return -1;
         return 0;
     }
+
+
+    public static int winnerPicker(List<HoldemPlayer> players, List<PlayingCard> tableCards)
+    {
+        HoldemPlayer winner = players.stream().max(new Comparator<HoldemPlayer>() {
+            Checker checker = new Checker();
+            @Override
+            public int compare(HoldemPlayer o1, HoldemPlayer o2) {
+
+                return Integer.compare(Checker.checkCombo(o1.getPlayingCards(), tableCards), Checker.checkCombo(o2.getPlayingCards(), tableCards));
+            }
+        }).get();
+        return players.indexOf(winner);
+    }
+
     public static int winnerPicker(List<HoldemPlayer> players)
     {
         HoldemPlayer winner = players.stream().max(new Comparator<HoldemPlayer>() {
@@ -41,5 +56,16 @@ public class GameEngine {
         return players.indexOf(winner);
     }
 
+    public List<PlayingCard> createAndShuffleDeck() {
+        LinkedList<PlayingCard> playingCards = new LinkedList<>();
+        final Random random = new Random();
+        int counter = random.nextInt(40);
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 13; j++)
+                playingCards.add(new PlayingCard(i, j));
+        for (int i = 0; i < counter; i++)
+            Collections.shuffle(playingCards);
+        return playingCards;
+    }
 
 }

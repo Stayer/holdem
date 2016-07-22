@@ -13,6 +13,8 @@ public class Game {
     private int currentBet;
     private int currentCash;
 
+    private int tableCash;
+
     private int currentPlayer;
     private int totalRoundBet;
     private int winPoint;
@@ -106,5 +108,13 @@ public class Game {
 
     public void setDeck(List<PlayingCard> deck) {
         this.deck = deck;
+    }
+
+    public int getTableCash() {
+        return tableCash;
+    }
+
+    public void setTableCash(int tableCash) {
+        this.tableCash = tableCash;
     }
 }
