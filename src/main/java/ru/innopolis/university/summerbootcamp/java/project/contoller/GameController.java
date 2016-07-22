@@ -69,12 +69,6 @@ public class GameController {
         return playerCounter <= 1;
     }
 
-    /**
-     * Clear dealer, blinds, beds, cards
-     *
-     * @param game
-     */
-
     public void clearGame() {
         game.setTableCards(null);
         game.setDeck(null);
@@ -83,6 +77,10 @@ public class GameController {
             if (p.getCash() < game.getLowestBet()) p.setInGame(false);
             p.setPlayingCards(null);
         }
+    }
+
+    public void recalculateScores(int userId, int cash) {
+        game.getHoldemPlayers().get(userId).setCash(game.getHoldemPlayers().get(userId).getCash() + cash);
     }
 
     public void reactToDecision(AiDecision dec, int botId) {
@@ -272,6 +270,8 @@ public class GameController {
 
 
             int winnerId = ge.winnerPicker(game.getHoldemPlayers(), game.getTableCards());
+            recalculateScores(winnerId, game.getTableCash());
+
 
             System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
 
