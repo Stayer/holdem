@@ -123,7 +123,7 @@ public class Controller {
 
     // Game logics 22.07.2016
     public Game game = new Game();
-    public int gameStage = GameStage.Start.getValue();
+    public int gameStage = 0;
     public int dealerIndex;
 
     private SettingsServices settingsServices = SettingsServices.getInstance();
@@ -311,7 +311,6 @@ public class Controller {
 
         }
     }
-
     private void hidePlayerCard(int id, double opacity) {
         for (int j = 0; j < 2; j++) {
             playersHandCards.get(id).get(j).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
@@ -322,12 +321,14 @@ public class Controller {
     private void showPlayerCard(int id) {
         showPlayerCard(id, 1.0);
     }
-
-
     private void hidePlayerCard(int id) {
         hidePlayerCard(id, 1.0);
     }
-
+    private void hidePlayersCards() {
+        for (int i = 1; i < game.getHoldemPlayers().size(); i++) {
+            hidePlayerCard(i);
+        }
+    }
     private int showWinner() {
         int winner = GameEngine.winnerPicker(game.getHoldemPlayers());
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
@@ -344,31 +345,28 @@ public class Controller {
             bets.get(i).setText(game.getHoldemPlayers().get(i).getBet() + "");
         }
     }
-
+    private void showUserCard() {
+        showPlayerCard(0);
+    }
     private void displayCashes() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             cashes.get(i).setText(game.getHoldemPlayers().get(i).getCash() + "");
         }
     }
-
     private void displayNames() {
         for (int i = 0; i < game.getHoldemPlayers().size(); i++) {
             names.get(i).setText(game.getHoldemPlayers().get(i).getLogin() + "");
         }
     }
-
     private void cleanTableCards() {
         for (int i = 0; i < game.getTableCards().size(); i++) {
             PlayingCard playingCard = game.getTableCards().get(i);
             cards.get(i).setImage(new Image(getClass().getClassLoader().getResource(ViewUtil.getBackCardImage()).toExternalForm()));
         }
     }
-
-
     private void displayRoundBet() {
         roundBet.setText(game.getTotalRoundBet() + "");
     }
-
     // end dalv666
 
     /**
@@ -461,11 +459,9 @@ public class Controller {
                         break;
 
                     case 2: // подняли ставку и обновиди данные игрока и стола
-                        int bet = scan("укажите ставку");
-
-                        game.setTableCash(game.getTableCash() + bet);
-                        p.setCash(p.getCash() - bet);
-                        game.setCurrentBet(bet);
+                        game.setTableCash(game.getTableCash() + p.getBet());
+                        p.setCash(p.getCash() - p.getBet());
+                        game.setCurrentBet(p.getBet());
                         break;
 
                     case 3: // поддержали и обновили данные стола
@@ -506,16 +502,20 @@ public class Controller {
                     game.getDeck().remove(0);
                     cards.add(game.getDeck().get(0));
                     game.getDeck().remove(0);
-
                     p.setPlayingCards(cards);
                 }
+                showBets();
+                cleanTableCards();
+                hidePlayersCards();
+                showUserCard();
                 System.out.println("прошел старт игры");
                 gameStage++;
                 break;
             case 1:
                 // раунд переговоров 2
-                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                if(buttonClick > 0 && debate(buttonClick, game.getUser().getBet()) > 0) {
                     System.out.println("прошел первый раунд дебатов");
+                    buttonClick = 0;
                     gameStage++;
                 }
                 break;
@@ -533,8 +533,9 @@ public class Controller {
                 break;
             case 3:
                 // раунд переговоров 4
-                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                if(buttonClick > 0 && debate(buttonClick, game.getUser().getBet()) > 0) {
                     System.out.println("прошел второй раунд дебатов");
+                    buttonClick = 0;
                     gameStage++;
                 }
                 break;
@@ -548,8 +549,9 @@ public class Controller {
                 break;
             case 5:
                 // раунд переговоров 6
-                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                if(buttonClick > 0 && debate(buttonClick, game.getUser().getBet()) > 0) {
                     System.out.println("прошел третий раунд дебатов");
+                    buttonClick = 0;
                     gameStage++;
                 }
                 break;
@@ -562,8 +564,9 @@ public class Controller {
                 break;
             case 7:
                 // раунд переговоров 8
-                if(debate(buttonClick, game.getUser().getBet()) > 0) {
+                if(buttonClick > 0 && debate(buttonClick, game.getUser().getBet()) > 0) {
                     System.out.println("финальные ставки");
+                    buttonClick = 0;
                     gameStage++;
                 }
                 break;
@@ -571,6 +574,7 @@ public class Controller {
                 int winnerId = ge.winnerPicker(game.getHoldemPlayers(), game.getTableCards());
                 recalculateScores(winnerId, game.getTableCash());
                 System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
+                gameStage++;
                 break;
             case 9:
                 clearGame();
@@ -578,9 +582,13 @@ public class Controller {
             default:
                 break;
         }
-        if(Controller.emptyGame(game.getHoldemPlayers()))
+        if(gameStage % 2 == 0) {
+            roundGenerator();
+        }
+        if(Controller.emptyGame(game.getHoldemPlayers())) {
             gameStage = 8;
             roundGenerator();
+        }
     }
     // end of Game Logics 22.07.2016
 }
@@ -956,7 +964,15 @@ public class Controller {
                 playingCard = takeCard();
                 user.getPlayingCards().add(playingCard);
             }
-            showUserCard();
+                    resetBets();
+        settingBets();
+        showBets();
+        removeCards();
+        settingDeck();
+        cleanTableCards();
+        hidePlayersCards();
+        distributePlayingCards();
+        showUserCard();();
 
         //    Bet round
             bettingRound(2);
