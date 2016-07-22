@@ -13,6 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ru.innopolis.university.summerbootcamp.java.project.ai.AIEngine;
 import ru.innopolis.university.summerbootcamp.java.project.engine.GameEngine;
@@ -24,8 +25,10 @@ import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage
 import ru.innopolis.university.summerbootcamp.java.project.services.impl.SettingsServices;
 import ru.innopolis.university.summerbootcamp.java.project.ui.util.ViewUtil;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class Controller {
 
@@ -112,6 +115,8 @@ public class Controller {
     @FXML
     private Label bet2;
 
+    @FXML
+    private FlowLayout logger;
     private SettingsServices settingsServices = SettingsServices.getInstance();
 
 
@@ -259,6 +264,7 @@ public class Controller {
                 if (game.getUser().isBigBlind()) {
                     runNextRound();
                 }
+              //  logger.g
             }
         });
 

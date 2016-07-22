@@ -72,3 +72,7 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
+#logger {
+    -fx-background-color: #7cb9ad;
+    -fx-border-size: 0px;
+}
