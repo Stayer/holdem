@@ -40,6 +40,7 @@ public class SettingsServices implements Service<Settings> {
             read.setDifficulty(1);
             read.setMusic(true);
             read.setUserName(name);
+            read.setPlayerCount(4);
         }
         return read;
     }

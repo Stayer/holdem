@@ -1,3 +1,4 @@
+/*
 package ru.innopolis.university.summerbootcamp.java.project.ui;
 
 import javafx.beans.value.ChangeListener;
@@ -297,9 +298,15 @@ public class Controller {
 
 
     }
-    /**
+    *//*
+
+*/
+/**
      * change dealer, sb, bb
-     */
+     *//*
+*/
+/*
+
     public void changeRoles() {
         dealerIndex = (dealerIndex + 1) % game.getHoldemPlayers().size();
         for(int i = 0; i < game.getHoldemPlayers().size(); i++)
@@ -555,6 +562,9 @@ public class Controller {
 
 
 
+*//*
+
+*/
 /*
         fold.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -966,11 +976,23 @@ public class Controller {
         }
     }
 
-    *//**
+    *//*
+*/
+/*
+*//*
+
+*/
+/**
      * Change dealer and blinds actors in a game
      *
      * @param game
      *//*
+*/
+/*
+*//*
+
+*/
+/*
     public void changeRoles(Game game) {
         List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
         int nDealer = 0;
