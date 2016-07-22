@@ -13,11 +13,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by iskandar on 22/07/16.
  */
 public class GameController {
+
     public Game game = new Game();
     public int gameStage = GameStage.Start.getValue();
     public int dealerIndex;
@@ -30,6 +33,66 @@ public class GameController {
      */
     public void changeRoles() {
         dealerIndex = (dealerIndex + 1) % game.getHoldemPlayers().size();
+    }
+
+    public static boolean emptyGame(List<HoldemPlayer> players) {
+
+        int playerCounter = 0;
+        for (HoldemPlayer p: players) {
+            if (p.isInGame()) playerCounter++;
+        }
+
+        return playerCounter == 1;
+    }
+
+    /**
+     * Change dealer and blinds actors in a game
+     *
+     * @param game
+     */
+    public void changeRoles(Game game) {
+        List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
+        int nDealer = 0;
+        int nSB = 0;
+        int nBB = 0;
+
+
+        for (int i = 0; i < holdemPlayers.size(); i++) {
+            HoldemPlayer holdemPlayer = holdemPlayers.get(i);
+
+
+            if (holdemPlayer.isBigBlind()) {
+                changeBigBlind(holdemPlayers, i, false);
+                if (i != holdemPlayers.size() - 1) {
+                    nBB = i + 1;
+                }
+            } else if (holdemPlayer.isSmallBlind()) {
+                changeSmallBlind(holdemPlayers, i, false);
+                if (i != holdemPlayers.size() - 1) {
+                    nSB = i + 1;
+                }
+            } else if (holdemPlayer.isDealer()) {
+                changeDealer(holdemPlayers, i, false);
+                if (i != holdemPlayers.size() - 1) {
+                    nDealer = i + 1;
+                }
+            }
+
+
+        }
+        changeBigBlind(holdemPlayers, nBB, true);
+        changeSmallBlind(holdemPlayers, nSB, true);
+        changeDealer(holdemPlayers, nDealer, true);
+        game.setCurrentPlayer(nBB + 1);
+    }
+
+    public void clearGame() {
+        game.setTableCards(null);
+        game.setDeck(null);
+        changeRoles();
+        for (HoldemPlayer p: game.getHoldemPlayers()) {
+            p.setPlayingCards(null);
+        }
     }
 
     public void reactToDecision(AiDecision dec, int botId) {
@@ -68,8 +131,10 @@ public class GameController {
         AIEngine ai = new AIEngine();
 
         do {
+
+
             for (HoldemPlayer p: game.getHoldemPlayers()) {
-                if (!p.isBot()) {
+                if (!p.isBot() && p.isInGame()) {
                     switch (scan("введите команду")) {
                         case 1: // выводим бота из игры до следующего раунда
                             p.setInGame(false);
@@ -89,16 +154,27 @@ public class GameController {
                             break;
                     }
                 } else if (p.isInGame()) {
-                    AiDecision aiDecision = ai.getDecision(p.getPlayingCards(), p.getCash(), p.getBet());
+                    List<PlayingCard> cards = Stream.concat(p.getPlayingCards().stream(), game.getTableCards().stream()).collect(Collectors.toList());
+
+                    AiDecision aiDecision = ai.getDecision(cards, p.getCash(), p.getBet());
                     reactToDecision(aiDecision, game.getHoldemPlayers().indexOf(p));
+
+                    System.out.println(aiDecision.getCommand().toString());
+                }
+
+                if (roundBet == 0 && roundBet < game.getCurrentBet()) {
+                    roundBet = game.getCurrentBet();
                 }
             }
 
             if (roundBet < game.getCurrentBet()) {
                 roundBet = game.getCurrentBet();
             } else {
+                game.setCurrentBet(0);
                 break;
             }
+
+
         } while(true);
     }
 
@@ -135,6 +211,8 @@ public class GameController {
 
         while (true) {
 
+
+
             // старт игры 1
             game.setDeck(ge.createAndShuffleDeck());
 
@@ -144,10 +222,21 @@ public class GameController {
                 game.getDeck().remove(0);
                 cards.add(game.getDeck().get(0));
                 game.getDeck().remove(0);
+
+                p.setPlayingCards(cards);
             }
 
-            // раунд переговоров 2
+            System.out.println("прошел старт игры");
+
+            // раунд переговоров 1
             debate();
+
+            System.out.println("прошел первый раунд дебатов");
+
+            if (emptyGame(game.getHoldemPlayers())) {
+                System.out.println("все дропнулись =)");
+                break;
+            }
 
             // флоп 3  - добавление карт на стол
             List<PlayingCard> tableCards = new LinkedList<>();
@@ -160,8 +249,12 @@ public class GameController {
 
             game.setTableCards(tableCards);
 
+            System.out.println("флоп");
+
             // раунд переговоров 4
             debate();
+
+            System.out.println("прошел второй раунд переговоров");
 
             // turn 5
             tableCards.add(game.getDeck().get(0));
@@ -169,8 +262,12 @@ public class GameController {
 
             game.setTableCards(tableCards);
 
+            System.out.println("turn");
+
             // раунд переговоров 6
             debate();
+
+            System.out.println("прошел третий раунд дебатов");
 
             // reiver 7
             tableCards.add(game.getDeck().get(0));
@@ -178,12 +275,19 @@ public class GameController {
 
             game.setTableCards(tableCards);
 
+            System.out.println("ривер");
+
             // финальные раунд переговоров 8
             debate();
+
+            System.out.println("финальные ставки");
+
 
             int winnerId = ge.winnerPicker(game.getHoldemPlayers(), game.getTableCards());
 
             System.out.println("winner is " + game.getHoldemPlayers().get(winnerId).getLogin());
+
+
         }
     }
 

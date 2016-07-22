@@ -2,12 +2,13 @@ package ru.innopolis.university.summerbootcamp.java.project.model;
 
 import ru.innopolis.university.summerbootcamp.java.project.model.enums.GameStage;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
     private List<HoldemPlayer> holdemPlayers;
     private List<PlayingCard> deck;
-    private List<PlayingCard> tableCards;
+    private List<PlayingCard> tableCards = new LinkedList<>();
     private int lowestBet;
     private GameStage gameStage;
     private int currentBet;
