@@ -675,7 +675,9 @@ public class Controller {
                     int diff = game.getCurrentBet() - game.getHoldemPlayers().get(i).getBet();
                     game.getHoldemPlayers().get(i).setBet(game.getHoldemPlayers().get(i).getBet() + diff);
                     game.getHoldemPlayers().get(i).setCash(game.getHoldemPlayers().get(i).getCash() - diff);
+                    System.out.println(game.getHoldemPlayers().get(i).getCash());
                     refreshBet(i, game.getHoldemPlayers().get(i).getBet());
+                    displayCashes();
                 }
             } else {
                 //Give control to user
