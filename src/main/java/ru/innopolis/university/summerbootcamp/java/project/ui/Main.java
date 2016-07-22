@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         root.getStylesheets().addAll(getClass().getClassLoader().getResource("style.css").toExternalForm());
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("#InnoBootCamp2016: Texas Holdem");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
