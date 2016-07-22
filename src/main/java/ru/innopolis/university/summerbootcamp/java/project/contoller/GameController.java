@@ -33,6 +33,24 @@ public class GameController {
      */
     public void changeRoles() {
         dealerIndex = (dealerIndex + 1) % game.getHoldemPlayers().size();
+        for(int i = 0; i < game.getHoldemPlayers().size(); i++)
+        {
+            if(i == (dealerIndex) % game.getHoldemPlayers().size()) {
+                game.getHoldemPlayers().get(i).setDealer(true);
+            } else {
+                game.getHoldemPlayers().get(i).setDealer(false);
+            }
+            if(i == (dealerIndex + 1) % game.getHoldemPlayers().size()) {
+                game.getHoldemPlayers().get(i).setSmallBlind(true);
+            } else {
+                game.getHoldemPlayers().get(i).setSmallBlind(false);
+            }
+            if(i == (dealerIndex + 2) % game.getHoldemPlayers().size()) {
+                game.getHoldemPlayers().get(i).setBigBlind(true);
+            } else {
+                game.getHoldemPlayers().get(i).setBigBlind(false);
+            }
+        }
     }
 
     public static boolean emptyGame(List<HoldemPlayer> players) {
@@ -50,41 +68,6 @@ public class GameController {
      *
      * @param game
      */
-    public void changeRoles(Game game) {
-        List<HoldemPlayer> holdemPlayers = game.getHoldemPlayers();
-        int nDealer = 0;
-        int nSB = 0;
-        int nBB = 0;
-
-
-        for (int i = 0; i < holdemPlayers.size(); i++) {
-            HoldemPlayer holdemPlayer = holdemPlayers.get(i);
-
-
-            if (holdemPlayer.isBigBlind()) {
-                changeBigBlind(holdemPlayers, i, false);
-                if (i != holdemPlayers.size() - 1) {
-                    nBB = i + 1;
-                }
-            } else if (holdemPlayer.isSmallBlind()) {
-                changeSmallBlind(holdemPlayers, i, false);
-                if (i != holdemPlayers.size() - 1) {
-                    nSB = i + 1;
-                }
-            } else if (holdemPlayer.isDealer()) {
-                changeDealer(holdemPlayers, i, false);
-                if (i != holdemPlayers.size() - 1) {
-                    nDealer = i + 1;
-                }
-            }
-
-
-        }
-        changeBigBlind(holdemPlayers, nBB, true);
-        changeSmallBlind(holdemPlayers, nSB, true);
-        changeDealer(holdemPlayers, nDealer, true);
-        game.setCurrentPlayer(nBB + 1);
-    }
 
     public void clearGame() {
         game.setTableCards(null);
