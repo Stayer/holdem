@@ -232,6 +232,7 @@ public class Controller {
                 personController.setTextToLabel();
                 ui.Cash = settingsServices.findOne(game.getUser().getLogin()).getCash();
                 personController.setCashToLabel();
+                //good
                 //create a new scene with root and set the stage
                 Scene scene = new Scene(roott);
                 stage.setScene(scene);
